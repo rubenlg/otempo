@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/widgetRoot"
+	android:orientation="horizontal"
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:background="@drawable/background_widget" 
+	android:paddingLeft="20dip" 
+	android:paddingRight="12dip"
+	android:paddingTop="17dip" 
+	android:paddingBottom="20dip">
+	<TextView android:id="@+id/widgetError"
+		android:text="ERR" 
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:gravity="center"/>
+</LinearLayout>

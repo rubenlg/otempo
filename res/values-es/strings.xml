@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OTempo</string>
+    <string name="preferencesActivity">Preferencias</string>
+    <string name="settings">Ajustes</string>
+    <string name="source">Fuente</string>
+    <string name="station_ordering">Orden de estaciones</string>
+    <string name="default_station">Estación inicial</string>
+    <string name="fixed_station">Estación fija</string>
+    <string name="pref_appearance">Apariencia</string>
+    <string name="pref_background">Fondo</string>
+    <string name="pref_stations">Estaciones</string>
+    <string name="select_station">Elegir estación</string>
+    <string name="internet_error">Error accediendo a internet</string>
+    <string name="internal_error">Error interno</string>
+    <string name="up_to_date">Ya tienes la última predicción</string>
+    <string name="loading_data">Cargando datos</string>
+    <string name="gps_unavailable">GPS no disponible</string>
+    <string name="gps_error2">No se puede acceder a la última ubicación del GPS</string>
+    <string name="my_location">Mi ubicación</string>
+    <string name="waiting_gps">Esperando ubicación</string>
+    <string name="old_location">Actualizando ubicación</string>
+    <string name="changelogMenu">Versiones</string>
+    <string name="syncMenu">Sincronizar</string>
+    <string name="shareMenu">Compartir</string>
+    <string name="widget_name">OTempo</string>
+    <string name="morning">Mañana</string>
+    <string name="afternoon">Tarde</string>
+    <string name="evening">Noche</string>
+    <string name="sync_short">OTempo sincronizando</string>
+    <string name="sync_desc">Descargando predicciones</string>
+    <string name="predicted_at">"'Predicho el' EEE d 'a las' HH:mm"</string>
+    <string name="predicted_time_why">¿Por qué?</string>
+    <string name="predicted_time_explain">En este momento, Meteogalicia sólo recalcula las predicciones dos veces al día.</string>
+    <string name="pref_updates">Actualizaciones automáticas</string>
+    <string name="update_period">Período actualización</string>
+    <string name="update_amount">Estaciones actualizadas</string>
+    <string name="share_chooser_title">Compartir app OTempo</string>
+    <string name="share_subject">OTempo, meteorología gallega para Android</string>
+
+    <string-array name="changelog_2_5">
+    	<item>Arreglado bug en la publicidad</item>
+    </string-array>
+    <string-array name="changelog_2_4">
+    	<item>Arreglado bug en la gestión de ventanas</item>
+    	<item>Actualizado icono de lluvia</item>
+    </string-array>
+    <string-array name="changelog_2_3">
+    	<item>Arreglado un fallo en dispositivos Android 1.5</item>
+    	<item>Arreglado un fallo en el nuevo diálogo de descripción</item>
+    </string-array>
+    <string-array name="changelog_2_2">
+    	<item>Ahora se pueden pinchar los días de predicción a corto plazo para ver su descripción</item>
+    	<item>Arreglado un fallo al usar imágenes de fondo muy grandes</item>
+    </string-array>
+    <string-array name="changelog_2_1">
+    	<item>Añadido icono de nieve</item>
+    	<item>Arreglados un par de fallos reportados por los usuarios</item>
+    </string-array>
+    <string-array name="changelog_2_0">
+   		<item>Se puede cambiar la imagen de fondo. Consejo: Usa imágenes verticales para que no se estiren.</item>
+   		<item>El [¿Por qué?] Situado junto a la predicción del tiempo no se muestra después de que se presione una vez.</item>
+   		<item>Corregido fallo en el widget, que mostraba la predicción del día anterior algunas veces.</item>
+   		<item>Añadido un botón de compartir al menú. Úsalo para hablarle de OTempo a tus amigos.</item>
+    </string-array>
+    <string-array name="changelog_1_9">
+   		<item>Botón en el menú para sincronizar manualmente.</item>
+   		<item>Se puede configurar el período de sincronización automática.</item>
+   		<item>Se puede configurar el número de estaciones que se actualizan periódicamente.</item>
+   		<item>Aumentado el rendimiento al procesar el RSS de meteogalicia (ahorra batería).</item>
+   		<item>Las preferencias muestran ahora los valores por defecto mientras no se configuran.</item>
+   		<item>Resuelto bug que podía colgar OTempo al actualizar sin acceso a Internet. Reportado por un usuario.</item>
+   		<item>La hora de predicción ya muestra correctamente los minutos.</item>
+    </string-array>
+    <string-array name="changelog_1_8">
+   		<item>Actualizada la librería de publicidad para reducir el tráfico de red y el consumo de batería.</item>
+    </string-array>
+    <string-array name="changelog_1_7">
+   		<item>Añadida la hora de la predicción a la interfaz.</item>
+   		<item>Añadida traducción al gallego (para dispositivos que soporten este idioma).</item>
+    </string-array>
+    <string-array name="changelog_1_6">
+   		<item>Arreglado fallo con la detección del día actual, ahora se vuelve a mostrar en la aplicación.</item>
+   		<item>Añadido parche para ignorar flujos RSS de Meteogalicia corruptos.</item>
+    </string-array>
+    <string-array name="changelog_1_5">
+   		<item>Creado widget. Puedes añadirlo pulsando durante un rato el escritorio.</item>
+   		<item>Creado un servicio que actualiza las predicciones en segundo plano, si está activado en la configuración global de android.</item>
+   		<item>Mientras OTempo está actualizando predicciones, aparece una notificación.</item>
+    </string-array>
+    <string-array name="changelog_1_4">
+   		<item>Corregido fallo interpretando el RSS de Meteogalicia.</item>
+    </string-array>
+    <string-array name="changelog_1_3">
+		<item>No muestra los días que ya pasaron cuando no hay Internet.</item>
+   		<item>Se destaca el día actual.</item>
+		<item>Ya no desincroniza el selector de estaciones y el contenido cuando no hay Internet.</item>
+		<item>Se movió la publicidad a la parte de abajo, para que resulte menos molesta.</item>
+		<item>Añadido este registro de versiones.</item>
+		<item>Ya no falla al usar el menú Fuente sin una localización.</item>
+		<item>Ya no falla al usar el menú Mi ubicación sin GPS.</item>
+    </string-array>
+    <string-array name="changelog_1_2">
+   		<item>Arreglado fallo en Android 1.5.</item>
+    </string-array>
+    <string-array name="changelog_1_1">
+   		<item>Soporte para Android 1.5.</item>
+    </string-array>
+    
+    <string-array name="orderingPref">
+    	<item>Distancia a mi ubicación</item>
+    	<item>Estaciones más consultadas</item>
+    	<item>Orden alfabético</item>
+    </string-array>
+    <string-array name="defaultStationPref">
+    	<item>Más cercana a mi ubicación</item>
+    	<item>Más consultada</item>
+    	<item>Una fija</item>
+    </string-array>
+    
+    <string-array name="updatePeriodPref">
+    	<item>30 minutos</item>
+    	<item>1 hora</item>
+    	<item>2 horas</item>
+    	<item>4 horas</item>
+    	<item>8 horas</item>
+    	<item>1 día</item>
+    </string-array>
+    
+    <string-array name="updateAmountPref">
+    	<item>Todas</item>
+    	<item>1 estación</item>
+    	<item>2 estaciones</item>
+    	<item>4 estaciones</item>
+    	<item>8 estaciones</item>
+    </string-array>
+    
+    <string-array name="backgroundPref">
+    	<item>Por defecto</item>
+    	<item>Negro</item>
+    	<item>Elegir imagen</item>
+    </string-array>
+</resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/widgetRoot"
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:background="@drawable/background_widget" 
+	android:orientation="horizontal"
+	android:paddingLeft="15dip" 
+	android:paddingRight="12dip"
+	android:paddingTop="17dip" 
+	android:paddingBottom="19dip">
+	<LinearLayout 
+		android:orientation="vertical"
+		android:layout_height="fill_parent" 
+		android:layout_width="fill_parent"
+		android:layout_weight="1">
+		<TextView android:id="@+id/widgetCurrentDay"
+			android:textColor="#fff" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textStyle="bold"/>
+		<TextView android:id="@+id/widgetTemps"
+			android:layout_width="wrap_content"
+			android:textColor="#fff" 
+			android:layout_height="wrap_content" 
+			android:layout_marginTop="3dip" />
+		<TextView android:id="@+id/widgetStation"
+			android:textColor="#aaa" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="2dip"/>
+	</LinearLayout>
+	<LinearLayout 
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent" 
+		android:orientation="vertical">
+		<TextView 
+			android:text="@string/morning" 
+			android:layout_height="wrap_content" 
+			android:layout_gravity="center" 
+			android:layout_width="wrap_content"
+			android:textSize="11dip"/>
+		<ImageView android:id="@+id/widgetMorning"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" />
+	</LinearLayout>
+	<LinearLayout 
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent" 
+		android:orientation="vertical">
+		<TextView 
+			android:text="@string/afternoon" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:textColor="#aaa"
+			android:layout_gravity="center" 
+			android:textSize="11dip"/>
+		<ImageView android:id="@+id/widgetAfternoon"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" />
+	</LinearLayout>
+	<LinearLayout 
+		android:layout_width="wrap_content"
+		android:layout_height="fill_parent" 
+		android:orientation="vertical">
+		<TextView 
+			android:text="@string/evening" 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:textColor="#aaa"
+			android:layout_gravity="center" 
+			android:textSize="11dip"/>
+		<ImageView  android:id="@+id/widgetEvening"
+			android:layout_width="wrap_content" 
+			android:layout_height="wrap_content" />
+	</LinearLayout>
+</LinearLayout>
