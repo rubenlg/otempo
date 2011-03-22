@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OTempo</string>
+    <string name="preferencesActivity">Preferences</string>
+    <string name="settings">Settings</string>
+    <string name="source">Source</string>
+    <string name="station_ordering">Station order</string>
+    <string name="default_station">Initial station</string>
+    <string name="fixed_station">Static station</string>
+    <string name="pref_appearance">Appearance</string>
+    <string name="pref_background">Background</string>
+    <string name="pref_stations">Stations</string>
+    <string name="select_station">Choose station</string>
+    <string name="internet_error">Internet access error</string>
+    <string name="internal_error">Internal error</string>
+    <string name="up_to_date">You already have the last prediction</string>
+    <string name="loading_data">Loading data</string>
+    <string name="gps_unavailable">GPS not available</string>
+    <string name="gps_error2">Can not access last GPS location</string>
+    <string name="my_location">My location</string>
+    <string name="waiting_gps">Waiting location</string>
+    <string name="old_location">Updating location</string>
+    <string name="changelogMenu">Versions</string>
+    <string name="syncMenu">Sync now</string>
+    <string name="shareMenu">Share</string>
+    <string name="widget_name">OTempo</string>
+    <string name="morning">Morning</string>
+    <string name="afternoon">Afternoon</string>
+    <string name="evening">Evening</string>
+    <string name="sync_short">OTempo synchronizing</string>
+    <string name="sync_desc">Downloading predictions</string>
+    <string name="predicted_at">"'Predicted on' EEE d 'at' HH:mm"</string>
+    <string name="predicted_time_why">Why?</string>
+    <string name="predicted_time_explain">Right now, MeteoGalicia recomputes predictions just twice a day.</string>
+    <string name="pref_updates">Automatic updates</string>
+    <string name="update_period">Period</string>
+    <string name="update_amount">Station count</string>
+    <string name="share_chooser_title">Share OTempo App</string>
+    <string name="share_subject">OTempo, galician weather for Android</string>
+    
+    <string-array name="changelog_2_5">
+    	<item>Fixed a bug with advertisement</item>
+    </string-array>
+    <string-array name="changelog_2_4">
+    	<item>Fixed a bug with dialog management</item>
+    	<item>Updated the rain icon</item>
+    </string-array>
+    <string-array name="changelog_2_3">
+    	<item>Fixed a bug in Android 1.5 devices</item>
+    	<item>Fixed a bug with the new description dialog</item>
+    </string-array>
+    <string-array name="changelog_2_2">
+    	<item>Short term predictions are now clickable to see the description</item>
+    	<item>Fixed a bug when using a huge background image</item>
+    </string-array>
+    <string-array name="changelog_2_1">
+    	<item>Added the snow icon</item>
+    	<item>Fixed a couple of bugs reported by users</item>
+    </string-array>
+    <string-array name="changelog_2_0">
+   		<item>You can change the background image. Tip: Use vertical images to avoid stretching.</item>
+   		<item>The [Why?] button next to the prediction time will not be shown after you press it once.</item>
+   		<item>Fixed a bug in the widget, that was showing the previous day prediction sometimes.</item>
+   		<item>Added a share button to the menu. Use it to tell your friends about OTempo.</item>
+    </string-array>
+    <string-array name="changelog_1_9">
+   		<item>Menu button to manually synchronize.</item>
+   		<item>You can set the automatic synchronization period.</item>
+   		<item>You can set the number of stations that are regularly updated.</item>
+   		<item>Increased performance when processing RSS from MeteoGalicia (saves battery).</item>
+   		<item>Preferences now show the default values when unset.</item>
+   		<item>Solved bug that could crash OTempo when updating without Internet access. Reported by a user.</item>
+   		<item>Predicted time now correctly displays minutes.</item>
+    </string-array>
+    <string-array name="changelog_1_8">
+   		<item>Upgraded advertisement library to reduce network traffic and battery consumption.</item>
+    </string-array>
+    <string-array name="changelog_1_7">
+   		<item>Added prediction time to the interface.</item>
+   		<item>Added galician translation (for devices supporting this language).</item>
+    </string-array>
+    <string-array name="changelog_1_6">
+   		<item>Fixed a bug with "today" detection, now the current day shows again in the application.</item>
+   		<item>Added a workaround for corrupted Meteogalicia RSS.</item>
+    </string-array>
+    <string-array name="changelog_1_5">
+   		<item>Created a widget. You can add it by long-pressing in the home screen.</item>
+   		<item>Created a service that updates predictions in the background, if you have this enabled in the global android configuration.</item>
+   		<item>While OTempo is updating predictions, it shows a notification.</item>
+    </string-array>
+    <string-array name="changelog_1_4">
+   		<item>Fixed a bug parsing Meteogalicia RSS.</item>
+    </string-array>
+    <string-array name="changelog_1_3">
+		<item>Does not show past days when Internet is off.</item>
+   		<item>Current day is highlighted.</item>
+		<item>Does not desynchronize the station switcher and the content when Internet is off.</item>
+		<item>The advertisement was moved to the bottom, to make it less annoying.</item>
+		<item>Added this version log.</item>
+		<item>Does not crash when using Source Menu without a selected location.</item>
+		<item>Does not crash when using My location Menu without GPS.</item>
+    </string-array>
+    <string-array name="changelog_1_2">
+   		<item>Fixed a bug in Android 1.5.</item>
+    </string-array>
+    <string-array name="changelog_1_1">
+   		<item>Support for Android 1.5.</item>
+    </string-array>
+    <string-array name="orderingPref">
+    	<item>Distance to my location</item>
+    	<item>Frequent locations</item>
+    	<item>Alphabetic order</item>
+    </string-array>
+    <string-array name="orderingPrefVal">
+    	<item>distance</item>
+    	<item>favorites</item>
+    	<item>alphabetic</item>
+    </string-array>
+    <string-array name="defaultStationPref">
+    	<item>Nearest to my location</item>
+    	<item>Most frequent</item>
+    	<item>Pick one</item>
+    </string-array>
+    <string-array name="defaultStationPrefVal">
+    	<item>nearest</item>
+    	<item>favorite</item>
+    	<item>fixed</item>
+    </string-array>
+    
+    <string-array name="updatePeriodPref">
+    	<item>30 minutes</item>
+    	<item>1 hour</item>
+    	<item>2 hours</item>
+    	<item>4 hours</item>
+    	<item>8 hours</item>
+    	<item>1 day</item>
+    </string-array>
+    
+    <string-array name="updatePeriodPrefVal">
+    	<item>1800000</item>
+    	<item>3600000</item>
+    	<item>7200000</item>
+    	<item>14400000</item>
+    	<item>28800000</item>
+    	<item>86400000</item>
+    </string-array>
+
+    <string-array name="updateAmountPref">
+    	<item>All stations</item>
+    	<item>1 station</item>
+    	<item>2 stations</item>
+    	<item>4 stations</item>
+    	<item>8 stations</item>
+    </string-array>
+    
+    <string-array name="updateAmountPrefVal">
+    	<item>0</item>
+    	<item>1</item>
+    	<item>2</item>
+    	<item>4</item>
+    	<item>8</item>
+    </string-array>
+
+    <string-array name="backgroundPref">
+    	<item>Default</item>
+    	<item>Black</item>
+    	<item>Select an image</item>
+    </string-array>
+    
+    <string-array name="backgroundPrefVal">
+    	<item>default</item>
+    	<item>black</item>
+    	<item>user_image</item>
+    </string-array>
+    
+    <string name="database_sql">
+		CREATE TABLE favorites (
+			station_id	INTEGER,
+			accessCount INTEGER NOT NULL DEFAULT 0,
+			last_access INTEGER NOT NULL, /* Int codificando timestamp */
+			PRIMARY KEY(station_id)
+		);    
+	</string>
+</resources>

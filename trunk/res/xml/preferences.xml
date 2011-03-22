@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/pref_stations">
+		<ListPreference
+			android:title="@string/station_ordering"
+			android:entries="@array/orderingPref"
+			android:entryValues="@array/orderingPrefVal"
+			android:key="stationOrdering"
+			android:defaultValue="alphabetic">
+		</ListPreference>
+		<ListPreference
+			android:title="@string/default_station"
+			android:entries="@array/defaultStationPref"
+			android:entryValues="@array/defaultStationPrefVal"
+			android:key="defaultStation"
+			android:defaultValue="nearest">
+		</ListPreference>
+		<ListPreference
+			android:title="@string/fixed_station"
+			android:key="defaultStationFixed">
+		</ListPreference>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_updates">
+		<ListPreference
+			android:title="@string/update_period"
+			android:entries="@array/updatePeriodPref"
+			android:entryValues="@array/updatePeriodPrefVal"
+			android:key="updatePeriod"
+			android:defaultValue="3600000">
+		</ListPreference>
+		<ListPreference
+			android:title="@string/update_amount"
+			android:entries="@array/updateAmountPref"
+			android:entryValues="@array/updateAmountPrefVal"
+			android:key="updateAmount"
+			android:defaultValue="0">
+		</ListPreference>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_appearance">
+		<ListPreference
+			android:title="@string/pref_background"
+			android:entries="@array/backgroundPref"
+			android:entryValues="@array/backgroundPrefVal"
+			android:key="background"
+			android:defaultValue="default">
+		</ListPreference>
+	</PreferenceCategory>
+</PreferenceScreen>

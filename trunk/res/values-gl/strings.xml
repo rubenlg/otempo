@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OTempo</string>
+    <string name="preferencesActivity">Configuración</string>
+    <string name="settings">Settings</string>
+    <string name="source">Fonte</string>
+    <string name="station_ordering">Orde das estacións</string>
+    <string name="default_station">Estación inicial</string>
+    <string name="fixed_station">Estación fixa</string>
+    <string name="pref_appearance">Aparencia</string>
+    <string name="pref_background">Fondo</string>
+    <string name="pref_stations">Estacións</string>
+    <string name="select_station">Elixir estación</string>
+    <string name="internet_error">Erro accedendo a Internet</string>
+    <string name="internal_error">Erro interno</string>
+    <string name="up_to_date">Xa tes a última predicción</string>
+    <string name="loading_data">Cargando datos</string>
+    <string name="gps_unavailable">GPS non dispoñible</string>
+    <string name="gps_error2">Non se pode acceder á última situación do GPS</string>
+    <string name="my_location">A miña situación</string>
+    <string name="waiting_gps">Esperando situación</string>
+    <string name="old_location">Actualizando situación</string>
+    <string name="changelogMenu">Versións</string>
+    <string name="syncMenu">Sincronizar</string>
+    <string name="shareMenu">Compartir</string>
+    <string name="widget_name">OTempo</string>
+    <string name="morning">Mañá</string>
+    <string name="afternoon">Tarde</string>
+    <string name="evening">Noite</string>
+    <string name="sync_short">OTempo sincronizando</string>
+    <string name="sync_desc">Descargando predicións</string>
+    <string name="predicted_at">"'Predito o' EEE d 'ás' HH:mm"</string>
+    <string name="predicted_time_why">¿Por qué?</string>
+    <string name="predicted_time_explain">Neste momento, Meteogalicia só recalcula as predicións dúas veces ao día.</string>
+    <string name="pref_updates">Actualizacións automáticas</string>
+    <string name="update_period">Período actualización</string>
+    <string name="update_amount">Estacións actualizadas</string>
+    <string name="share_chooser_title">Compartir app OTempo</string>
+    <string name="share_subject">OTempo, meteoroloxía galega para Android</string>
+    
+    <string-array name="changelog_2_5">
+    	<item>Arranxado fallo na publicidade</item>
+    </string-array>
+    <string-array name="changelog_2_4">
+    	<item>Arranxado fallo na xestión de ventás</item>
+    	<item>Actualizada icona de chuvia</item>
+    </string-array>
+    <string-array name="changelog_2_3">
+    	<item>Arranxado un fallo en dispositivos Android 1.5</item>
+    	<item>Arranxado un fallo no novo diálogo de descrición</item>
+    </string-array>
+    <string-array name="changelog_2_2">
+    	<item>Agora pódense picar os días de predición a curto prazo para ver a súa descrición</item>
+    	<item>Arranxado un fallo ao usar imaxes de fondo moi grandes</item>
+    </string-array>
+    <string-array name="changelog_2_1">
+    	<item>Engadido icono de neve</item>
+    	<item>Correxidos un par de faios reportados polos usuarios</item>
+    </string-array>
+    <string-array name="changelog_2_0">
+   		<item>Pódese cambiar a imaxe de fondo. Consello: Usa imaxes verticais para que non se estiren.</item>
+   		<item>O [Por que?] Situado xunto á predición do tempo non se mostra despois de que se prema unha vez.</item>
+   		<item>Corrixido fallo no widget, que mostraba a predición do día anterior algunhas veces.</item>
+   		<item>Engadido un botón de compartir ao menú. Úsao para falarlle de OTempo aos teus amigos.</item>
+    </string-array>
+    <string-array name="changelog_1_9">
+   		<item>Botón no menú para sincronizar manualmente.</item>
+   		<item>Pódese configurar o período de sincronización automática.</item>
+   		<item>Pódese configurar o número de estacións que se actualizan periodicamente.</item>
+   		<item>Aumentado o rendemento ao procesar o RSS de meteogalicia (aforra batería).</item>
+   		<item>As preferencias mostran agora os valores por defecto mentres non se configuran.</item>
+   		<item>Resolto bug que podía colgar OTempo ao actualizar sen acceso Internet. Reportado por un usuario.</item>
+   		<item>A hora de predición xa mostra correctamente os minutos.</item>
+    </string-array>
+    <string-array name="changelog_1_8">
+   		<item>Actualizada a libraría de publicidade para reducir o tráfico de rede e o consumo de batería.</item>
+    </string-array>
+    <string-array name="changelog_1_7">
+   		<item>Engadida a hora da predición á interface.</item>
+   		<item>Engadida tradución ao galego (para dispositivos que soporten este idioma).</item>
+    </string-array>
+    <string-array name="changelog_1_6">
+   		<item>Arreglado fallo coa detección do día actual, agora vólvese mostrar na aplicación.</item>
+   		<item>Engadido parche para ignorar fluxos RSS de Meteogalicia corruptos.</item>
+    </string-array>
+    <string-array name="changelog_1_5">
+   		<item>Creado widget. Podes engadilo pulsando durante un anaco o escritorio.</item>
+   		<item>Creado un servizo que actualiza as predicións en segundo plano, se está activado na configuración global de android.</item>
+   		<item>Mentres OTempo está a actualizar predicións, aparece unha notificación.</item>
+    </string-array>
+    <string-array name="changelog_1_4">
+   		<item>Corrixido fallo interpretando o RSS de Meteogalicia.</item>
+    </string-array>
+    <string-array name="changelog_1_3">
+		<item>Non mostra os días que xa pasaron cando non hai Internet.</item>
+   		<item>Destácase o día actual</item>
+		<item>Xa non desincroniza o selector de estacións e o contido cando non hai Internet.</item>
+		<item>Moveuse a publicidade á parte de abaixo, para que resulte menos molesta.</item>
+		<item>Engadido este rexistro de versións.</item>
+		<item>Xa non falla ao usar o menú Fonte sen unha localización.</item>
+		<item>Xa non falla ao usar o menú Mércores situación sen GPS.</item>
+    </string-array>
+    <string-array name="changelog_1_2">
+   		<item>Correxido fallo en Android 1.5.</item>
+    </string-array>
+    <string-array name="changelog_1_1">
+   		<item>Soporte para Android 1.5.</item>
+    </string-array>
+    <string-array name="orderingPref">
+    	<item>Distancia á miña situación</item>
+    	<item>Estacións máis consultadas</item>
+    	<item>Orde alfabética</item>
+    </string-array>
+    <string-array name="defaultStationPref">
+    	<item>Máis próxima á miña situación</item>
+    	<item>Máis consultada</item>
+    	<item>Unha fixa</item>
+    </string-array>
+    <string-array name="updatePeriodPref">
+    	<item>30 minutos</item>
+    	<item>1 hora</item>
+    	<item>2 horas</item>
+    	<item>4 horas</item>
+    	<item>8 horas</item>
+    	<item>1 día</item>
+    </string-array>
+    <string-array name="updateAmountPref">
+    	<item>Todas</item>
+    	<item>1 estación</item>
+    	<item>2 estacións</item>
+    	<item>4 estacións</item>
+    	<item>8 estacións</item>
+    </string-array>
+
+    <string-array name="backgroundPref">
+    	<item>Por defecto</item>
+    	<item>Negro</item>
+    	<item>Elexir imaxe</item>
+    </string-array>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/root"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:padding="5dp">
+	<Spinner
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/stationSpinner"
+		android:prompt="@string/select_station">
+	</Spinner>
+	<HorizontalScrollView
+		android:id="@+id/scrollView" 
+		android:layout_width="wrap_content" 
+		android:layout_height="fill_parent"
+		android:background="@drawable/background_land">
+		<LinearLayout 
+			android:id="@+id/scrolled" 
+			android:layout_width="wrap_content" 
+			android:layout_height="fill_parent" 
+			android:orientation="horizontal">
+		</LinearLayout>
+	</HorizontalScrollView>
+</LinearLayout>
