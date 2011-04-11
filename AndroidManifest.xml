@@ -13,13 +13,6 @@
 
     	<activity android:name=".view.Preferences" android:label="@string/preferencesActivity"></activity>
     	<activity android:name=".view.ChangeLog" android:label="@string/changelogMenu"></activity>
-        <meta-data android:name="ADMOB_PUBLISHER_ID" android:value="a14c30eb9493aeb"/>
-    	<meta-data android:name="ADMOB_ALLOW_LOCATION_FOR_ADS" android:value="false"/>
-    	<activity android:name="com.admob.android.ads.AdMobActivity"
-					android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-					android:configChanges="orientation|keyboard|keyboardHidden"/>
-    	
-    	
     	<receiver android:label="@string/widget_name" android:name=".view.StationWidget">
     		<intent-filter>
         		<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
