@@ -46,7 +46,7 @@ public class StationSAXHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (localName == "dataPredicion") {
-            String format = attributes.getValue("formato").split(" ")[1];
+        	String format = attributes.getValue("formato");
             _lastPredFormat = new SimpleDateFormat(format);
         }
         _currentChars.setLength(0);

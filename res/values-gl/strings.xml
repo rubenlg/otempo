@@ -38,6 +38,9 @@
     <string name="share_chooser_title">Compartir app OTempo</string>
     <string name="share_subject">OTempo, meteoroloxía galega para Android</string>
     
+    <string-array name="changelog_2_6">
+    	<item>Sincronizado co novo formato RSS de Meteogalicia</item>
+    </string-array>
     <string-array name="changelog_2_5">
     	<item>Arranxado fallo na publicidade</item>
     </string-array>

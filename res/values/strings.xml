@@ -38,6 +38,9 @@
     <string name="share_chooser_title">Share OTempo App</string>
     <string name="share_subject">OTempo, galician weather for Android</string>
     
+    <string-array name="changelog_2_6">
+    	<item>Synced with the new Meteogalicia RSS format</item>
+    </string-array>
     <string-array name="changelog_2_5">
     	<item>Fixed a bug with advertisement</item>
     </string-array>
