@@ -243,6 +243,7 @@ public class Station {
         _knownStations.add(new Station("Lugo", 5, 43.012132,-7.555844));
         _knownStations.add(new Station("Monforte", 4, 42.518549,-7.510687));
         _knownStations.add(new Station("O Barco", 38, 42.415461,-6.981956));
+        _knownStations.add(new Station("Ortigueira", 40, 43.686337,-7.851941));
         _knownStations.add(new Station("Ourense", 8, 42.340057,-7.864653));
         _knownStations.add(new Station("Pedrafita", 30, 42.357004,-7.49027));
         _knownStations.add(new Station("Pontevedra", 11, 42.43366,-8.648051));

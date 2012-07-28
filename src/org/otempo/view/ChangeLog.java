@@ -34,6 +34,8 @@ public class ChangeLog extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Version[] versions = {
+            new Version("2.7", R.array.changelog_2_7),
+            new Version("2.6", R.array.changelog_2_6),
             new Version("2.5", R.array.changelog_2_5),
             new Version("2.4", R.array.changelog_2_4),
             new Version("2.3", R.array.changelog_2_3),
