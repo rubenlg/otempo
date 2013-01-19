@@ -16,10 +16,8 @@
     <string name="up_to_date">Ya tienes la última predicción</string>
     <string name="loading_data">Cargando datos</string>
     <string name="gps_unavailable">GPS no disponible</string>
-    <string name="gps_error2">No se puede acceder a la última ubicación del GPS</string>
     <string name="my_location">Mi ubicación</string>
     <string name="waiting_gps">Esperando ubicación</string>
-    <string name="old_location">Actualizando ubicación</string>
     <string name="changelogMenu">Versiones</string>
     <string name="syncMenu">Sincronizar</string>
     <string name="shareMenu">Compartir</string>
@@ -37,7 +35,81 @@
     <string name="update_amount">Estaciones actualizadas</string>
     <string name="share_chooser_title">Compartir app OTempo</string>
     <string name="share_subject">OTempo, meteorología gallega para Android</string>
+	<string name="shortTermDescriptionFormat" formatted="false">
+	    %s por la mañana, con viento %s y probabilidad de lluvia del %.0f%%.\n
+		%s por la tarde, con viento %s y probabilidad de lluvia del %.0f%%.\n
+		%s por la noche, con viento %s y probabilidad de lluvia del %.0f%%.
+	</string>
 
+	<!--  Sky states -->
+	<string name="sky_clear">Cielo despejado</string>
+	<string name="sky_cloud_and_clear">Nubes y claros</string>
+	<string name="sky_high_clouds">Nubes altas</string>
+	<string name="sky_mostly_cloudy">Mayormente nublado</string>
+	<string name="sky_cloudy">Cielo cubierto</string>
+	<string name="sky_dew">Llovizna</string>
+	<string name="sky_shower">Chubascos</string>
+	<string name="sky_rain">Lluvia</string>
+	<string name="sky_storm">Tormenta</string>
+	<string name="sky_fog">Niebla</string>
+	<string name="sky_fog_patches">Bancos de niebla</string>
+	<string name="sky_haze">Neblina</string>
+	<string name="sky_snow">Nieve</string>
+	<string name="sky_hail">Granizo</string>
+	<string name="sky_light_rain">Lluvia ligera</string>
+	<string name="sky_light_shower">Chubascos ligeros</string>
+	<string name="sky_light_storm">Tormenta con pocas nubes</string>
+	<string name="sky_medium_clouds">Nubes medias</string>
+	<string name="sky_shower_snow">Chubascos de nieve</string>
+	<string name="sky_sleet">Aguanieve</string>
+	<string name="sky_unknown">Estado del cielo desconocido</string>
+
+	<!--  Wind states -->
+	<string name="wind_calm">en calma</string>
+	<string name="wind_variable">variable</string>
+	<string name="wind_unknown">desconocido</string>
+	
+	<string name="wind_light_east">suave del este</string>
+	<string name="wind_light_north">suave del norte</string>
+	<string name="wind_light_northeast">suave del nordeste</string>
+	<string name="wind_light_northwest">suave del noroeste</string>
+	<string name="wind_light_south">suave del sur</string>
+	<string name="wind_light_southeast">suave del sudeste</string>
+	<string name="wind_light_southwest">suave del suroeste</string>
+	<string name="wind_light_west">suave del oeste</string>
+
+	<string name="wind_mild_east">moderado del este</string>
+	<string name="wind_mild_north">moderado del norte</string>
+	<string name="wind_mild_northeast">moderado del nordeste</string>
+	<string name="wind_mild_northwest">moderado del noroeste</string>
+	<string name="wind_mild_south">moderado del sur</string>
+	<string name="wind_mild_southeast">moderado del sudeste</string>
+	<string name="wind_mild_southwest">moderado del suroeste</string>
+	<string name="wind_mild_west">moderado del oeste</string>
+
+	<string name="wind_strong_east">fuerte del este</string>
+	<string name="wind_strong_north">fuerte del norte</string>
+	<string name="wind_strong_northeast">fuerte del nordeste</string>
+	<string name="wind_strong_northwest">fuerte del noroeste</string>
+	<string name="wind_strong_south">fuerte del sur</string>
+	<string name="wind_strong_southeast">fuerte del sudeste</string>
+	<string name="wind_strong_southwest">fuerte del suroeste</string>
+	<string name="wind_strong_west">fuerte del oeste</string>
+	
+	<string name="wind_very_strong_east">muy fuerte del este</string>
+	<string name="wind_very_strong_north">muy fuerte del norte</string>
+	<string name="wind_very_strong_northeast">muy fuerte del nordeste</string>
+	<string name="wind_very_strong_northwest">muy fuerte del noroeste</string>
+	<string name="wind_very_strong_south">muy fuerte del sur</string>
+	<string name="wind_very_strong_southeast">muy fuerte del sudeste</string>
+	<string name="wind_very_strong_southwest">muy fuerte del suroeste</string>
+	<string name="wind_very_strong_west">muy fuerte del oeste</string>
+	
+    <string-array name="changelog_2_8">
+    	<item>Migradas las predicciones a corto plazo al nuevo formato de Meteogalicia.</item>
+		<item>Añadidos nuevos iconos climáticos</item>
+		<item>Las predicciones a medio plazo están desactivadas hasta que se adapten al nuevo formato de datos.</item>
+    </string-array>
     <string-array name="changelog_2_7">
     	<item>Añadida la estación de Ortigueira. Gracias a Manel Villar por la contribución.</item>
     </string-array>
