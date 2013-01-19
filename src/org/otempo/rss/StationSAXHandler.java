@@ -70,23 +70,39 @@ public class StationSAXHandler extends DefaultHandler {
         }
         if (localName == null) return;
         try {
-            if (localName.equals("TMax")) {
+            if (localName.equals("tMax")) {
                 getCurrentShortPrediction().setMaxTemp(Integer.valueOf(_currentChars.toString()));
-            } else if (localName.equals("TMin")) {
+            } else if (localName.equals("tMin")) {
                 getCurrentShortPrediction().setMinTemp(Integer.valueOf(_currentChars.toString()));
+
             } else if (localName.equals("ceoM")) {
                 getCurrentShortPrediction().setSkyStateMorning(parseSkyState(_currentChars.toString()));
             } else if (localName.equals("ceoT")) {
                 getCurrentShortPrediction().setSkyStateAfternoon(parseSkyState(_currentChars.toString()));
             } else if (localName.equals("ceoN")) {
                 getCurrentShortPrediction().setSkyStateNight(parseSkyState(_currentChars.toString()));
+
+            } else if (localName.equals("ventoM")) {
+                getCurrentShortPrediction().setWindStateMorning(parseWindState(_currentChars.toString()));
+            } else if (localName.equals("ventoT")) {
+                getCurrentShortPrediction().setWindStateAfternoon(parseWindState(_currentChars.toString()));
+            } else if (localName.equals("ventoN")) {
+                getCurrentShortPrediction().setWindStateNight(parseWindState(_currentChars.toString()));
+
+            } else if (localName.equals("pChoivaM")) {
+                getCurrentShortPrediction().setRainProbabilityMorning(Float.valueOf(_currentChars.toString()));
+            } else if (localName.equals("pChoivaT")) {
+                getCurrentShortPrediction().setRainProbabilityAfternoon(Float.valueOf(_currentChars.toString()));
+            } else if (localName.equals("pChoivaN")) {
+                getCurrentShortPrediction().setRainProbabilityNight(Float.valueOf(_currentChars.toString()));
+
             } else if (localName.equals("dataCreacion")
-                       && uri.equals("Localidades")) {
+                       && uri.equals("Concellos")) {
                 getCurrentShortPrediction().setCreationDate(parseDate(_currentChars.toString(), _creationDateformat));
             } else if (localName.equals("dataPredicion")
-                       && uri.equals("Localidades")) {
+                       && uri.equals("Concellos")) {
                 getCurrentShortPrediction().setDate(parseDate(_currentChars.toString(), _lastPredFormat));
-            } else if (localName.equals("dataCreacion")
+            /*} else if (localName.equals("dataCreacion")
                        && uri.equals("LocMP")) {
                 getCurrentMediumPrediction().setCreationDate(parseDate(_currentChars.toString(), _creationDateformat));
             } else if (localName.equals("dataPredicion")
@@ -96,7 +112,7 @@ public class StationSAXHandler extends DefaultHandler {
             } else if (localName.equals("estadoCeo")) {
                 getCurrentMediumPrediction().setSkyState(parseSkyState(_currentChars.toString()));
             } else if (localName.equals("comentario") && uri.equals("Localidades")) {
-                getCurrentShortPrediction().setComment(_currentChars.toString());
+                getCurrentShortPrediction().setComment(_currentChars.toString());*/
             }
         } catch (NumberFormatException e) {
             Log.w("OTempo", "NumberFormatException parsing["+_currentChars+"]");
@@ -105,7 +121,23 @@ public class StationSAXHandler extends DefaultHandler {
 
 
 
-    @Override
+    private StationPrediction.WindState parseWindState(String stateString) {
+    	try {
+    		int state = Integer.valueOf(stateString);
+        	// Lo convertimos a algo indexable (0..N)
+        	state -= 299;
+        	if (state < 0 || state >= StationPrediction.WindState.values().length) {
+        		Log.w("OTempo", "Unable to parse wind " + stateString);
+                return null; 
+        	}
+        	return StationPrediction.WindState.values()[state];
+    	} catch (NumberFormatException e) {
+            Log.w("OTempo", "NumberFormatException parsing wind state: ["+stateString+"]");
+            return null;
+        }
+	}
+
+	@Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         _currentChars.append(ch, start, length);
     }
@@ -129,35 +161,51 @@ public class StationSAXHandler extends DefaultHandler {
 
     /**
      * Permite parsear un estado del cielo
-     * @param state Estado del cielo como texto
+     * @param stateString Estado del cielo como texto
      * @return Devuelve el enumerado correspondiente
      * @TODO Se puede optimizar un poco mediante un HashMap, aunque hay otras optimizaciones más relevantes
+     * @TODO(ryu): Añadir nuevos iconos de meteogalicia
      */
-    protected StationPrediction.SkyState parseSkyState(String state) {
-        if (state.startsWith("despexado")) {
-            return StationPrediction.SkyState.CLEAR;
-        } else if (state.startsWith("nubes_altas")) {
-            return StationPrediction.SkyState.HIGH_CLOUDS;
-        } else if (state.startsWith("nubes_e_craros")) {
-            return StationPrediction.SkyState.CLOUD_AND_CLEAR;
-        } else if (state.startsWith("case_cuberto")) {
-            return StationPrediction.SkyState.MOSTLY_CLOUD;
-        } else if (state.startsWith("nuboso")) {
-            return StationPrediction.SkyState.CLOUDY;
-        } else if (state.startsWith("chubasco")) {
-            return StationPrediction.SkyState.CHUBASCO;
-        } else if (state.startsWith("chuvia")) {
-            return StationPrediction.SkyState.RAIN;
-        } else if (state.startsWith("treboada")) {
-            return StationPrediction.SkyState.STORM;
-        } else if (state.startsWith("neve")) {
-            return StationPrediction.SkyState.SNOW;
-        } else if (state.startsWith("orballo")) {
-            return StationPrediction.SkyState.DEW;
-        } else if (state.startsWith("neboas")) {
-            return StationPrediction.SkyState.FOG;
-        } else {
-            Log.w("OTempo", "Unable to parse "+state);
+    protected StationPrediction.SkyState parseSkyState(String stateString) {
+    	StationPrediction.SkyState[] knownStates = {
+    			/*101*/StationPrediction.SkyState.CLEAR,
+    			/*102*/StationPrediction.SkyState.HIGH_CLOUDS,
+    			/*103*/StationPrediction.SkyState.CLOUD_AND_CLEAR,
+    			/*104*/StationPrediction.SkyState.MOSTLY_CLOUDY,
+    			/*105*/StationPrediction.SkyState.CLOUDY,
+    			/*106*/StationPrediction.SkyState.FOG,
+    			/*107*/StationPrediction.SkyState.SHOWER,
+    			/*108*/StationPrediction.SkyState.SHOWER,
+    			/*109*/StationPrediction.SkyState.SHOWER_SNOW,
+    			/*100*/StationPrediction.SkyState.DEW,
+    			/*111*/StationPrediction.SkyState.RAIN,
+    			/*112*/StationPrediction.SkyState.SNOW,
+    			/*113*/StationPrediction.SkyState.STORM,
+    			/*114*/StationPrediction.SkyState.HAZE,
+    			/*115*/StationPrediction.SkyState.FOG_PATCHES,
+    			/*116*/StationPrediction.SkyState.MEDIUM_CLOUDS,
+    			/*117*/StationPrediction.SkyState.LIGHT_RAIN,
+    			/*118*/StationPrediction.SkyState.LIGHT_SHOWER,
+    			/*119*/StationPrediction.SkyState.LIGHT_STORM,
+    			/*120*/StationPrediction.SkyState.SLEET,
+    			/*121*/StationPrediction.SkyState.HAIL
+    	};
+    	try {
+    		int state = Integer.valueOf(stateString);
+        	if (state > 200) {
+        		// No distinguimos entre estado diurno y nocturno a estas alturas, 
+        		// eso se hace automáticamente más tarde.
+        		state -= 100;
+        	}
+        	// Lo convertimos a algo indexable (0..N)
+        	state -= 101;
+        	if (state < 0 || state >= knownStates.length) {
+        		Log.w("OTempo", "Unable to parse sky " + stateString);
+                return null; 
+        	}
+        	return knownStates[state];
+    	} catch (NumberFormatException e) {
+            Log.w("OTempo", "NumberFormatException parsing sky state: ["+stateString+"]");
             return null;
         }
     }

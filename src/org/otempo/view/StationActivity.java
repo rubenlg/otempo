@@ -89,7 +89,6 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         super.onCreate(savedInstanceState);
         System.gc();
         lastUpdateFormat = new SimpleDateFormat(getString(R.string.predicted_at));
-        //Log.d("OTempo", "ONCREATE");
         _serviceConnection  = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName arg0, IBinder binder) {
@@ -104,7 +103,6 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
             }
             @Override
             public void onServiceDisconnected(ComponentName arg0) {
-                //Log.d("OTempo", "onDisconnected");
                 _binder = null;
             }
         };
@@ -151,7 +149,6 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     protected void onResume() {
         super.onResume();
         if (_binder != null) {
-            //Log.d("OTempo", "onResume adding listener");
             _binder.addListener(this);
         }
     }
@@ -161,7 +158,6 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         super.onPause();
 
         if (_binder != null) {
-            //Log.d("OTempo", "onPause removing listener");
             _binder.removeListener(this);
         }
     }
@@ -169,7 +165,6 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //Log.d("OTempo", "Freeing service!");
         unbindService(_serviceConnection);
         PreferenceManager.getDefaultSharedPreferences(getBaseContext()).unregisterOnSharedPreferenceChangeListener(this);
     }
@@ -344,14 +339,14 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         }
         default:
             if (id >= DIALOG_DAY_COMMENT_MASK) {
-                int day = id - DIALOG_DAY_COMMENT_MASK;
                 Station station = _stationManager.getStation();
                 if (station != null) {
+                    int day = id - DIALOG_DAY_COMMENT_MASK - station.getId() * MAX_PREDICTED_DAYS;
                     StationPrediction genericPrediction = station.getPredictions().get(day);
                     if (genericPrediction instanceof StationShortTermPrediction) {
                         StationShortTermPrediction prediction = (StationShortTermPrediction)genericPrediction;
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setMessage(DateUtils.weekDayFormat.format(prediction.getDate().getTime()) + ":\n" + prediction.getComment())
+                        builder.setMessage(DateUtils.weekDayFormat.format(prediction.getDate().getTime()) + ":\n" + prediction.createDescription())
                         .setCancelable(false)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
@@ -397,6 +392,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
             // Si no hay estación elegida, nada más que hacer...
             return;
         }
+        final int currentStationId = currentStation.getId();
         if (currentStation.getPredictions().size() > 0) {
             if (predictedGroup != null) { // en landscape no hay
                 final TextView predictionTime = (TextView) findViewById(R.id.predictionTime);
@@ -413,7 +409,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                     day.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View arg0) {
-                            showDialog(DIALOG_DAY_COMMENT_MASK + index);
+                            showDialog(DIALOG_DAY_COMMENT_MASK + index + currentStationId * MAX_PREDICTED_DAYS);
                         }
                     });
                     day.setOrientation(LinearLayout.VERTICAL);
@@ -642,7 +638,8 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     final static int DIALOG_PREDICTION_EXPLAIN_ID = 1;
     final static int DIALOG_DAY_COMMENT_MASK = 1024; // por encima de 1024, el diálogo es el comentario de un día
     final static int AGE_THRESHOLD = 1200; // 20 minutos para marcar como vieja la última localización conocida
-
+    final static int MAX_PREDICTED_DAYS = 20; // Cualquier número mayor a la cantidad de días que mostramos estará bien, preferiblemente no muy grande.
+    
     // Lo tenemos aquí y no en dateutils porque necesita los strings para estar traducido
     public static SimpleDateFormat lastUpdateFormat = null;
 

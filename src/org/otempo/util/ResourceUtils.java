@@ -46,13 +46,13 @@ public class ResourceUtils {
                 return R.drawable.cloud_clear;
             case HIGH_CLOUDS:
                 return R.drawable.high_clouds;
-            case MOSTLY_CLOUD:
+            case MOSTLY_CLOUDY:
                 return R.drawable.mostly_cloud;
             case CLOUDY:
                 return R.drawable.cloudy;
             case DEW:
                 return R.drawable.orballo;
-            case CHUBASCO:
+            case SHOWER:
                 return R.drawable.chubasco;
             case RAIN:
                 return R.drawable.rain;
@@ -60,8 +60,26 @@ public class ResourceUtils {
                 return R.drawable.storm;
             case FOG:
                 return R.drawable.fog;
+            case FOG_PATCHES:
+                return R.drawable.fog_patches;
+            case HAZE:
+                return R.drawable.haze;
             case SNOW:
                 return R.drawable.snow;
+            case HAIL:
+            	return R.drawable.hail;
+            case LIGHT_RAIN:
+            	return R.drawable.light_rain;
+            case LIGHT_SHOWER:
+            	return R.drawable.light_shower;
+            case LIGHT_STORM:
+            	return R.drawable.light_storm;
+            case MEDIUM_CLOUDS:
+            	return R.drawable.medium_clouds;
+            case SHOWER_SNOW:
+            	return R.drawable.shower_snow;
+            case SLEET:
+            	return R.drawable.sleet;
             default:
                 return R.drawable.clear;
             }
@@ -73,13 +91,13 @@ public class ResourceUtils {
                 return R.drawable.cloud_clear_night;
             case HIGH_CLOUDS:
                 return R.drawable.high_clouds_night;
-            case MOSTLY_CLOUD:
+            case MOSTLY_CLOUDY:
                 return R.drawable.mostly_cloud_night;
             case CLOUDY:
                 return R.drawable.cloudy;
             case DEW:
                 return R.drawable.orballo;
-            case CHUBASCO:
+            case SHOWER:
                 return R.drawable.chubasco_night;
             case RAIN:
                 return R.drawable.rain;
@@ -87,8 +105,26 @@ public class ResourceUtils {
                 return R.drawable.storm;
             case FOG:
                 return R.drawable.fog;
+            case FOG_PATCHES:
+                return R.drawable.fog_patches_night;
+            case HAZE:
+                return R.drawable.haze_night;
             case SNOW:
                 return R.drawable.snow;
+            case HAIL:
+            	return R.drawable.hail;
+            case LIGHT_RAIN:
+            	return R.drawable.light_rain;
+            case LIGHT_SHOWER:
+            	return R.drawable.light_shower_night;
+            case LIGHT_STORM:
+            	return R.drawable.light_storm_night;
+            case MEDIUM_CLOUDS:
+            	return R.drawable.medium_clouds;
+            case SHOWER_SNOW:
+            	return 0;
+            case SLEET:
+            	return R.drawable.shower_snow_night;
             default:
                 return R.drawable.clear_night;
             }

@@ -43,4 +43,10 @@ public class StationMediumTermPrediction extends StationPrediction {
     }
 
     private SkyState _skyState = null; ///< El estado predicho del cielo
+
+	@Override
+	public String createDescription() {
+		// TODO(ryu): Implementar descripción a medio plazo
+		return "No description";
+	}
 }

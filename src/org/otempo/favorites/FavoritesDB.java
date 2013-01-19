@@ -64,6 +64,16 @@ public class FavoritesDB extends SQLiteOpenHelper {
         db.replace(FAVORITES_TABLE_NAME, "last_access", values);
     }
 
+    /**
+     * Borra un favorito que use un ID antiguo, para dejar sitio a los nuevos IDs.
+     * TODO(ryu): Borrar después de un par de versiones.  
+     * @param legacyId El id a borrar.
+     */
+    private void deleteLegacyFavorite(int legacyId) {
+        SQLiteDatabase db = getWritableDatabase();
+    	db.delete(FAVORITES_TABLE_NAME, "station_id = ?", new String[]{ String.valueOf(legacyId) });
+    }
+    
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(_createSQL);
@@ -89,6 +99,10 @@ public class FavoritesDB extends SQLiteOpenHelper {
                 Station station = Station.getById(id);
                 station.setLastAccess(lastAccess);
                 station.setAccessCount(accessCount);
+                // TODO(ryu): Borrar después de un par de versiones.
+                if (Station.isLegacyId(id)) {
+                	deleteLegacyFavorite(id);
+                }
             } while (cursor.moveToNext());
         }
     }
