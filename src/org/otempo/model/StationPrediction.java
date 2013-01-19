@@ -23,6 +23,8 @@ import java.util.Calendar;
 import org.otempo.R;
 import org.otempo.util.DateUtils;
 
+import android.content.Context;
+
 /**
  * Predicción de una estación. Es una clase abstracta porque tenemos dos tipos de predicciones (corto/medio plazo) implementadas por subclases.
  */
@@ -64,96 +66,77 @@ public abstract class StationPrediction {
         return DateUtils.getDifference(_creationDate, Calendar.getInstance());
     }
 
-	public String skyStateDescription(SkyState state) {
+	protected int skyStateDescriptionResId(SkyState state) {
         switch(state) {
-        case CLEAR:
-            return "Cielo despejado";
-        case CLOUD_AND_CLEAR:
-            return "Nubes y claros";
-        case HIGH_CLOUDS:
-            return "Nubes altas";
-        case MOSTLY_CLOUDY:
-            return "Mayormente nublado";
-        case CLOUDY:
-            return "Cielo cubierto";
-        case DEW:
-            return "Llovizna";
-        case SHOWER:
-            return "Chubascos";
-        case RAIN:
-            return "Lluvia";
-        case STORM:
-            return "Tormenta";
-        case FOG:
-            return "Niebla";
-        case FOG_PATCHES:
-            return "Bancos de niebla";
-        case HAZE:
-            return "Neblina";
-        case SNOW:
-            return "Nieve";
-        case HAIL:
-        	return "Granizo";
-        case LIGHT_RAIN:
-        	return "Lluvia ligera";
-        case LIGHT_SHOWER:
-        	return "Chubascos ligeros";
-        case LIGHT_STORM:
-        	return "Tormenta con pocas nubes";
-        case MEDIUM_CLOUDS:
-        	return "Nubes medias";
-        case SHOWER_SNOW:
-        	return "Chubascos de nieve";
-        case SLEET:
-        	return "Aguanieve";
-        default:
-            return "Estado del cielo desconocido";
+        case CLEAR: return R.string.sky_clear;
+        case CLOUD_AND_CLEAR: return R.string.sky_cloud_and_clear;
+        case HIGH_CLOUDS: return R.string.sky_high_clouds;
+        case MOSTLY_CLOUDY: return R.string.sky_mostly_cloudy;
+        case CLOUDY: return R.string.sky_cloudy;
+        case DEW: return R.string.sky_dew;
+        case SHOWER: return R.string.sky_shower;
+        case RAIN: return R.string.sky_rain;
+        case STORM: return R.string.sky_storm;
+        case FOG: return R.string.sky_fog;
+        case FOG_PATCHES: return R.string.sky_fog_patches;
+        case HAZE: return R.string.sky_haze;
+        case SNOW: return R.string.sky_snow;
+        case HAIL: return R.string.sky_hail;
+        case LIGHT_RAIN: return R.string.sky_light_rain;
+        case LIGHT_SHOWER: return R.string.sky_light_shower;
+        case LIGHT_STORM: return R.string.sky_light_storm;
+        case MEDIUM_CLOUDS: return R.string.sky_medium_clouds;
+        case SHOWER_SNOW: return R.string.sky_shower_snow;
+        case SLEET: return R.string.sky_sleet;
+        default: return R.string.sky_unknown;
         }
 	}
 	
-	public String windStateDescription(WindState state) {
+	public int windStateDescriptionResId(WindState state) {
 		switch (state) {
-		case VARIABLE: return "variable";
-		case CALM: return "en calma";
-		case LIGHT_EAST: return "suave del este";
+		case VARIABLE: return R.string.wind_variable;
+		case CALM: return R.string.wind_calm;
 
-		case LIGHT_NORTH: return "suave del norte";
-		case LIGHT_NORTHEAST: return "suave del nordeste";
-		case LIGHT_NORTHWEST: return "suave del noroeste";
-		case LIGHT_SOUTH: return "suave del sur";
-		case LIGHT_SOUTHEAST: return "suave del sudeste";
-		case LIGHT_SOUTHWEST: return "suave del suroeste";
-		case LIGHT_WEST: return "suave del oeste";
+		case LIGHT_EAST: return R.string.wind_light_east;
+		case LIGHT_NORTH: return R.string.wind_light_north;
+		case LIGHT_NORTHEAST: return R.string.wind_light_northeast;
+		case LIGHT_NORTHWEST: return R.string.wind_light_northwest;
+		case LIGHT_SOUTH: return R.string.wind_light_south;
+		case LIGHT_SOUTHEAST: return R.string.wind_light_southeast;
+		case LIGHT_SOUTHWEST: return R.string.wind_light_southwest;
+		case LIGHT_WEST: return R.string.wind_light_west;
 
-		case MILD_NORTH: return "moderado del norte";
-		case MILD_NORTHEAST: return "moderado del nordeste";
-		case MILD_NORTHWEST: return "moderado del noroeste";
-		case MILD_SOUTH: return "moderado del sur";
-		case MILD_SOUTHEAST: return "moderado del sudeste";
-		case MILD_SOUTHWEST: return "moderado del suroeste";
-		case MILD_WEST: return "moderado del oeste";
+		case MILD_EAST: return R.string.wind_mild_east;
+		case MILD_NORTH: return R.string.wind_mild_north;
+		case MILD_NORTHEAST: return R.string.wind_mild_northeast;
+		case MILD_NORTHWEST: return R.string.wind_mild_northwest;
+		case MILD_SOUTH: return R.string.wind_mild_south;
+		case MILD_SOUTHEAST: return R.string.wind_mild_southeast;
+		case MILD_SOUTHWEST: return R.string.wind_mild_southwest;
+		case MILD_WEST: return R.string.wind_mild_west;
 
-		case STRONG_NORTH: return "fuerte del norte";
-		case STRONG_NORTHEAST: return "fuerte del nordeste";
-		case STRONG_NORTHWEST: return "fuerte del noroeste";
-		case STRONG_SOUTH: return "fuerte del sur";
-		case STRONG_SOUTHEAST: return "fuerte del sudeste";
-		case STRONG_SOUTHWEST: return "fuerte del suroeste";
-		case STRONG_WEST: return "fuerte del oeste";
+		case STRONG_EAST: return R.string.wind_strong_east;
+		case STRONG_NORTH: return R.string.wind_strong_north;
+		case STRONG_NORTHEAST: return R.string.wind_strong_northeast;
+		case STRONG_NORTHWEST: return R.string.wind_strong_northwest;
+		case STRONG_SOUTH: return R.string.wind_strong_south;
+		case STRONG_SOUTHEAST: return R.string.wind_strong_southeast;
+		case STRONG_SOUTHWEST: return R.string.wind_strong_southwest;
+		case STRONG_WEST: return R.string.wind_strong_west;
 
-		case VERY_STRONG_NORTH: return "muy fuerte del norte";
-		case VERY_STRONG_NORTHEAST: return "muy fuerte del nordeste";
-		case VERY_STRONG_NORTHWEST: return "muy fuerte del noroeste";
-		case VERY_STRONG_SOUTH: return "muy fuerte del sur";
-		case VERY_STRONG_SOUTHEAST: return "muy fuerte del sudeste";
-		case VERY_STRONG_SOUTHWEST: return "muy fuerte del suroeste";
-		case VERY_STRONG_WEST: return "muy fuerte del oeste";
-		default: return "desconocido";
+		case VERY_STRONG_EAST: return R.string.wind_very_strong_east;
+		case VERY_STRONG_NORTH: return R.string.wind_very_strong_north;
+		case VERY_STRONG_NORTHEAST: return R.string.wind_very_strong_northeast;
+		case VERY_STRONG_NORTHWEST: return R.string.wind_very_strong_northwest;
+		case VERY_STRONG_SOUTH: return R.string.wind_very_strong_south;
+		case VERY_STRONG_SOUTHEAST: return R.string.wind_very_strong_southeast;
+		case VERY_STRONG_SOUTHWEST: return R.string.wind_very_strong_southwest;
+		case VERY_STRONG_WEST: return R.string.wind_very_strong_west;
+		default: return R.string.wind_unknown;
 		}
 	}
     
-	public abstract String createDescription();
-	
+	public abstract String createDescription(Context ctx);
     /**
      * Patrón visitante
      * @param visitor Visitante de predicciones

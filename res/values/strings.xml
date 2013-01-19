@@ -16,10 +16,8 @@
     <string name="up_to_date">You already have the last prediction</string>
     <string name="loading_data">Loading data</string>
     <string name="gps_unavailable">GPS not available</string>
-    <string name="gps_error2">Can not access last GPS location</string>
     <string name="my_location">My location</string>
     <string name="waiting_gps">Waiting location</string>
-    <string name="old_location">Updating location</string>
     <string name="changelogMenu">Versions</string>
     <string name="syncMenu">Sync now</string>
     <string name="shareMenu">Share</string>
@@ -37,7 +35,82 @@
     <string name="update_amount">Station count</string>
     <string name="share_chooser_title">Share OTempo App</string>
     <string name="share_subject">OTempo, galician weather for Android</string>
-    
+	<string name="shortTermDescriptionFormat" formatted="false">
+	    %s in the morning, with %s wind and rain probability of %.0f%%.\n
+		%s in the afternoon, with %s wind and rain probability of %.0f%%.\n
+		%s in the night, with %s wind and rain probability of %.0f%%.
+	</string>
+   
+	<!--  Sky states -->
+	<string name="sky_clear">Clear</string>
+	<string name="sky_cloud_and_clear">Clouds and clears</string>
+	<string name="sky_high_clouds">High clouds</string>
+	<string name="sky_mostly_cloudy">Mostly cloudy</string>
+	<string name="sky_cloudy">Cloudy</string>
+	<string name="sky_dew">Dew</string>
+	<string name="sky_shower">Showers</string>
+	<string name="sky_rain">Rain</string>
+	<string name="sky_storm">Storm</string>
+	<string name="sky_fog">Fog</string>
+	<string name="sky_fog_patches">Fog patches</string>
+	<string name="sky_haze">Haze</string>
+	<string name="sky_snow">Snow</string>
+	<string name="sky_hail">Hail</string>
+	<string name="sky_light_rain">Light rain</string>
+	<string name="sky_light_shower">Light showers</string>
+	<string name="sky_light_storm">Light storm</string>
+	<string name="sky_medium_clouds">Medium clouds</string>
+	<string name="sky_shower_snow">Snow showers</string>
+	<string name="sky_sleet">Sleet</string>
+	<string name="sky_unknown">Unknown sky state</string>
+
+	
+	<!--  Wind states -->
+	<string name="wind_calm">calm</string>
+	<string name="wind_variable">variable</string>
+	<string name="wind_unknown">unknown</string>
+	
+	<string name="wind_light_east">light east</string>
+	<string name="wind_light_north">light north</string>
+	<string name="wind_light_northeast">light northeast</string>
+	<string name="wind_light_northwest">light northwest</string>
+	<string name="wind_light_south">light south</string>
+	<string name="wind_light_southeast">light southeast</string>
+	<string name="wind_light_southwest">light southwest</string>
+	<string name="wind_light_west">light west</string>
+
+	<string name="wind_mild_east">mild east</string>
+	<string name="wind_mild_north">mild north</string>
+	<string name="wind_mild_northeast">mild northeast</string>
+	<string name="wind_mild_northwest">mild northwest</string>
+	<string name="wind_mild_south">mild south</string>
+	<string name="wind_mild_southeast">mild southeast</string>
+	<string name="wind_mild_southwest">mild southwest</string>
+	<string name="wind_mild_west">mild west</string>
+
+	<string name="wind_strong_east">strong east</string>
+	<string name="wind_strong_north">strong north</string>
+	<string name="wind_strong_northeast">strong northeast</string>
+	<string name="wind_strong_northwest">strong northwest</string>
+	<string name="wind_strong_south">strong south</string>
+	<string name="wind_strong_southeast">strong southeast</string>
+	<string name="wind_strong_southwest">strong southwest</string>
+	<string name="wind_strong_west">strong west</string>
+	
+	<string name="wind_very_strong_east">very strong east</string>
+	<string name="wind_very_strong_north">very strong north</string>
+	<string name="wind_very_strong_northeast">very strong northeast</string>
+	<string name="wind_very_strong_northwest">very strong northwest</string>
+	<string name="wind_very_strong_south">very strong south</string>
+	<string name="wind_very_strong_southeast">very strong southeast</string>
+	<string name="wind_very_strong_southwest">very strong southwest</string>
+	<string name="wind_very_strong_west">very strong west</string>	
+	
+    <string-array name="changelog_2_8">
+    	<item>Migrated short-term predictions to the new Meteogalicia data format.</item>
+		<item>Added new weather icons.</item>
+		<item>Medium-term predictions disabled temporarily until they are adapted to the new data format.</item>
+    </string-array>
     <string-array name="changelog_2_7">
     	<item>Added Ortigueira station. Thanks to Manel Villar for the patch.</item>
     </string-array>

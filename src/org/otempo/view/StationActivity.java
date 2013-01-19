@@ -346,7 +346,8 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                     if (genericPrediction instanceof StationShortTermPrediction) {
                         StationShortTermPrediction prediction = (StationShortTermPrediction)genericPrediction;
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setMessage(DateUtils.weekDayFormat.format(prediction.getDate().getTime()) + ":\n" + prediction.createDescription())
+                        builder.setMessage(DateUtils.weekDayFormat.format(prediction.getDate().getTime()) + ":\n"
+                        			+ prediction.createDescription(this))
                         .setCancelable(false)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override

@@ -18,6 +18,8 @@
  */
 package org.otempo.model;
 
+import android.content.Context;
+
 /**
  * Predicción a medio plazo de una estación. Dispone de menos información que una predicción a corto plazo.
  */
@@ -45,7 +47,7 @@ public class StationMediumTermPrediction extends StationPrediction {
     private SkyState _skyState = null; ///< El estado predicho del cielo
 
 	@Override
-	public String createDescription() {
+	public String createDescription(Context ctx) {
 		// TODO(ryu): Implementar descripción a medio plazo
 		return "No description";
 	}

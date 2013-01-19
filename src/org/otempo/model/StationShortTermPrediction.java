@@ -18,7 +18,10 @@
  */
 package org.otempo.model;
 
-import java.util.Formatter;
+import org.otempo.R;
+
+import android.content.Context;
+
 
 
 /**
@@ -94,19 +97,18 @@ public class StationShortTermPrediction extends StationPrediction {
 		_rainProbabilityNight = rainProbabilityNight;
 	}
 	
-	public String createDescription() {
+	@Override
+	public String createDescription(Context ctx) {
 		return String.format(
-				"%s por la mañana, con viento %s y probabilidad de lluvia del %.0f%%.\n"+
-				"%s por la tarde, con viento %s y probabilidad de lluvia del %.0f%%.\n" +
-				"%s por la noche, con viento %s y probabilidad de lluvia del %.0f%%.",
-				skyStateDescription(_skyStateMorning),
-				windStateDescription(_windStateMorning),
+				ctx.getString(R.string.shortTermDescriptionFormat), 
+				ctx.getString(skyStateDescriptionResId(_skyStateMorning)),
+				ctx.getString(windStateDescriptionResId(_windStateMorning)),
 				_rainProbabilityMorning,
-				skyStateDescription(_skyStateAfternoon),
-				windStateDescription(_windStateAfternoon),
+				ctx.getString(skyStateDescriptionResId(_skyStateAfternoon)),
+				ctx.getString(windStateDescriptionResId(_windStateAfternoon)),
 				_rainProbabilityAfternoon,
-				skyStateDescription(_skyStateNight),
-				windStateDescription(_windStateNight),
+				ctx.getString(skyStateDescriptionResId(_skyStateNight)),
+				ctx.getString(windStateDescriptionResId(_windStateNight)),
 				_rainProbabilityNight);
 	}
 	
