@@ -25,6 +25,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import android.util.SparseArray;
+
 /**
  * Clase que encapsula una estación meteorológica de meteogalicia
  */
@@ -206,6 +208,10 @@ public class Station {
      * @return La estación que corresponde con el ID, o null si ninguna corresponde
      */
     public static Station getById(int stationId) {
+    	// Reescribe IDs antiguos. TODO(ryu): Eliminar tras un par de versiones.
+    	if (isLegacyId(stationId)) {
+    		stationId = _legacyIdMap.get(stationId);
+    	}
         for (Station station: _knownStations) {
             if (station.getId() == stationId) {
                 return station;
@@ -222,7 +228,17 @@ public class Station {
         Collections.sort(_knownStations, comparator);
     }
 
-
+    /**
+     * Comprueba si un identificador es uno de los antiguos identificadores de localidades.
+     * Para poder migrar bases de datos ya existentes.
+     * TODO(ryu): Eliminar tras un par de versiones.
+     * @param id Identificador a comprobar.
+     * @return True si es legacy
+     */
+    public static boolean isLegacyId(int id) {
+    	return _legacyIdMap.get(id) != null;
+    }
+    
     private String _name;
     private int _id;
     private double _latitude;
@@ -234,24 +250,50 @@ public class Station {
     private Calendar _lastCreationDate = null;
 
     private static List<Station> _knownStations = new ArrayList<Station>();
+    
+    // Mapa de identificador viejo a identificador nuevo para las antiguas localidades de Meteogalicia
+    // TODO(ryu): Eliminar después de un par de versiones
+    private static SparseArray<Integer> _legacyIdMap = new SparseArray<Integer>();
+    
     static {
-        _knownStations.add(new Station("A Coruña", 14, 43.370971, -8.395824));
-        _knownStations.add(new Station("Cuntis", 39, 42.632656, -8.563430));
-        _knownStations.add(new Station("Ferrol", 1, 43.488436, -8.222513));
-        _knownStations.add(new Station("Fisterra", 2, 42.905119, -9.264347));
-        _knownStations.add(new Station("Lalín", 10, 42.661421, -8.110960));
-        _knownStations.add(new Station("Lugo", 5, 43.012132,-7.555844));
-        _knownStations.add(new Station("Monforte", 4, 42.518549,-7.510687));
-        _knownStations.add(new Station("O Barco", 38, 42.415461,-6.981956));
-        _knownStations.add(new Station("Ortigueira", 40, 43.686337,-7.851941));
-        _knownStations.add(new Station("Ourense", 8, 42.340057,-7.864653));
-        _knownStations.add(new Station("Pedrafita", 30, 42.357004,-7.49027));
-        _knownStations.add(new Station("Pontevedra", 11, 42.43366,-8.648051));
-        _knownStations.add(new Station("Ribadeo", 6, 43.537396,-7.04303));
-        _knownStations.add(new Station("Santiago", 3, 42.877929,-8.557962));
-        _knownStations.add(new Station("Verín", 9, 41.940489,-7.439134));
-        _knownStations.add(new Station("Vigo", 12, 42.231397,-8.712445));
-        _knownStations.add(new Station("Vilagarcía", 13, 42.593922,-8.765969));
-        _knownStations.add(new Station("Viveiro", 7, 43.66148,-7.594527));
+        _knownStations.add(new Station("A Coruña", 15030, 43.370971, -8.395824));
+        _knownStations.add(new Station("Cuntis", 36015, 42.632656, -8.563430));
+        _knownStations.add(new Station("Ferrol", 15036, 43.488436, -8.222513));
+        _knownStations.add(new Station("Fisterra", 15037, 42.905119, -9.264347));
+        _knownStations.add(new Station("Lalín", 36024, 42.661421, -8.110960));
+        _knownStations.add(new Station("Lugo", 27028, 43.012132,-7.555844));
+        _knownStations.add(new Station("Monforte", 27031, 42.518549,-7.510687));
+        _knownStations.add(new Station("O Barco", 32009, 42.415461,-6.981956));
+        _knownStations.add(new Station("Ortigueira", 15061, 43.686337,-7.851941));
+        _knownStations.add(new Station("Ourense", 32054, 42.340057,-7.864653));
+        _knownStations.add(new Station("Pedrafita", 27045, 42.357004,-7.49027));
+        _knownStations.add(new Station("Pontevedra", 36038, 42.43366,-8.648051));
+        _knownStations.add(new Station("Ribadeo", 27051, 43.537396,-7.04303));
+        _knownStations.add(new Station("Santiago", 15078, 42.877929,-8.557962));
+        _knownStations.add(new Station("Verín", 32085, 41.940489,-7.439134));
+        _knownStations.add(new Station("Vigo", 36057, 42.231397,-8.712445));
+        _knownStations.add(new Station("Vilagarcía", 36060, 42.593922,-8.765969));
+        _knownStations.add(new Station("Viveiro", 27066, 43.66148,-7.594527));
+        
+        // TODO(ryu): Eliminar después de un par de versiones
+        _legacyIdMap.put(14, 15030); // A Coruña
+        _legacyIdMap.put(39, 36015); // Cuntis
+        _legacyIdMap.put(1, 15036); // Ferrol
+        _legacyIdMap.put(2, 15037); // Fisterra
+        _legacyIdMap.put(10, 36024); // Lalín
+        _legacyIdMap.put(5, 27028); // Lugo
+        _legacyIdMap.put(4, 27031); // Monforte
+        _legacyIdMap.put(38, 32009); // O Barco
+        _legacyIdMap.put(40, 15061); // Ortigueira
+        _legacyIdMap.put(8, 32054); // Ourense
+        _legacyIdMap.put(30, 27045); // Pedrafita
+        _legacyIdMap.put(11, 36038); // Pontevedra
+        _legacyIdMap.put(6, 27051); // Ribadeo
+        _legacyIdMap.put(3, 15078); // Santiago
+        _legacyIdMap.put(9, 32085); // Verín
+        _legacyIdMap.put(12, 36057); // Vigo
+        _legacyIdMap.put(13, 36060); // Vilagarcía
+        _legacyIdMap.put(7, 27066); // Viveiro
+        
     }
 }
