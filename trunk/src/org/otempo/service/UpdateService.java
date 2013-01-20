@@ -38,6 +38,7 @@ import org.otempo.StationUpdateListener;
 import org.otempo.StationManager.Listener;
 import org.otempo.model.FavoritesStationComparator;
 import org.otempo.model.Station;
+import org.otempo.rss.MediumTermSAXHandler;
 import org.otempo.rss.PredictionSAXHandler;
 import org.otempo.rss.StationCache;
 import org.otempo.rss.ShortTermSAXHandler;
@@ -227,20 +228,33 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
      */
     public void processNextStation(boolean forceStorage) {
         Station station = getNextStation();
-        //Log.d("OTempo", "Processing " + station.getName());
         try {
             Calendar oldCreationDate = null;
             if (station.getPredictions().size() > 0) {
                 oldCreationDate = station.getLastCreationDate();
             }
-            InputStream stream = StationCache.getStationRSS(station.getId(), forceStorage);
-            if (stream == null) {
-                throw new IOException("Station cache returned a NULL stream");
+
+            // Parsing short term
+            InputStream streamShortTerm = StationCache.getStationRSS(station.getId(), true, forceStorage);
+            if (streamShortTerm == null) {
+                throw new IOException("Station cache returned a NULL stream for short term");
             }
-            PredictionSAXHandler handler = new ShortTermSAXHandler(station);
-            SAXParserFactory spf = SAXParserFactory.newInstance();
-            SAXParser parser = spf.newSAXParser();
-            parser.parse(stream, handler);
+            PredictionSAXHandler shortTermHandler = new ShortTermSAXHandler(station);
+            SAXParserFactory spfShort = SAXParserFactory.newInstance();
+            SAXParser parserShort = spfShort.newSAXParser();
+            parserShort.parse(streamShortTerm, shortTermHandler);
+            
+            // Parsing medium term
+            InputStream streamMediumTerm = StationCache.getStationRSS(station.getId(), false, forceStorage);
+            if (streamMediumTerm == null) {
+                throw new IOException("Station cache returned a NULL stream for medium term");
+            }
+            PredictionSAXHandler mediumTermHandler = new MediumTermSAXHandler(station);
+            SAXParserFactory spfMedium = SAXParserFactory.newInstance();
+            SAXParser parserMedium = spfMedium.newSAXParser();
+            parserMedium.parse(streamMediumTerm, mediumTermHandler);
+            
+            
             // Si la fecha de creación es la misma, ya no vamos a perder el tiempo con más estaciones de las que ya tenían predicción...
             if (station.getPredictions().size() > 0 && station.getLastCreationDate() != null && station.getLastCreationDate().equals(oldCreationDate)) {
                 if (hasConnectivity()) {
@@ -265,7 +279,8 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
         } catch (SAXException e) {
             Log.e("OTempo", "Error parsing station "+station.getName() + ": " + e.getMessage(), e);
             _binder.deliverInternetError();
-            StationCache.removeCached(station.getId());
+            StationCache.removeCached(station.getId(), true);
+            StationCache.removeCached(station.getId(), false);
             // Si falla el parseo, ya ha sucedido que era meteogalicia que tenía el RSS petado, así que no lo volvemos a añadir en pendientes, se queda sin actualizar hasta el siguiente ciclo.
         }
     }

@@ -27,7 +27,7 @@ import org.otempo.model.StationPrediction;
  */
 public class MediumTermSAXHandler extends PredictionSAXHandler {
     public MediumTermSAXHandler(Station station) {
-        super(station);
+        super(station, false);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class MediumTermSAXHandler extends PredictionSAXHandler {
     }
     
 	@Override
-	protected StationPrediction getCurrentPrediction() {
+	protected StationPrediction getOrCreateCurrentPrediction() {
 		return getCurrentMediumPrediction();
 	}
 

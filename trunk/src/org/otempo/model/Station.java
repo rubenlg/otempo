@@ -118,10 +118,12 @@ public class Station {
      * Establece las predicciones de la estación
      * @param predictions Las nuevas predicciones
      */
-    public synchronized void setPredictions(List<StationPrediction> predictions) {
+    public synchronized void setPredictions(List<StationPrediction> predictions, boolean clearExisting) {
         Calendar yesterday = Calendar.getInstance();
         yesterday.add(Calendar.DATE, -1);
-        _predictions.clear();
+        if (clearExisting) {
+        	_predictions.clear();
+        }
         for (StationPrediction prediction: predictions) {
             if (_lastCreationDate == null || prediction.getCreationDate().after(_lastCreationDate)) {
                 _lastCreationDate = prediction.getCreationDate();

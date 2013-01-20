@@ -47,16 +47,16 @@ public class StationCache {
      * @param forceStorage Permite forzar que deseamos cargarlo desde la SD (por ej: si no hay conexión a Internet)
      * @return Un flujo del que leer el RSS
      */
-    public static InputStream getStationRSS(int stationId, boolean forceStorage) {
+    public static InputStream getStationRSS(int stationId, boolean shortTerm, boolean forceStorage) {
         InputStream stream = null;
-        long storageAge = getStorageAge(stationId);
+        long storageAge = getStorageAge(stationId, shortTerm);
         // Si la edad de la caché no es buena, intentamos coger de internet
         if ((storageAge < 0 || storageAge > MAX_STORAGE_AGE) && forceStorage == false) {
-            stream = getFromInternet(stationId);
+            stream = getFromInternet(stationId, shortTerm);
         }
         // Si en internet no se puede, o la caché es buena, pues de la caché
         if (stream == null) {
-            stream = getFromStorage(stationId);
+            stream = getFromStorage(stationId, shortTerm);
         }
         // Puede que devolvamos null a pesar de todo
         return stream;
@@ -66,9 +66,9 @@ public class StationCache {
      * @param stationId ID de estación
      * @return Edad de la cache en milisegundos para una estación
      */
-    private static long getStorageAge(int stationId) {
+    private static long getStorageAge(int stationId, boolean shortTerm) {
         File sdDir = Environment.getExternalStorageDirectory();
-        File cache = new File(sdDir, DATA_DIR+stationId+".rss");
+        File cache = new File(sdDir, DATA_DIR + makeFileName(stationId, shortTerm));
         if (cache.exists()) {
             Date d = new Date();
             return d.getTime() - cache.lastModified();
@@ -81,12 +81,12 @@ public class StationCache {
      * @param stationId ID de la estación
      * @return Obtiene el RSS de una estación desde la SD
      */
-    private static InputStream getFromStorage(int stationId) {
+    private static InputStream getFromStorage(int stationId, boolean shortTerm) {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)
                 || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state) ) {
             File sdDir = Environment.getExternalStorageDirectory();
-            File cache = new File(sdDir, DATA_DIR+stationId+".rss");
+            File cache = new File(sdDir, DATA_DIR + makeFileName(stationId, shortTerm));
             try {
                 return new FileInputStream(cache);
             } catch (FileNotFoundException e) {
@@ -102,13 +102,13 @@ public class StationCache {
      * Invalida la caché de una estación (si no se puede parsear, por ej)
      * @param stationId Id de la estación a invalidar
      */
-    public static boolean removeCached(int stationId) {
+    public static boolean removeCached(int stationId, boolean shortTerm) {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             File sdDir = Environment.getExternalStorageDirectory();
             File dataDir = new File(sdDir, DATA_DIR);
             if (! dataDir.exists()) return true;
-            File cache = new File(dataDir, stationId+".rss");
+            File cache = new File(dataDir, makeFileName(stationId, shortTerm));
             cache.delete();
             return true;
         } else {
@@ -122,14 +122,14 @@ public class StationCache {
      * @param rss flujo del que se puede leer el RSS
      * @return true si se pudo guardar correctamente, y false en todos los demás casos
      */
-    private static boolean saveCached(int stationId, InputStream rss) {
+    private static boolean saveCached(int stationId, boolean shortTerm, InputStream rss) {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             File sdDir = Environment.getExternalStorageDirectory();
             File dataDir = new File(sdDir, DATA_DIR);
             try {
                 if (! dataDir.exists()) dataDir.mkdirs();
-                File cache = new File(dataDir, stationId+".rss");
+                File cache = new File(dataDir, makeFileName(stationId, shortTerm));
                 OutputStream outputStream = new FileOutputStream(cache);
                 byte[] buffer = new byte[4096];
                 int n = 0;
@@ -150,17 +150,33 @@ public class StationCache {
     }
 
     /**
+     * Crea el nombre de fichero en el que cacheamos un RSS dado su ID de
+     * estación y si es o no a corto plazo. 
+     */
+    private static String makeFileName(int stationId, boolean shortTerm) {
+    	if (shortTerm) {
+    		return String.format("%d_short.rss", stationId);
+    	} else {
+    		return String.format("%d_medium.rss", stationId);
+    	}
+    }
+    
+    /**
      * @param stationId ID de la estación
      * @return Obtiene el RSS de una estación directamente desde Internet
      */
-    private static InputStream getFromInternet(int stationId) {
-        URL url;
+    private static InputStream getFromInternet(int stationId, boolean shortTerm) {
+        URL url = null;
         try {
-            url = new URL("http://www.meteogalicia.es/web/RSS/rssLocalidades.action?idZona="+stationId+"&dia=-1");
+        	if (shortTerm) {
+        		url = new URL("http://www.meteogalicia.es/web/RSS/rssLocalidades.action?idZona="+stationId+"&dia=-1");
+        	} else {
+        		url = new URL("http://www.meteogalicia.es/web/RSS/rssConcellosMPrazo.action?idZona="+stationId+"&dia=-1");
+        	}
             URLConnection conn = url.openConnection();
             InputStream stream = conn.getInputStream();
-            if (saveCached(stationId, stream)) {
-                return getFromStorage(stationId);
+            if (saveCached(stationId, shortTerm, stream)) {
+                return getFromStorage(stationId, shortTerm);
             } else {
                 return stream;
             }

@@ -27,7 +27,7 @@ import org.otempo.model.StationShortTermPrediction;
  */
 public class ShortTermSAXHandler extends PredictionSAXHandler {
     public ShortTermSAXHandler(Station station) {
-        super(station);
+        super(station, true);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ShortTermSAXHandler extends PredictionSAXHandler {
     }
 
 	@Override
-	protected StationPrediction getCurrentPrediction() {
+	protected StationPrediction getOrCreateCurrentPrediction() {
 		return getCurrentShortPrediction();
 	}
 
