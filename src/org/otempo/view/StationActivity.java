@@ -342,21 +342,18 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                 Station station = _stationManager.getStation();
                 if (station != null) {
                     int day = id - DIALOG_DAY_COMMENT_MASK - station.getId() * MAX_PREDICTED_DAYS;
-                    StationPrediction genericPrediction = station.getPredictions().get(day);
-                    if (genericPrediction instanceof StationShortTermPrediction) {
-                        StationShortTermPrediction prediction = (StationShortTermPrediction)genericPrediction;
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setMessage(DateUtils.weekDayFormat.format(prediction.getDate().getTime()) + ":\n"
-                        			+ prediction.createDescription(this))
-                        .setCancelable(false)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                        return builder.create();
-                    }
+                    StationPrediction prediction = station.getPredictions().get(day);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(DateUtils.weekDayFormat.format(prediction.getDate().getTime()) + ":\n"
+                    			+ prediction.createDescription(this))
+                    .setCancelable(false)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+                    return builder.create();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(getString(R.string.loading_data))
@@ -442,12 +439,23 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                         return;
                     }
                     LinearLayout day = new LinearLayout(StationActivity.this);
+                    day.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View arg0) {
+                            showDialog(DIALOG_DAY_COMMENT_MASK + index + currentStationId * MAX_PREDICTED_DAYS);
+                        }
+                    });
                     day.setOrientation(LinearLayout.VERTICAL);
                     TextView dayName = getDayName(medPred.getDate());
                     day.addView(dayName);
                     ImageView morningIcon = new ImageView(StationActivity.this);
                     morningIcon.setImageResource(ResourceUtils.getResource(medPred.getSkyState(), true));
                     day.addView(morningIcon);
+                    TextView temps = new TextView(StationActivity.this);
+                    temps.setText(medPred.getMinTemp()+" - "+medPred.getMaxTemp() + " C");
+                    temps.setGravity(Gravity.CENTER_HORIZONTAL);
+                    temps.setTextColor(Color.WHITE);
+                    day.addView(temps);
                     scrolled.addView(day, params);
                 }
             });

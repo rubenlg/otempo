@@ -34,7 +34,7 @@
 			android:entries="@array/updateAmountPref"
 			android:entryValues="@array/updateAmountPrefVal"
 			android:key="updateAmount"
-			android:defaultValue="0">
+			android:defaultValue="1">
 		</ListPreference>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_appearance">
