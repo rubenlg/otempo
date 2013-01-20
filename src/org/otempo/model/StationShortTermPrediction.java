@@ -29,18 +29,6 @@ import android.content.Context;
  */
 public class StationShortTermPrediction extends StationPrediction {
     //// Setters/getters ////
-    public void setMaxTemp(int maxTemp) {
-        _maxTemp = maxTemp;
-    }
-    public int getMaxTemp() {
-        return _maxTemp;
-    }
-    public int getMinTemp() {
-        return _minTemp;
-    }
-    public void setMinTemp(int minTemp) {
-        _minTemp = minTemp;
-    }
     public SkyState getSkyStateMorning() {
         return _skyStateMorning;
     }
@@ -116,10 +104,6 @@ public class StationShortTermPrediction extends StationPrediction {
     public void accept(StationPredictionVisitor visitor, int index) {
         visitor.apply(this, index);
     }
-
-    ///////// ATTRIBUTES /////////////
-    private int _maxTemp = 0; ///< Temperatura máxima del día
-    private int _minTemp = 0; ///< Temperatura mínima del día
 
     private SkyState _skyStateMorning = null; ///< Estado del cielo por la mañana
     private SkyState _skyStateAfternoon = null; ///< Estado del cielo por la tarde

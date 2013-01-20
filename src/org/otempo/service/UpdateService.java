@@ -38,8 +38,9 @@ import org.otempo.StationUpdateListener;
 import org.otempo.StationManager.Listener;
 import org.otempo.model.FavoritesStationComparator;
 import org.otempo.model.Station;
+import org.otempo.rss.PredictionSAXHandler;
 import org.otempo.rss.StationCache;
-import org.otempo.rss.StationSAXHandler;
+import org.otempo.rss.ShortTermSAXHandler;
 import org.otempo.service.states.CreatedState;
 import org.otempo.service.states.ServiceState;
 import org.otempo.view.Preferences;
@@ -236,7 +237,7 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
             if (stream == null) {
                 throw new IOException("Station cache returned a NULL stream");
             }
-            StationSAXHandler handler = new StationSAXHandler(station);
+            PredictionSAXHandler handler = new ShortTermSAXHandler(station);
             SAXParserFactory spf = SAXParserFactory.newInstance();
             SAXParser parser = spf.newSAXParser();
             parser.parse(stream, handler);
