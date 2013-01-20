@@ -40,7 +40,10 @@
 		%s in the afternoon, with %s wind and rain probability of %.0f%%.\n
 		%s in the night, with %s wind and rain probability of %.0f%%.
 	</string>
-   
+   	<string name="mediumTermDescriptionFormat" formatted="false">
+	    %s, with %s wind and rain probability of %.0f%%.
+	</string>
+	
 	<!--  Sky states -->
 	<string name="sky_clear">Clear</string>
 	<string name="sky_cloud_and_clear">Clouds and clears</string>
@@ -106,7 +109,14 @@
 	<string name="wind_very_strong_southwest">very strong southwest</string>
 	<string name="wind_very_strong_west">very strong west</string>	
 	
-    <string-array name="changelog_2_8">
+    <string-array name="changelog_3_0">
+    	<item>Added again medium-term predictions.</item>
+    	<item>Added all the municipalities from Galicia.</item>
+		<item>Medium term predictions have now description when tapping on them.</item>
+		<item>Fixed a bug when tapping over short-term predictions if Meteogalicia does not have wind info.</item>
+		<item>Removed the option of updating all the stations, to contain data transfers now that we support 315 municipalities.</item>
+	</string-array>
+	<string-array name="changelog_2_8">
     	<item>Migrated short-term predictions to the new Meteogalicia data format.</item>
 		<item>Added new weather icons.</item>
 		<item>Medium-term predictions disabled temporarily until they are adapted to the new data format.</item>
@@ -225,19 +235,19 @@
     </string-array>
 
     <string-array name="updateAmountPref">
-    	<item>All stations</item>
     	<item>1 station</item>
     	<item>2 stations</item>
-    	<item>4 stations</item>
-    	<item>8 stations</item>
-    </string-array>
+    	<item>5 stations</item>
+    	<item>10 stations</item>
+    	<item>15 stations</item>
+    	</string-array>
     
     <string-array name="updateAmountPrefVal">
-    	<item>0</item>
     	<item>1</item>
     	<item>2</item>
-    	<item>4</item>
-    	<item>8</item>
+    	<item>5</item>
+    	<item>10</item>
+    	<item>15</item>
     </string-array>
 
     <string-array name="backgroundPref">

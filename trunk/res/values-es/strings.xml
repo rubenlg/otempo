@@ -40,7 +40,10 @@
 		%s por la tarde, con viento %s y probabilidad de lluvia del %.0f%%.\n
 		%s por la noche, con viento %s y probabilidad de lluvia del %.0f%%.
 	</string>
-
+	<string name="mediumTermDescriptionFormat" formatted="false">
+	    %s, con viento %s y probabilidad de lluvia del %.0f%%.
+	</string>
+	
 	<!--  Sky states -->
 	<string name="sky_clear">Cielo despejado</string>
 	<string name="sky_cloud_and_clear">Nubes y claros</string>
@@ -105,6 +108,13 @@
 	<string name="wind_very_strong_southwest">muy fuerte del suroeste</string>
 	<string name="wind_very_strong_west">muy fuerte del oeste</string>
 	
+    <string-array name="changelog_3_0">
+    	<item>Añadidas de nuevo las predicciones a medio plazo.</item>
+    	<item>Añadidos todos los municipios de Galicia.</item>
+		<item>Las predicciones a medio plazo tienen ahora descripción al pulsar sobre ellas.</item>
+		<item>Arreglado bug al pulsar sobre las predicciones a corto plazo si Meteogalicia no conoce el estado del viento.</item>
+		<item>Eliminada la posibilidad de actualizar todas las estaciones, para limitar la transferencia de datos ahora que se soportan los 315 municipios gallegos.</item>
+	</string-array>
     <string-array name="changelog_2_8">
     	<item>Migradas las predicciones a corto plazo al nuevo formato de Meteogalicia.</item>
 		<item>Añadidos nuevos iconos climáticos</item>
@@ -206,11 +216,11 @@
     </string-array>
     
     <string-array name="updateAmountPref">
-    	<item>Todas</item>
     	<item>1 estación</item>
     	<item>2 estaciones</item>
-    	<item>4 estaciones</item>
-    	<item>8 estaciones</item>
+    	<item>5 estaciones</item>
+    	<item>10 estaciones</item>
+    	<item>15 estaciones</item>
     </string-array>
     
     <string-array name="backgroundPref">

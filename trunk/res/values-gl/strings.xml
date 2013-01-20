@@ -37,10 +37,12 @@
     <string name="share_subject">OTempo, meteoroloxía galega para Android</string>
     <string name="shortTermDescriptionFormat" formatted="false">
 	    %s pola mañá, con vento %s e probabilidade de chuvia do %.0f%%.\n
-		%s pola tarde, con vento %s y probabilidade de chuvia do %.0f%%.\n
-		%s pola noite, con vento %s y probabilidade de chuvia do %.0f%%.
+		%s pola tarde, con vento %s e probabilidade de chuvia do %.0f%%.\n
+		%s pola noite, con vento %s e probabilidade de chuvia do %.0f%%.
 	</string>
-
+	<string name="mediumTermDescriptionFormat" formatted="false">
+	    %s, con vento %s e probabilidade de chuvia do %.0f%%.
+	</string>
 
 	<!--  Sky states -->
 	<string name="sky_clear">Despexado</string>
@@ -107,7 +109,14 @@
 	<string name="wind_very_strong_southwest">moi forte do suroeste</string>
 	<string name="wind_very_strong_west">moi forte do oeste</string>
 	
-    <string-array name="changelog_2_8">
+    <string-array name="changelog_3_0">
+    	<item>Engadidas de novo as predicións a medio prazo.</item>
+    	<item>Engadidos todos os munucipios galegos.</item>
+		<item>As predicións a medio plazo teñen agora descripción cando se preme sobre elas.</item>
+		<item>Correxido faio ao premer sobre as predicións a curto prazo se Meteogalicia non coñece o estado do vento.</item>
+		<item>Eliminada a posibilidade de actulizar todas as estacións, para limitar a transferencia de datos ahora que se soportan os 315 municipios galegos.</item> 
+	</string-array>
+	<string-array name="changelog_2_8">
     	<item>Migradas as predicións a curto plazo ao novo formato de Meteogalicia.</item>
 		<item>Engadidos novos iconos de tempo</item>
 		<item>As predicións a medio plazo están desactivadas ata que se adapten ao novo formato de datos.</item>
@@ -205,11 +214,11 @@
     	<item>1 día</item>
     </string-array>
     <string-array name="updateAmountPref">
-    	<item>Todas</item>
     	<item>1 estación</item>
     	<item>2 estacións</item>
-    	<item>4 estacións</item>
-    	<item>8 estacións</item>
+    	<item>5 estacións</item>
+    	<item>10 estacións</item>
+    	<item>15 estacións</item>
     </string-array>
 
     <string-array name="backgroundPref">

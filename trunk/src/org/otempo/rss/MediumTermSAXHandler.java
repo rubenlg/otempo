@@ -34,6 +34,10 @@ public class MediumTermSAXHandler extends PredictionSAXHandler {
     public void endElementSpecific(String uri, String localName) {
     	if (localName.equals("ceo")) {
             getCurrentMediumPrediction().setSkyState(parseSkyState(getCurrentText()));
+        } else if (localName.equals("vento")) {
+            getCurrentMediumPrediction().setWindState(parseWindState(getCurrentText()));
+        } else if (localName.equals("pChoiva")) {
+            getCurrentMediumPrediction().setRainProbability(Float.valueOf(getCurrentText()));
         }
     }
     

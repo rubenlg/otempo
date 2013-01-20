@@ -18,6 +18,9 @@
  */
 package org.otempo.model;
 
+
+import org.otempo.R;
+
 import android.content.Context;
 
 /**
@@ -39,16 +42,33 @@ public class StationMediumTermPrediction extends StationPrediction {
         _skyState = skyState;
     }
 
-    @Override
+	public WindState getWindState() {
+		return _windState;
+	}
+	public void setWindState(WindState windState) {
+		_windState = windState;
+	}
+	public float getRainProbability() {
+		return _rainProbability;
+	}
+	public void setRainProbability(float rainProbability) {
+		_rainProbability = rainProbability;
+	}
+
+	@Override
     public void accept(StationPredictionVisitor visitor, int index) {
         visitor.apply(this, index);
     }
 
-    private SkyState _skyState = null; ///< El estado predicho del cielo
-
 	@Override
 	public String createDescription(Context ctx) {
-		// TODO(ryu): Implementar descripción a medio plazo
-		return "No description";
+		return String.format(ctx.getString(R.string.mediumTermDescriptionFormat),
+				ctx.getString(skyStateDescriptionResId(_skyState)),
+				ctx.getString(windStateDescriptionResId(_windState)),
+				_rainProbability);
 	}
+    
+    private SkyState _skyState = null; ///< El estado predicho del cielo
+	private WindState _windState = null; ///< El estado predicho del viento
+    private float _rainProbability = 0; //< Probabilidad de lluvia (%)
 }

@@ -68,7 +68,8 @@ import android.util.Log;
  * Coordina una máquina de estados (patrón estado) que le permite gestionar diferentes eventualidades
  */
 public class UpdateService extends Service implements Listener, OnSharedPreferenceChangeListener {
-
+	private final static int MAX_UPDATE_AMOUNT = 15;
+	
     @Override
     public void onCreate() {
         initWidgetStationManager();
@@ -211,14 +212,14 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
     	// Número de estaciones que deseamos actualizar
         int updateAmount= Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString(Preferences.PREF_UPDATE_AMOUNT, "0"));
         if (updateAmount == 0) {
-            _pendingStations.addAll(Station.getKnownStations());
-        } else {
-        	// Las estaciones ya están ordenadas según el criterio del usuario, así que se van a actualizar las más prioritarias para él
-            List<Station> known = Station.getKnownStations();
-            for (int i=0; i < updateAmount && i < known.size(); i++) {
-                _pendingStations.add(known.get(i));
-            }
+            updateAmount = MAX_UPDATE_AMOUNT;
         }
+    	// Las estaciones ya están ordenadas según el criterio del usuario, así que se van a actualizar las más prioritarias para él
+        List<Station> known = Station.getKnownStations();
+        for (int i=0; i < updateAmount && i < known.size(); i++) {
+            _pendingStations.add(known.get(i));
+        }
+        
         // Aunque elegimos las estaciones que más interesan al usuario, vamos a ordenarlas por frecuencia de uso, por si se corta Internet a medio camino
         Collections.sort(_pendingStations, new FavoritesStationComparator());
     }
