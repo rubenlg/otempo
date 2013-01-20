@@ -59,6 +59,11 @@ public abstract class StationPrediction {
         return _creationDate;
     }
 
+    public void setMaxTemp(int maxTemp) { _maxTemp = maxTemp; }
+    public int getMaxTemp() { return _maxTemp; }
+    public int getMinTemp() { return _minTemp; }
+    public void setMinTemp(int minTemp) { _minTemp = minTemp; }
+
     /**
      * Devuelve la edad de una predicción en milisegundos desde que se creó hasta ahora mismo
      */
@@ -67,6 +72,9 @@ public abstract class StationPrediction {
     }
 
 	protected int skyStateDescriptionResId(SkyState state) {
+		if (state == null) {
+			return R.string.sky_unknown;
+		}
         switch(state) {
         case CLEAR: return R.string.sky_clear;
         case CLOUD_AND_CLEAR: return R.string.sky_cloud_and_clear;
@@ -93,6 +101,9 @@ public abstract class StationPrediction {
 	}
 	
 	public int windStateDescriptionResId(WindState state) {
+		if (state == null) {
+			return R.string.wind_unknown;
+		}
 		switch (state) {
 		case VARIABLE: return R.string.wind_variable;
 		case CALM: return R.string.wind_calm;
@@ -209,4 +220,6 @@ public abstract class StationPrediction {
     
     private Calendar _date = null;
     private Calendar _creationDate = null;
+	private int _maxTemp = 0; ///< Temperatura máxima del día
+	private int _minTemp = 0; ///< Temperatura mínima del día
 }
