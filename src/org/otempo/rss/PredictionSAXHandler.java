@@ -17,8 +17,9 @@ import android.util.Log;
 
 public abstract class PredictionSAXHandler extends DefaultHandler {
 
-	public PredictionSAXHandler(Station station) {
+	public PredictionSAXHandler(Station station, boolean clearPredictions) {
 		_station = station;
+		_clearPredictions  = clearPredictions;
 	}
 
 	protected final StationPrediction.WindState parseWindState(String stateString) {
@@ -72,24 +73,24 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
     public final void endElement(String uri, String localName, String qName) throws SAXException {
         if (localName == "item") {
         	if (hasCurrentPrediction()) {
-                _predictions.add(getCurrentPrediction());
+                _predictions.add(getOrCreateCurrentPrediction());
                 resetCurrentPrediction();
             }
         }
         if (localName == "rss") {
-            _station.setPredictions(_predictions);
+            _station.setPredictions(_predictions, _clearPredictions);
         }
         if (localName == null) return;
         try {
             if (localName.equals("tMax")) {
-                getCurrentPrediction().setMaxTemp(Integer.valueOf(getCurrentText()));
+                getOrCreateCurrentPrediction().setMaxTemp(Integer.valueOf(getCurrentText()));
             } else if (localName.equals("tMin")) {
-                getCurrentPrediction().setMinTemp(Integer.valueOf(getCurrentText()));
+                getOrCreateCurrentPrediction().setMinTemp(Integer.valueOf(getCurrentText()));
 
             } else if (localName.equals("dataCreacion")) {
-                getCurrentPrediction().setCreationDate(parseDate(getCurrentText(), _creationDateformat));
+                getOrCreateCurrentPrediction().setCreationDate(parseDate(getCurrentText(), _creationDateformat));
             } else if (localName.equals("dataPredicion")) {
-                getCurrentPrediction().setDate(parseDate(getCurrentText(), _lastPredFormat));
+                getOrCreateCurrentPrediction().setDate(parseDate(getCurrentText(), _lastPredFormat));
 
             } else {
             	endElementSpecific(uri, localName);
@@ -155,14 +156,14 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 	        return null;
 	    }
 	}
-    // Gets the current prediction
-	protected abstract StationPrediction getCurrentPrediction();
+    // Obtiene la predicción actual, creándola si no existe
+	protected abstract StationPrediction getOrCreateCurrentPrediction();
 	
-	// Checks if there is a current prediction. For items which doesn't contain
-	// weather info, like overall comments, we don't want to create Prediction objects.
+	// Comprueba si existe una predicción actual. Algunos items in el RSS 
+	// no tienen predicciones, y para ellos no se crea.  
 	protected abstract boolean hasCurrentPrediction();
 	
-	// Resets the current prediction, so that the next item will start in a new one
+	// Borra la predicción actual (usado al cerrar un item) 
 	protected abstract void resetCurrentPrediction();
 	
 	
@@ -182,4 +183,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
     // Formato de fecha de creación (no se especifica en el RSS)
     private static final SimpleDateFormat _creationDateformat =
         new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+    // Borrar las predicciones antes de cargar las nuevas?
+	private boolean _clearPredictions = true;
 }
