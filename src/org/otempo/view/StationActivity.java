@@ -40,6 +40,7 @@ import org.otempo.service.UpdateService;
 import org.otempo.service.UpdateService.UpdateServiceBinder;
 import org.otempo.util.BitmapUtils;
 import org.otempo.util.DateUtils;
+import org.otempo.util.LayoutUtils;
 import org.otempo.util.ResourceUtils;
 
 import android.app.Activity;
@@ -392,7 +393,9 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
             predictedGroup.setVisibility(LinearLayout.INVISIBLE);
         }
         final LinearLayout.LayoutParams params =
-            new LinearLayout.LayoutParams(100, LinearLayout.LayoutParams.WRAP_CONTENT);
+            new LinearLayout.LayoutParams(
+            		LayoutUtils.dips(75, this), 
+            		LinearLayout.LayoutParams.WRAP_CONTENT);
         Station currentStation = _stationManager.getStation();
         if (currentStation == null) {
             // Si no hay estación elegida, nada más que hacer...
