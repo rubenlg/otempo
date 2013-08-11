@@ -20,8 +20,10 @@ package org.otempo.favorites;
 
 import java.util.Date;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.R;
 import org.otempo.model.Station;
+import org.otempo.util.Nullness;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -39,7 +41,7 @@ public class FavoritesDB extends SQLiteOpenHelper {
     private static final String STATION_ID_COL = "station_id";
     private static final String ACCESS_COUNT_COL = "accessCount";
     private static final String LAST_ACCESS_COL = "last_access";
-    private String _createSQL = null;
+    @Nullable private String _createSQL = null;
 
     /**
      * Construye la utilidad
@@ -56,12 +58,15 @@ public class FavoritesDB extends SQLiteOpenHelper {
      * @param station Estación a actualizar
      */
     public void updateFavorite(Station station) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(STATION_ID_COL, station.getId());
-        values.put(ACCESS_COUNT_COL, station.getAccessCount());
-        values.put(LAST_ACCESS_COL, station.getLastAccess().getTime());
-        db.replace(FAVORITES_TABLE_NAME, "last_access", values);
+    	Date access = station.getLastAccess();
+    	if (access != null) {
+	        SQLiteDatabase db = getWritableDatabase();
+	        ContentValues values = new ContentValues();
+	        values.put(STATION_ID_COL, station.getId());
+	        values.put(ACCESS_COUNT_COL, station.getAccessCount());
+	        values.put(LAST_ACCESS_COL, access.getTime());
+	        db.replace(FAVORITES_TABLE_NAME, "last_access", values);
+    	}
     }
 
     /**
@@ -96,7 +101,7 @@ public class FavoritesDB extends SQLiteOpenHelper {
                 int id = cursor.getInt(0);
                 int accessCount = cursor.getInt(1);
                 Date lastAccess = new Date(cursor.getLong(2));
-                Station station = Station.getById(id);
+                Station station = Nullness.checkNotNull(Station.getById(id));
                 station.setLastAccess(lastAccess);
                 station.setAccessCount(accessCount);
                 // TODO(ryu): Borrar después de un par de versiones.

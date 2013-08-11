@@ -29,6 +29,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
+import java.util.Locale;
+
+import org.eclipse.jdt.annotation.Nullable;
 
 import android.os.Environment;
 import android.util.Log;
@@ -47,6 +50,7 @@ public class StationCache {
      * @param forceStorage Permite forzar que deseamos cargarlo desde la SD (por ej: si no hay conexión a Internet)
      * @return Un flujo del que leer el RSS
      */
+    @Nullable
     public static InputStream getStationRSS(int stationId, boolean shortTerm, boolean forceStorage) {
         InputStream stream = null;
         long storageAge = getStorageAge(stationId, shortTerm);
@@ -79,8 +83,9 @@ public class StationCache {
 
     /**
      * @param stationId ID de la estación
-     * @return Obtiene el RSS de una estación desde la SD
+     * @return Obtiene el RSS de una estación desde la SD, o null si no hay.
      */
+    @Nullable
     private static InputStream getFromStorage(int stationId, boolean shortTerm) {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)
@@ -136,6 +141,7 @@ public class StationCache {
                 while (-1 != (n = rss.read(buffer))) {
                     outputStream.write(buffer, 0, n);
                 }
+                outputStream.close();
                 return true;
             } catch (FileNotFoundException e) {
                 Log.e("OTempo", e.getMessage(), e);
@@ -155,9 +161,9 @@ public class StationCache {
      */
     private static String makeFileName(int stationId, boolean shortTerm) {
     	if (shortTerm) {
-    		return String.format("%d_short.rss", stationId);
+    		return String.format(Locale.US, "%d_short.rss", stationId);
     	} else {
-    		return String.format("%d_medium.rss", stationId);
+    		return String.format(Locale.US, "%d_medium.rss", stationId);
     	}
     }
     
@@ -165,6 +171,7 @@ public class StationCache {
      * @param stationId ID de la estación
      * @return Obtiene el RSS de una estación directamente desde Internet
      */
+    @Nullable
     private static InputStream getFromInternet(int stationId, boolean shortTerm) {
         URL url = null;
         try {

@@ -19,12 +19,15 @@
 package org.otempo.model;
 
 import java.util.Comparator;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 
 /**
  * Comparador de estaciones por orden alfabético
  */
+@NonNullByDefault(false)
 public class AlphabeticStationComparator implements Comparator<Station> {
-    public int compare(Station arg0, Station arg1) {
+    @Override
+	public int compare(Station arg0, Station arg1) {
         return arg0.getName().compareTo(arg1.getName());
     }
 }

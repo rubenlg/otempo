@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -37,6 +39,7 @@ public class BitmapUtils {
 	 * @param maxHeight Máximo alto de la imagen resultante
 	 * @return La imagen cargada y cumpliendo con los máximos solicitados, o null si no existe el fichero.
 	 */
+	@Nullable
     public static Bitmap safeDecodeFile(File f, int maxWidth, int maxHeight) {
         System.gc();
         Bitmap b = null;

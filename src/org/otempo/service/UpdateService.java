@@ -33,6 +33,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.StationManager;
 import org.otempo.StationUpdateListener;
 import org.otempo.StationManager.Listener;
@@ -44,6 +46,7 @@ import org.otempo.rss.StationCache;
 import org.otempo.rss.ShortTermSAXHandler;
 import org.otempo.service.states.CreatedState;
 import org.otempo.service.states.ServiceState;
+import org.otempo.util.Nullness;
 import org.otempo.view.Preferences;
 import org.otempo.view.StationWidget;
 import org.xml.sax.SAXException;
@@ -62,6 +65,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import static org.otempo.util.Nullness.checkNotNull;
 
 /**
  * Servicio encargado de las actualizaciones periódicas
@@ -84,7 +88,7 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
     @Override
     public void onDestroy() {
         _interrupted = true;
-        _workThread.interrupt();
+        checkNotNull(_workThread).interrupt();
         PreferenceManager.getDefaultSharedPreferences(getBaseContext()).unregisterOnSharedPreferenceChangeListener(this);
     }
 
@@ -92,7 +96,8 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
      * Thread que se queda cargando los datos
      */
     private class Loader implements Runnable {
-        public void run() {
+        @Override
+		public void run() {
             // Condición de salida del thread: _interrupted
             while (!_interrupted) {
                 if (_state != null) {
@@ -109,7 +114,7 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
     }
 
     // Función de cambio de estado, para poder depurar
-    public void setState(ServiceState state) {
+    public void setState(@Nullable ServiceState state) {
         //Log.d("OTempo", _state.toString()+" -> "+state.toString());
         _state = state;
     }
@@ -127,9 +132,9 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1) {
+    public void onSharedPreferenceChanged(@Nullable SharedPreferences arg0, @Nullable String arg1) {
         initWidgetStationManager();
-        Station station = _widgetStationManager.getStation();
+        Station station = checkNotNull(_widgetStationManager).getStation();
         if (station != null) {
             onStationChanged(station);
         }
@@ -139,7 +144,7 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
      * Llamado cuando cambia la posición del GPS
      */
     @Override
-    public void onStationChanged(Station station) {
+    public void onStationChanged(@NonNull Station station) {
         // Sólo ordenamos actualizar si la estación a la que cambiamos ya tiene datos
         if (station.getPredictions().size() > 0) {
             updateWidget(station);
@@ -257,8 +262,9 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
             
             
             // Si la fecha de creación es la misma, ya no vamos a perder el tiempo con más estaciones de las que ya tenían predicción...
-            if (station.getPredictions().size() > 0 && station.getLastCreationDate() != null && station.getLastCreationDate().equals(oldCreationDate)) {
+            if (station.getPredictions().size() > 0 && station.getLastCreationDate() != null && Nullness.equals(station.getLastCreationDate(), oldCreationDate)) {
                 if (hasConnectivity()) {
+                	Log.w("OTempo", "EQUALS: " + station.getLastCreationDate() + " == "+ oldCreationDate);
                     _binder.deliverUpToDate(station);
                 }
                 clearPredictedStations();
@@ -290,9 +296,10 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
      * Actualiza el widget si le toca...
      */
     private void updateWidget(Station station) {
-        if (_widgetStationManager.getStation() == null
-                || _widgetStationManager.getStation().getPredictions().size() == 0
-                || _widgetStationManager.getStation() == station) {
+    	Station widgetStation = checkNotNull(_widgetStationManager).getStation();
+        if (widgetStation == null
+                || widgetStation.getPredictions().size() == 0
+                || widgetStation == station) {
             StationWidget.updateStation(this, station);
         }
     }
@@ -421,15 +428,15 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
      * @return Devuelve la estación que se debe mostrar en el widget de escritorio
      */
     public Station getWidgetStation() {
-        Station widgetStation = _widgetStationManager.getStation();
-        if (widgetStation == null) {
-            widgetStation = Station.getFavoriteStation();
-        }
-        return widgetStation;
+		Station widgetStation = checkNotNull(_widgetStationManager).getStation();
+		if (widgetStation == null) {
+		    widgetStation = Station.getFavoriteStation();
+		}
+		return widgetStation;
     }
 
     /// Widget displayed station
-    StationManager _widgetStationManager = null;
+    @Nullable StationManager _widgetStationManager = null;
 
     /// Stations pending to be processed
     private List<Station> _pendingStations = new ArrayList<Station>();
@@ -441,8 +448,8 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
     private UpdateServiceBinder _binder = new UpdateServiceBinder();
 
     /// Worker thread
-    private Thread _workThread = null;
+    @Nullable private Thread _workThread = null;
 
     /// Estado de la máquina, inicialmente es CREATED
-    private ServiceState _state = new CreatedState();
+    @Nullable private ServiceState _state = new CreatedState();
 }

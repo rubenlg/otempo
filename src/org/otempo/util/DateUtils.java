@@ -20,6 +20,7 @@ package org.otempo.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Herramientas para trabajar con fechas
@@ -27,7 +28,7 @@ import java.util.Calendar;
 public class DateUtils {
 
 	/// Formato para los días de la semana que se visualizan encima de cada predicción
-    public static SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEE d");
+    public static SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEE d", Locale.getDefault());
 
     /**
      * Comprueba si una fecha dada se corresponde al día de hoy

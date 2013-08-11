@@ -18,6 +18,7 @@
  */
 package org.otempo.util;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.R;
 import org.otempo.model.StationPrediction.SkyState;
 
@@ -33,7 +34,7 @@ public class ResourceUtils {
 	 * @param day true si queremos un icono para día, y false si lo queremos para noche
 	 * @return El ID del recurso
 	 */
-    public static int getResource(SkyState state, boolean day) {
+    public static int getResource(@Nullable SkyState state, boolean day) {
         if (state == null) {
             Log.e("OTempo", "getResource: NULL Sky State");
             return R.drawable.clear;

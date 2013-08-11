@@ -18,6 +18,7 @@
  */
 package org.otempo.model;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.R;
 
 import android.content.Context;
@@ -29,40 +30,46 @@ import android.content.Context;
  */
 public class StationShortTermPrediction extends StationPrediction {
     //// Setters/getters ////
+	@Nullable 
     public SkyState getSkyStateMorning() {
         return _skyStateMorning;
     }
-    public void setSkyStateMorning(SkyState skyStateMorning) {
+    public void setSkyStateMorning(@Nullable  SkyState skyStateMorning) {
         _skyStateMorning = skyStateMorning;
     }
+    @Nullable 
     public SkyState getSkyStateAfternoon() {
         return _skyStateAfternoon;
     }
-    public void setSkyStateAfternoon(SkyState skyStateAfternoon) {
+    public void setSkyStateAfternoon(@Nullable SkyState skyStateAfternoon) {
         _skyStateAfternoon = skyStateAfternoon;
     }
+    @Nullable 
     public SkyState getSkyStateNight() {
         return _skyStateNight;
     }
-    public void setSkyStateNight(SkyState skyStateNight) {
+    public void setSkyStateNight(@Nullable SkyState skyStateNight) {
         _skyStateNight = skyStateNight;
     }
+    @Nullable 
 	public WindState getWindStateMorning() {
 		return _windStateMorning;
 	}
-	public void setWindStateMorning(WindState windStateMorning) {
+	public void setWindStateMorning(@Nullable WindState windStateMorning) {
 		_windStateMorning = windStateMorning;
 	}
+	@Nullable 
 	public WindState getWindStateAfternoon() {
 		return _windStateAfternoon;
 	}
-	public void setWindStateAfternoon(WindState windStateAfternoon) {
+	public void setWindStateAfternoon(@Nullable WindState windStateAfternoon) {
 		_windStateAfternoon = windStateAfternoon;
 	}
+	@Nullable 
 	public WindState getWindStateNight() {
 		return _windStateNight;
 	}
-	public void setWindStateNight(WindState windStateNight) {
+	public void setWindStateNight(@Nullable WindState windStateNight) {
 		_windStateNight = windStateNight;
 	}
 
@@ -105,13 +112,13 @@ public class StationShortTermPrediction extends StationPrediction {
         visitor.apply(this, index);
     }
 
-    private SkyState _skyStateMorning = null; ///< Estado del cielo por la mañana
-    private SkyState _skyStateAfternoon = null; ///< Estado del cielo por la tarde
-    private SkyState _skyStateNight = null; ///< Estado del cielo por la noche
+    @Nullable private SkyState _skyStateMorning = null; ///< Estado del cielo por la mañana
+    @Nullable private SkyState _skyStateAfternoon = null; ///< Estado del cielo por la tarde
+    @Nullable private SkyState _skyStateNight = null; ///< Estado del cielo por la noche
     
-    private WindState _windStateMorning = null; //< Estado del viento por la mañana
-	private WindState _windStateAfternoon = null; //< Estado del viento por la tarde
-    private WindState _windStateNight = null; //< Estado del viento por la noche
+    @Nullable private WindState _windStateMorning = null; //< Estado del viento por la mañana
+    @Nullable private WindState _windStateAfternoon = null; //< Estado del viento por la tarde
+    @Nullable private WindState _windStateNight = null; //< Estado del viento por la noche
 
     private float _rainProbabilityMorning = 0; //< Probabilidad de lluvia (%) por la mañana
 	private float _rainProbabilityAfternoon = 0; //< Probabilidad de lluvia (%) por la tarde

@@ -20,11 +20,14 @@ package org.otempo.model;
 
 import java.util.Comparator;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 /**
  * Comparador de estaciones por distancia a unas coordenadas de latitud/longitud dadas
  * Será menor la estación cuya distancia a la coordenada dada sea menor
  * Sirve para ordenar estaciones por distancia a nuestra ubicación, por ejemplo.
  */
+@NonNullByDefault(false)
 public class ClosestStationComparator implements Comparator<Station> {
     /**
      * Construye el comparador
@@ -35,7 +38,8 @@ public class ClosestStationComparator implements Comparator<Station> {
         _lat = lat;
         _lng = lng;
     }
-    public int compare(Station arg0, Station arg1) {
+    @Override
+	public int compare(Station arg0, Station arg1) {
         double distA = Station.distance2(arg0.getLatitude(), arg0.getLongitude(), _lat, _lng);
         double distB = Station.distance2(arg1.getLatitude(), arg1.getLongitude(), _lat, _lng);
         return Double.compare(distA, distB);
