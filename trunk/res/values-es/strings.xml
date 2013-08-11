@@ -108,7 +108,11 @@
 	<string name="wind_very_strong_southwest">muy fuerte del suroeste</string>
 	<string name="wind_very_strong_west">muy fuerte del oeste</string>
 	
-    <string-array name="changelog_3_0">
+    <string-array name="changelog_3_1">
+    	<item>Arreglado un fallo en la aplicación.</item>
+		<item>Mejorada la distribución en pantalla para que tenga el mismo aspecto en todos los dispositivos. Gracias a Adrian Barbeito por el feedback.</item>
+	</string-array>
+	<string-array name="changelog_3_0">
     	<item>Añadidas de nuevo las predicciones a medio plazo.</item>
     	<item>Añadidos todos los municipios de Galicia.</item>
 		<item>Las predicciones a medio plazo tienen ahora descripción al pulsar sobre ellas.</item>
