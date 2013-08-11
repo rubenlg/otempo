@@ -22,7 +22,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.otempo.R;
 import org.otempo.StationManager;
 import org.otempo.StationUpdateListener;
@@ -88,7 +90,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.gc();
-        lastUpdateFormat = new SimpleDateFormat(getString(R.string.predicted_at));
+        lastUpdateFormat = new SimpleDateFormat(getString(R.string.predicted_at), Locale.getDefault());
         _serviceConnection  = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName arg0, IBinder binder) {
@@ -272,7 +274,8 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         }
     }
 
-    public void onSharedPreferenceChanged(SharedPreferences preferences, String pref) {
+    @Override
+	public void onSharedPreferenceChanged(SharedPreferences preferences, String pref) {
         reloadPreferences();
     }
 
@@ -344,7 +347,12 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                     int day = id - DIALOG_DAY_COMMENT_MASK - station.getId() * MAX_PREDICTED_DAYS;
                     StationPrediction prediction = station.getPredictions().get(day);
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(DateUtils.weekDayFormat.format(prediction.getDate().getTime()) + ":\n"
+                    Calendar predictionDate = prediction.getDate();
+                    String header = "";
+                    if (predictionDate != null) {
+                    	header = DateUtils.weekDayFormat.format(predictionDate.getTime());
+                    }
+                    builder.setMessage(header + ":\n"
                     			+ prediction.createDescription(this))
                     .setCancelable(false)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -399,8 +407,9 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
             }
             currentStation.acceptPredictionVisitor(new StationPredictionVisitor() {
                 @Override
-                public void apply(StationShortTermPrediction shortPred, final int index) {
-                    if (!DateUtils.isFromToday(shortPred.getDate())) {
+                public void apply(@NonNull StationShortTermPrediction shortPred, final int index) {
+                	Calendar predictionDate = shortPred.getDate();
+                    if (predictionDate == null || !DateUtils.isFromToday(predictionDate)) {
                         return;
                     }
                     LinearLayout day = new LinearLayout(StationActivity.this);
@@ -426,7 +435,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                     temps.setText(shortPred.getMinTemp()+" - "+shortPred.getMaxTemp() + " C");
                     temps.setGravity(Gravity.CENTER_HORIZONTAL);
                     day.addView(temps);
-                    if (DateUtils.isToday(shortPred.getDate())) {
+                    if (DateUtils.isToday(predictionDate)) {
                         day.setBackgroundResource(R.drawable.today_bg);
                         temps.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
                         dayName.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
@@ -434,8 +443,9 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                     scrolled.addView(day, params);
                 }
                 @Override
-                public void apply(StationMediumTermPrediction medPred, final int index) {
-                    if (!DateUtils.isFromToday(medPred.getDate())) {
+                public void apply(@NonNull StationMediumTermPrediction medPred, final int index) {
+                	Calendar predictionDate = medPred.getDate();
+                    if (predictionDate == null || !DateUtils.isFromToday(predictionDate)) {
                         return;
                     }
                     LinearLayout day = new LinearLayout(StationActivity.this);
@@ -500,10 +510,12 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     /**
      * Llamado por el manager cuando cambiamos de estación por GPS
      */
-    public void onStationChanged(final Station station) {
+    @Override
+	public void onStationChanged(final @NonNull Station station) {
         //Log.d("OTempo", "onStationChanged");
         runOnUiThread(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 fillStationAdapter();
                 Spinner stationSpinner = (Spinner) findViewById(R.id.stationSpinner);
                 stationSpinner.setSelection(_stationAdapter.getPosition(station));
@@ -538,7 +550,8 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
      */
     private class OnStationSelectedListener implements OnItemSelectedListener {
 
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        @Override
+		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             Station selected = (Station)parent.getItemAtPosition(pos);
             if (selected.getId() != -1 && selected != _stationManager.getStation()) {
                 _stationManager.setStaticStation(selected);
@@ -547,7 +560,8 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                 _favoritesDB.updateFavorite(selected);
             }
         }
-        public void onNothingSelected(AdapterView<?> arg0) {
+        @Override
+		public void onNothingSelected(AdapterView<?> arg0) {
             // Nada que hacer
         }
     }
@@ -555,7 +569,8 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     @Override
     public void internetError() {
         runOnUiThread(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 removeDialog(DIALOG_LOADING_ID);
                 _dialogLoadingShown = false;
                 Toast.makeText(getApplicationContext(), R.string.internet_error, Toast.LENGTH_LONG).show();
@@ -568,7 +583,8 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     @Override
     public void internalError() {
         runOnUiThread(new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 if (!isFinishing()) {
                     removeDialog(DIALOG_LOADING_ID);
                     _dialogLoadingShown = false;
@@ -581,10 +597,11 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     }
 
     @Override
-    public void onStationUpdate(Station station) {
+    public void onStationUpdate(@NonNull Station station) {
         if (station == _stationManager.getStation()) {
             runOnUiThread(new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     if (!isFinishing()) {
                         removeDialog(DIALOG_LOADING_ID);
                         _dialogLoadingShown = false;
@@ -599,7 +616,8 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     public void internetOff() {
         if (_dialogLoadingShown) {
             runOnUiThread(new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     if (!isFinishing()) {
                         removeDialog(DIALOG_LOADING_ID);
                         _dialogLoadingShown = false;
@@ -611,10 +629,11 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     }
 
     @Override
-    public void upToDate(Station station) {
+    public void upToDate(@NonNull Station station) {
         if (_dialogLoadingShown) {
             runOnUiThread(new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     if (!isFinishing()) {
                         removeDialog(DIALOG_LOADING_ID);
                         _dialogLoadingShown = false;

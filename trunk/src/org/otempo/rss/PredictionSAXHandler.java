@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import org.otempo.model.Station;
 import org.otempo.model.StationPrediction;
@@ -15,6 +16,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.util.Log;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
+
+@NonNullByDefault(false)
 public abstract class PredictionSAXHandler extends DefaultHandler {
 
 	public PredictionSAXHandler(Station station, boolean clearPredictions) {
@@ -22,6 +28,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 		_clearPredictions  = clearPredictions;
 	}
 
+	@Nullable
 	protected final StationPrediction.WindState parseWindState(String stateString) {
 		try {
 			int state = Integer.valueOf(stateString);
@@ -44,6 +51,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 	 * @param format Formato de fecha esperado
 	 * @return Un objeto Calendar con la fecha
 	 */
+	@Nullable
 	protected final Calendar parseDate(String string, SimpleDateFormat format) {
 	    if (format == null) return null;
 	    try {
@@ -59,7 +67,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
     public final void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (localName == "dataPredicion") {
         	String format = attributes.getValue("formato");
-            _lastPredFormat = new SimpleDateFormat(format);
+            _lastPredFormat = new SimpleDateFormat(format, SPANISH);
         }
         _currentChars.setLength(0);
     }
@@ -101,7 +109,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
     }
 
     // Process specific short/medium elements in the subclasses.
-    public abstract void endElementSpecific(String uri, String localName);
+    public abstract void endElementSpecific(@NonNull String uri, @NonNull String localName);
     
     // Returns currently accumulated text in the active element
     protected final String getCurrentText() { return _currentChars.toString(); }
@@ -113,6 +121,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 	 * @TODO Se puede optimizar un poco mediante un HashMap, aunque hay otras optimizaciones más relevantes
 	 * @TODO(ryu): Añadir nuevos iconos de meteogalicia
 	 */
+    @Nullable
 	protected final StationPrediction.SkyState parseSkyState(String stateString) {
 		StationPrediction.SkyState[] knownStates = {
 				/*101*/StationPrediction.SkyState.CLEAR,
@@ -166,7 +175,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 	// Borra la predicción actual (usado al cerrar un item) 
 	protected abstract void resetCurrentPrediction();
 	
-	
+	private static Locale SPANISH = new Locale("es"); 
 	
     // Lista de predicciones de la estación
     private List<StationPrediction> _predictions = new ArrayList<StationPrediction>();
@@ -182,7 +191,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 	
     // Formato de fecha de creación (no se especifica en el RSS)
     private static final SimpleDateFormat _creationDateformat =
-        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", SPANISH);
 
     // Borrar las predicciones antes de cargar las nuevas?
 	private boolean _clearPredictions = true;

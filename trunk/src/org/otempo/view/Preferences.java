@@ -71,14 +71,16 @@ public class Preferences extends PreferenceActivity {
         String defaultStation = getPreferenceManager().getSharedPreferences().getString(PREF_DEFAULT_STATION, DEFAULT_DEFAULT_STATION);
         defaultStationFixed.setEnabled(defaultStation.equals("fixed"));
         findPreference(PREF_DEFAULT_STATION).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            public boolean onPreferenceChange(Preference arg0, Object arg1) {
+            @Override
+			public boolean onPreferenceChange(Preference arg0, Object arg1) {
                 findPreference(PREF_DEFAULT_STATION_FIXED).setEnabled(arg1.equals("fixed"));
                 return true;
             }
         });
 
         findPreference(PREF_BACKGROUND).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            public boolean onPreferenceChange(Preference arg0, Object arg1) {
+            @Override
+			public boolean onPreferenceChange(Preference arg0, Object arg1) {
                 if (arg1.equals("user_image")) {
                     Intent intent = new Intent(Intent.ACTION_PICK,
                                                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);

@@ -20,6 +20,7 @@ package org.otempo.model;
 
 import java.util.Calendar;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.R;
 import org.otempo.util.DateUtils;
 
@@ -32,7 +33,7 @@ public abstract class StationPrediction {
     /**
      * @return La fecha para la que se aplica la predicción
      */
-    public Calendar getDate() {
+    public @Nullable Calendar getDate() {
         return _date;
     }
 
@@ -40,7 +41,7 @@ public abstract class StationPrediction {
      * Establece la fecha para la que se aplica la predicción
      * @param date la fecha para la que se aplica la predicción
      */
-    public void setDate(Calendar date) {
+    public void setDate(@Nullable Calendar date) {
         _date = date;
     }
 
@@ -48,14 +49,14 @@ public abstract class StationPrediction {
      * Establece la fecha en que se realizó la predicción
      * @param creationDate La fecha en que se realizó la predicción
      */
-    public void setCreationDate(Calendar creationDate) {
+    public void setCreationDate(@Nullable Calendar creationDate) {
         _creationDate = creationDate;
     }
 
     /**
      * @return La fecha en que se realizó la predicción
      */
-    public Calendar getCreationDate() {
+    public @Nullable Calendar getCreationDate() {
         return _creationDate;
     }
 
@@ -68,10 +69,15 @@ public abstract class StationPrediction {
      * Devuelve la edad de una predicción en milisegundos desde que se creó hasta ahora mismo
      */
     public long getAge() {
-        return DateUtils.getDifference(_creationDate, Calendar.getInstance());
+        final Calendar creationDate = _creationDate;
+		if (creationDate != null) {
+			return DateUtils.getDifference(creationDate, Calendar.getInstance());
+		} else {
+			return 0;
+		}
     }
 
-	protected int skyStateDescriptionResId(SkyState state) {
+	protected int skyStateDescriptionResId(@Nullable SkyState state) {
 		if (state == null) {
 			return R.string.sky_unknown;
 		}
@@ -100,7 +106,7 @@ public abstract class StationPrediction {
         }
 	}
 	
-	public int windStateDescriptionResId(WindState state) {
+	public int windStateDescriptionResId(@Nullable WindState state) {
 		if (state == null) {
 			return R.string.wind_unknown;
 		}
@@ -217,9 +223,10 @@ public abstract class StationPrediction {
     	/*331*/VERY_STRONG_WEST,
     	/*332*/VERY_STRONG_NORTHWEST,
     }
+ 
     
-    private Calendar _date = null;
-    private Calendar _creationDate = null;
+    @Nullable private Calendar _date = null;
+    @Nullable private Calendar _creationDate = null;
 	private int _maxTemp = 0; ///< Temperatura máxima del día
 	private int _minTemp = 0; ///< Temperatura mínima del día
 }

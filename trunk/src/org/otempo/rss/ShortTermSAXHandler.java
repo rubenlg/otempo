@@ -18,6 +18,7 @@
  */
 package org.otempo.rss;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.model.Station;
 import org.otempo.model.StationPrediction;
 import org.otempo.model.StationShortTermPrediction;
@@ -69,10 +70,13 @@ public class ShortTermSAXHandler extends PredictionSAXHandler {
      * @return La última predicción a corto plazo parseada, o crea una nueva 
      */
     protected StationShortTermPrediction getCurrentShortPrediction() {
-        if (_currentShortPrediction == null) {
+    	StationShortTermPrediction current = _currentShortPrediction; 
+        if (current == null) {
             _currentShortPrediction = new StationShortTermPrediction();
+            return _currentShortPrediction;
+        } else {
+        	return current;
         }
-        return _currentShortPrediction;
     }
 
 	@Override
@@ -81,5 +85,5 @@ public class ShortTermSAXHandler extends PredictionSAXHandler {
 	}
 
     // Predicción a corto plazo actual
-    private StationShortTermPrediction _currentShortPrediction = null;
+    @Nullable private StationShortTermPrediction _currentShortPrediction = null;
 }

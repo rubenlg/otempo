@@ -18,6 +18,7 @@
  */
 package org.otempo.rss;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.model.Station;
 import org.otempo.model.StationMediumTermPrediction;
 import org.otempo.model.StationPrediction;
@@ -55,10 +56,13 @@ public class MediumTermSAXHandler extends PredictionSAXHandler {
      * @return La última predicción a medio plazo parseada, o crea una nueva 
      */
     protected StationMediumTermPrediction getCurrentMediumPrediction() {
-        if (_currentMediumPrediction == null) {
-            _currentMediumPrediction = new StationMediumTermPrediction();
+    	StationMediumTermPrediction current = _currentMediumPrediction; 
+        if (current == null) {
+        	_currentMediumPrediction = new StationMediumTermPrediction();
+        	return _currentMediumPrediction;
+        } else {
+        	return current;
         }
-        return _currentMediumPrediction;
     }
     
 	@Override
@@ -67,6 +71,6 @@ public class MediumTermSAXHandler extends PredictionSAXHandler {
 	}
 
     // Predicción a medio plazo actual
-    private StationMediumTermPrediction _currentMediumPrediction = null;
+    @Nullable private StationMediumTermPrediction _currentMediumPrediction = null;
 
 }

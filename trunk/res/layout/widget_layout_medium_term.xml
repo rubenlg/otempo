@@ -8,11 +8,12 @@
 	android:paddingLeft="15dip" 
 	android:paddingRight="12dip"
 	android:paddingTop="17dip" 
-	android:paddingBottom="20dip">
+	android:paddingBottom="20dip"
+	android:baselineAligned="false">
 	<LinearLayout 
 		android:orientation="vertical"
 		android:layout_height="fill_parent" 
-		android:layout_width="fill_parent"
+		android:layout_width="0dip"
 		android:layout_weight="1">
 		<TextView android:id="@+id/widgetCurrentDay"
 			android:text="mar 3" 

@@ -19,6 +19,7 @@
 package org.otempo.model;
 
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.R;
 
 import android.content.Context;
@@ -30,6 +31,7 @@ public class StationMediumTermPrediction extends StationPrediction {
     /**
      * @return El estado predicho del cielo
      */
+	@Nullable
     public SkyState getSkyState() {
         return _skyState;
     }
@@ -38,14 +40,15 @@ public class StationMediumTermPrediction extends StationPrediction {
      * Establece el estado predicho del cielo
      * @param skyState El estado predicho del cielo
      */
-    public void setSkyState(SkyState skyState) {
+    public void setSkyState(@Nullable SkyState skyState) {
         _skyState = skyState;
     }
 
+    @Nullable
 	public WindState getWindState() {
 		return _windState;
 	}
-	public void setWindState(WindState windState) {
+	public void setWindState(@Nullable WindState windState) {
 		_windState = windState;
 	}
 	public float getRainProbability() {
@@ -68,7 +71,7 @@ public class StationMediumTermPrediction extends StationPrediction {
 				_rainProbability);
 	}
     
-    private SkyState _skyState = null; ///< El estado predicho del cielo
-	private WindState _windState = null; ///< El estado predicho del viento
+    @Nullable private SkyState _skyState = null; ///< El estado predicho del cielo
+    @Nullable private WindState _windState = null; ///< El estado predicho del viento
     private float _rainProbability = 0; //< Probabilidad de lluvia (%)
 }

@@ -18,6 +18,7 @@
  */
 package org.otempo.view;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.otempo.R;
@@ -40,7 +41,6 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
-
 /**
  * Proveedor del widget que se puede integrar en el escritorio
  */
@@ -95,7 +95,8 @@ public class StationWidget extends AppWidgetProvider {
      */
     private static StationPrediction getTodayPrediction(Station station) {
         for (StationPrediction prediction: station.getPredictions()) {
-            if (DateUtils.isFromToday(prediction.getDate())) {
+        	final Calendar predictionDate = prediction.getDate();
+            if (predictionDate != null && DateUtils.isFromToday(predictionDate)) {
                 return prediction;
             }
         }

@@ -25,7 +25,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import android.util.SparseArray;
+import org.eclipse.jdt.annotation.Nullable;
+
+import android.util.SparseIntArray;
 
 /**
  * Clase que encapsula una estación meteorológica de meteogalicia
@@ -95,6 +97,7 @@ public class Station {
     /**
      * @return Fecha del último acceso realizado a la estación
      */
+    @Nullable
     public Date getLastAccess() {
         return _lastAccess;
     }
@@ -125,10 +128,12 @@ public class Station {
         	_predictions.clear();
         }
         for (StationPrediction prediction: predictions) {
-            if (_lastCreationDate == null || prediction.getCreationDate().after(_lastCreationDate)) {
-                _lastCreationDate = prediction.getCreationDate();
+        	Calendar creationDate = prediction.getCreationDate();
+            if (_lastCreationDate == null || (creationDate != null && creationDate.after(_lastCreationDate))) {
+                _lastCreationDate = creationDate;
             }
-            if (prediction.getDate().after(yesterday)) {
+            Calendar predictionDate = prediction.getDate(); 
+            if (predictionDate != null && predictionDate.after(yesterday)) {
                 _predictions.add(prediction);
             }
         }
@@ -149,6 +154,7 @@ public class Station {
     /**
      * @return la fecha de creación más reciente de todas las predicciones
      */
+    @Nullable
     public synchronized Calendar getLastCreationDate() {
         return _lastCreationDate;
     }
@@ -209,6 +215,7 @@ public class Station {
      * @param stationId ID de la estación buscada
      * @return La estación que corresponde con el ID, o null si ninguna corresponde
      */
+    @Nullable
     public static Station getById(int stationId) {
     	// Reescribe IDs antiguos. TODO(ryu): Eliminar tras un par de versiones.
     	if (isLegacyId(stationId)) {
@@ -238,7 +245,7 @@ public class Station {
      * @return True si es legacy
      */
     public static boolean isLegacyId(int id) {
-    	return _legacyIdMap.get(id) != null;
+    	return _legacyIdMap.get(id, -1) != -1;
     }
     
     private String _name;
@@ -246,16 +253,16 @@ public class Station {
     private double _latitude;
     private double _longitude;
     private int _accessCount = 0; ///< Viene de BD
-    private Date _lastAccess = null; ///< Viene de BD
+    @Nullable private Date _lastAccess = null; ///< Viene de BD
     private List<StationPrediction> _predictions = new ArrayList<StationPrediction>();
     /// Contiene la fecha de creación más reciente de todas las predicciones
-    private Calendar _lastCreationDate = null;
+    @Nullable private Calendar _lastCreationDate = null;
 
     private static List<Station> _knownStations = new ArrayList<Station>();
     
     // Mapa de identificador viejo a identificador nuevo para las antiguas localidades de Meteogalicia
     // TODO(ryu): Eliminar después de un par de versiones
-    private static SparseArray<Integer> _legacyIdMap = new SparseArray<Integer>();
+    private static SparseIntArray _legacyIdMap = new SparseIntArray();
     
     static {
     	// Provincia de A Coruña

@@ -18,6 +18,7 @@
  */
 package org.otempo.service.states;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.model.Station;
 import org.otempo.service.UpdateService;
 
@@ -69,7 +70,7 @@ public class WaitNextUpdateState implements ServiceState {
     @Override
     public void connectivityAvailable(UpdateService context) {}
 
-    private Station _requestedPrioStation = null;
+    @Nullable private Station _requestedPrioStation = null;
 
     private static final int DEFAULT_UPDATE_PERIOD = 1000 * 3600; // 1 Hour
     private static final String PREF_UPDATE_PERIOD = "updatePeriod";
