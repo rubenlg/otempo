@@ -108,8 +108,11 @@
 	<string name="wind_very_strong_southeast">moi forte do sueste</string>
 	<string name="wind_very_strong_southwest">moi forte do suroeste</string>
 	<string name="wind_very_strong_west">moi forte do oeste</string>
-	
-    <string-array name="changelog_3_1">
+
+    <string-array name="changelog_3_2">
+        <item>Adaptado á nova ubicación dos RSS de Meteogalicia. Gracias a Pilar e Konyn polo feedback.</item>
+    </string-array>
+	<string-array name="changelog_3_1">
     	<item>Arranxado un faio na aplicación.</item>
 		<item>Mellorada a distribución en pantalla para que teña o mesmo aspecto en todolos dispositivos. Gracias a Adrian Barbeito polo feedback.</item>
 	</string-array>

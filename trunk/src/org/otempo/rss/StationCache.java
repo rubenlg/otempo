@@ -166,7 +166,7 @@ public class StationCache {
     		return String.format(Locale.US, "%d_medium.rss", stationId);
     	}
     }
-    
+
     /**
      * @param stationId ID de la estación
      * @return Obtiene el RSS de una estación directamente desde Internet
@@ -176,9 +176,9 @@ public class StationCache {
         URL url = null;
         try {
         	if (shortTerm) {
-        		url = new URL("http://www.meteogalicia.es/web/RSS/rssLocalidades.action?idZona="+stationId+"&dia=-1");
+        		url = new URL("http://servizos.meteogalicia.es/rss/predicion/rssLocalidades.action?idZona="+stationId+"&dia=-1");
         	} else {
-        		url = new URL("http://www.meteogalicia.es/web/RSS/rssConcellosMPrazo.action?idZona="+stationId+"&dia=-1");
+        		url = new URL("http://servizos.meteogalicia.es/rss/predicion/rssConcellosMPrazo.action?idZona="+stationId+"&dia=-1");
         	}
             URLConnection conn = url.openConnection();
             InputStream stream = conn.getInputStream();
