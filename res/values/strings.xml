@@ -108,12 +108,15 @@
 	<string name="wind_very_strong_southeast">very strong southeast</string>
 	<string name="wind_very_strong_southwest">very strong southwest</string>
 	<string name="wind_very_strong_west">very strong west</string>	
-	
+
+    <string-array name="changelog_3_2">
+        <item>Adapt to the new RSS location of Meteogalicia. Thanks Pilar and Konyn for the feedback.</item>
+    </string-array>
     <string-array name="changelog_3_1">
-    	<item>Fixed a crash in the application.</item>
-		<item>Improved the layout to look and feel the same in all devices. Thanks to Adrian Barbeito for the feedback.</item>
-	</string-array>
-	<string-array name="changelog_3_0">
+        <item>Fixed a crash in the application.</item>
+        <item>Improved the layout to look and feel the same in all devices. Thanks to Adrian Barbeito for the feedback.</item>
+    </string-array>
+    	<string-array name="changelog_3_0">
     	<item>Added again medium-term predictions.</item>
     	<item>Added all the municipalities from Galicia.</item>
 		<item>Medium term predictions have now description when tapping on them.</item>
