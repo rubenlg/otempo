@@ -43,7 +43,7 @@ public class WaitConnectionState implements ServiceState {
         }
     }
 
-    synchronized void sleep() {
+    private synchronized void sleep() {
         try {
             wait(_sleepTimeout);
         } catch (InterruptedException e) {
@@ -51,7 +51,7 @@ public class WaitConnectionState implements ServiceState {
         }
     }
 
-    synchronized void awake() {
+    private synchronized void awake() {
         notify();
     }
 
@@ -67,5 +67,5 @@ public class WaitConnectionState implements ServiceState {
         awake();
     }
 
-    public static final int _sleepTimeout = 1000*60*5; // 5 minutos
+    private static final int _sleepTimeout = 1000*60*5; // 5 minutos
 }

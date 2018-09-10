@@ -69,7 +69,7 @@ public class ChangeLog extends ListActivity {
     }
 
     private class Version {
-        public Version(String versionName, int versionChangesR) {
+        Version(String versionName, int versionChangesR) {
             _versionName = versionName;
             _versionChangesR = versionChangesR;
         }

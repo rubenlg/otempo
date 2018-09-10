@@ -114,5 +114,5 @@ public class Preferences extends PreferenceActivity {
         }
     }
 
-    final static int ACTIVITY_SELECT_BG_IMAGE = 1;
+    private final static int ACTIVITY_SELECT_BG_IMAGE = 1;
 }

@@ -39,9 +39,9 @@ import android.util.Log;
  * Caché de estaciones. Almacena en la SD una copia de los RSS solicitados a meteogalicia, y evita volver a descargarlas de Internet si la copia es muy reciente.
  */
 public class StationCache {
-    public static final String DATA_DIR = "Android/data/org.otempo/cache/"; ///< Ubicación de la caché
-    public static final long MAX_STORAGE_HOURS = 1; ///< Máxima edad permitida para una copia en caché, a partir de ahí se vuelve a descargar (en horas)
-    public static final long MAX_STORAGE_AGE = 1000 * 3600 * MAX_STORAGE_HOURS; ///< Máxima edad permitida para una copia en caché, a partir de ahí se vuelve a descargar (en ms)
+    private static final String DATA_DIR = "Android/data/org.otempo/cache/"; ///< Ubicación de la caché
+    private static final long MAX_STORAGE_HOURS = 1; ///< Máxima edad permitida para una copia en caché, a partir de ahí se vuelve a descargar (en horas)
+    private static final long MAX_STORAGE_AGE = 1000 * 3600 * MAX_STORAGE_HOURS; ///< Máxima edad permitida para una copia en caché, a partir de ahí se vuelve a descargar (en ms)
 
     /**
      * Obtiene el RSS de una estación, decidiendo si servirlo directamente desde la SD, o desde Internet
@@ -54,7 +54,7 @@ public class StationCache {
         InputStream stream = null;
         long storageAge = getStorageAge(stationId, shortTerm);
         // Si la edad de la caché no es buena, intentamos coger de internet
-        if ((storageAge < 0 || storageAge > MAX_STORAGE_AGE) && forceStorage == false) {
+        if ((storageAge < 0 || storageAge > MAX_STORAGE_AGE) && !forceStorage) {
             stream = getFromInternet(stationId, shortTerm);
         }
         // Si en internet no se puede, o la caché es buena, pues de la caché

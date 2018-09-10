@@ -99,7 +99,7 @@ public class StationShortTermPrediction extends StationPrediction {
 				createNightDescription(ctx);
 	}
 
-	public String createMorningDescription(Context ctx) {
+	private String createMorningDescription(Context ctx) {
 		if (_rainProbabilityMorning < 0) {
 			return String.format(ctx.getString(R.string.shortTermDescriptionFormatMorningNoRain),
 					ctx.getString(skyStateDescriptionResId(_skyStateMorning)),
@@ -112,7 +112,7 @@ public class StationShortTermPrediction extends StationPrediction {
 		}
 	}
 
-	public String createAfternoonDescription(Context ctx) {
+	private String createAfternoonDescription(Context ctx) {
 		if (_rainProbabilityAfternoon < 0) {
 			return String.format(ctx.getString(R.string.shortTermDescriptionFormatAfternoonNoRain),
 					ctx.getString(skyStateDescriptionResId(_skyStateAfternoon)),
@@ -125,7 +125,7 @@ public class StationShortTermPrediction extends StationPrediction {
 		}
 	}
 
-	public String createNightDescription(Context ctx) {
+	private String createNightDescription(Context ctx) {
 		if (_rainProbabilityNight < 0) {
 			return String.format(ctx.getString(R.string.shortTermDescriptionFormatNightNoRain),
 					ctx.getString(skyStateDescriptionResId(_skyStateNight)),

@@ -25,13 +25,18 @@ import java.util.TimeZone;
 import org.otempo.model.ClosestStationComparator;
 import org.otempo.model.Station;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
 /**
  * Encapsula la lógica para cambiar de estación manualmente o automáticamente
@@ -54,8 +59,12 @@ public class StationManager implements LocationListener {
     public StationManager(LocationManager locManager, String defaultStationPreference, int defaultStationFixed) {
         String provider = locManager.getBestProvider(new Criteria(), false);
         if (provider != null) {
-            _lastLocation = locManager.getLastKnownLocation(provider);
-            locManager.requestLocationUpdates(provider, MIN_UPDATE_MINUTES * 60000, MIN_UPDATE_DISTANCE, this);
+            try {
+                _lastLocation = locManager.getLastKnownLocation(provider);
+                locManager.requestLocationUpdates(provider, MIN_UPDATE_MINUTES * 60000, MIN_UPDATE_DISTANCE, this);
+            } catch (SecurityException e) {
+                // No permissions... pass.
+            }
         }
         if (defaultStationPreference.equals("nearest")) {
             _followLocation = true;
@@ -184,7 +193,8 @@ public class StationManager implements LocationListener {
 	public void onStatusChanged(@Nullable String provider, int status, @Nullable Bundle extras) {
     }
 
-    @Nullable Listener _listener = null; ///< Escuchador de cambios de estación
+    @Nullable
+    private Listener _listener = null; ///< Escuchador de cambios de estación
     @Nullable private Station _station = null; ///< Estación activa
     private boolean _followLocation = false; ///< Cambio automático de localización
     @Nullable private Location _lastLocation = null; ///< Última localización conocida

@@ -30,29 +30,29 @@ public interface StationUpdateListener {
      * pasa a ser otra diferente, o bien porque tiene datos más nuevos.
      * @param station La estación que se debe mostrar
      */
-    public void onStationUpdate(Station station);
+    void onStationUpdate(Station station);
 
     /**
      * Se llama aquí cuando falla la carga por error de internet
      * Llamado desde un thread diferente al de la UI, CUIDADO!
      */
-    public void internetError();
+    void internetError();
 
     /**
      * Se llama aquí cuando falla la carga por error del programador
      * Llamado desde un thread diferente al de la UI, CUIDADO!
      */
-    public void internalError();
+    void internalError();
 
     /**
      * Se llama aquí cuando una estación que se intentó actualizar ya estaba actualizada
      * Llamado desde un thread diferente al de la UI, CUIDADO!
      */
-    public void upToDate(Station station);
+    void upToDate(Station station);
 
     /**
      * Se llama aquí cuando se desactiva el acceso a internet durante una actualización
      * Llamado desde un thread diferente al de la UI, CUIDADO!
      */
-    public void internetOff();
+    void internetOff();
 }

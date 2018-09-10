@@ -20,13 +20,13 @@ import android.util.Log;
 
 public abstract class PredictionSAXHandler extends DefaultHandler {
 
-	public PredictionSAXHandler(Station station, boolean clearPredictions) {
+	PredictionSAXHandler(Station station, boolean clearPredictions) {
 		_station = station;
 		_clearPredictions  = clearPredictions;
 	}
 
 	@Nullable
-	protected final StationPrediction.WindState parseWindState(String stateString) {
+    final StationPrediction.WindState parseWindState(String stateString) {
 		try {
 			int state = Integer.valueOf(stateString);
 	    	// Lo convertimos a algo indexable (0..N)
@@ -49,7 +49,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 	 * @return Un objeto Calendar con la fecha
 	 */
 	@Nullable
-	protected final Calendar parseDate(String string, SimpleDateFormat format) {
+    private Calendar parseDate(String string, SimpleDateFormat format) {
 	    if (format == null) return null;
 	    try {
 	        Calendar c = new GregorianCalendar();
@@ -106,10 +106,10 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
     }
 
     // Process specific short/medium elements in the subclasses.
-    public abstract void endElementSpecific(@NonNull String uri, @NonNull String localName);
+    protected abstract void endElementSpecific(@NonNull String uri, @NonNull String localName);
     
     // Returns currently accumulated text in the active element
-    protected final String getCurrentText() { return _currentChars.toString(); }
+    final String getCurrentText() { return _currentChars.toString(); }
     
     /**
 	 * Permite parsear un estado del cielo
@@ -119,7 +119,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 	 * @TODO(ryu): Añadir nuevos iconos de meteogalicia
 	 */
     @Nullable
-	protected final StationPrediction.SkyState parseSkyState(String stateString) {
+    final StationPrediction.SkyState parseSkyState(String stateString) {
 		StationPrediction.SkyState[] knownStates = {
 				/*101*/StationPrediction.SkyState.CLEAR,
 				/*102*/StationPrediction.SkyState.HIGH_CLOUDS,

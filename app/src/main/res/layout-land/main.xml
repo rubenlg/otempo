@@ -6,8 +6,7 @@
 	android:layout_height="match_parent">
 
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-				  android:id="@+id/root"
-				  android:orientation="vertical"
+        android:orientation="vertical"
 				  android:layout_width="fill_parent"
 				  android:layout_height="fill_parent"
 				  android:padding="5dp">

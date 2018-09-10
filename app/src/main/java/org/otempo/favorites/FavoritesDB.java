@@ -93,7 +93,7 @@ public class FavoritesDB extends SQLiteOpenHelper {
     /**
      * Accede a la base de datos y relee la información de accesos
      */
-    protected void refreshFavorites() {
+    private void refreshFavorites() {
         String[] columns = {STATION_ID_COL, ACCESS_COUNT_COL, LAST_ACCESS_COL};
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(FAVORITES_TABLE_NAME, columns, null, null, null, null, null);

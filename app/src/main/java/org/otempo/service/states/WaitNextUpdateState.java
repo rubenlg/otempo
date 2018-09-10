@@ -49,7 +49,7 @@ public class WaitNextUpdateState implements ServiceState {
             }
         }
     }
-    synchronized void sleep(int updatePeriod) {
+    private synchronized void sleep(int updatePeriod) {
         try {
             wait(updatePeriod);
         } catch (InterruptedException e) {
@@ -57,7 +57,7 @@ public class WaitNextUpdateState implements ServiceState {
         }
     }
 
-    synchronized void awake() {
+    private synchronized void awake() {
         notify();
     }
 

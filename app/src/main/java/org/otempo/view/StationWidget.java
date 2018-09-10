@@ -71,7 +71,7 @@ public class StationWidget extends AppWidgetProvider {
     /**
      * Elige la primera estación a mostrar, si es posible
      */
-    public static boolean firstStation(Context context) {
+    private static boolean firstStation(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String defaultStationPreference = prefs.getString(Preferences.PREF_DEFAULT_STATION, Preferences.DEFAULT_DEFAULT_STATION);
         int defaultStationFixed = Integer.valueOf(prefs.getString(Preferences.PREF_DEFAULT_STATION_FIXED, "1"));

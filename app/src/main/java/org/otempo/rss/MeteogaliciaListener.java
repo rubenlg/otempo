@@ -32,18 +32,18 @@ public interface MeteogaliciaListener {
      * Se llama aquí cuando se han cargado datos para la localización solicitada
      * Llamado desde un thread diferente al de la UI, CUIDADO!
      */
-    public void dataLoaded(List<StationShortTermPrediction> _shortPredictions,
-                           List<StationMediumTermPrediction> _mediumPredictions);
+    void dataLoaded(List<StationShortTermPrediction> _shortPredictions,
+                    List<StationMediumTermPrediction> _mediumPredictions);
 
     /**
      * Se llama aquí cuando falla la carga por error de internet
      * Llamado desde un thread diferente al de la UI, CUIDADO!
      */
-    public void internetError();
+    void internetError();
 
     /**
      * Se llama aquí cuando falla la carga por error del programador
      * Llamado desde un thread diferente al de la UI, CUIDADO!
      */
-    public void internalError();
+    void internalError();
 }

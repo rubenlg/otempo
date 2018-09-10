@@ -23,8 +23,8 @@ package org.otempo.model;
  */
 public interface StationPredictionVisitor {
     /// Procesa una predicción de corto plazo. Index es global, entre todas las predicciones de cualquier tipo (short+medium)
-    public void apply(StationShortTermPrediction shortPred, int index);
+    void apply(StationShortTermPrediction shortPred, int index);
 
     /// Procesa una predicción de largo plazo. Index es global, entre todas las predicciones de cualquier tipo (short+medium)
-    public void apply(StationMediumTermPrediction medPred, int index);
+    void apply(StationMediumTermPrediction medPred, int index);
 }

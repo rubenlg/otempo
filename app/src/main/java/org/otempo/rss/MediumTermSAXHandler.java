@@ -56,7 +56,7 @@ public class MediumTermSAXHandler extends PredictionSAXHandler {
     /**
      * @return La última predicción a medio plazo parseada, o crea una nueva 
      */
-    protected StationMediumTermPrediction getCurrentMediumPrediction() {
+    private StationMediumTermPrediction getCurrentMediumPrediction() {
     	StationMediumTermPrediction current = _currentMediumPrediction; 
         if (current == null) {
         	_currentMediumPrediction = new StationMediumTermPrediction();

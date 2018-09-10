@@ -436,7 +436,8 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
     }
 
     /// Widget displayed station
-    @Nullable StationManager _widgetStationManager = null;
+    @Nullable
+    private StationManager _widgetStationManager = null;
 
     /// Stations pending to be processed
     private List<Station> _pendingStations = new ArrayList<Station>();

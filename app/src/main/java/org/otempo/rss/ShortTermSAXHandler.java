@@ -70,7 +70,7 @@ public class ShortTermSAXHandler extends PredictionSAXHandler {
     /**
      * @return La última predicción a corto plazo parseada, o crea una nueva 
      */
-    protected StationShortTermPrediction getCurrentShortPrediction() {
+    private StationShortTermPrediction getCurrentShortPrediction() {
     	StationShortTermPrediction current = _currentShortPrediction; 
         if (current == null) {
             _currentShortPrediction = new StationShortTermPrediction();

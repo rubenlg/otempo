@@ -30,6 +30,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -38,10 +39,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
@@ -169,9 +173,9 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     }
 
     static class SideMenuItem {
-      public final int id;
-      public final int title_id;
-      public final int icon_id;
+      final int id;
+      final int title_id;
+      final int icon_id;
 
       SideMenuItem(int id, int title_id, int icon_id) {
         this.id = id;
@@ -181,7 +185,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     }
 
     static class SideMenuListAdapter extends ArrayAdapter<SideMenuItem> {
-      public SideMenuListAdapter(Context context, int resource, List<SideMenuItem> items) {
+      SideMenuListAdapter(Context context, int resource, List<SideMenuItem> items) {
         super(context, resource, items);
       }
 
@@ -231,6 +235,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     @Override
     protected void onResume() {
         super.onResume();
+        maybeRequestPermission();
         if (_binder != null) {
             _binder.addListener(this);
         }
@@ -265,7 +270,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     return true;
   }
 
-  public void onMenuItemSelected(int id) {
+  private void onMenuItemSelected(int id) {
     if (id == R.id.settings) {
       showPreferences();
     } else if (id == R.id.source) {
@@ -301,7 +306,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     /**
      * Lanza el navegador en la web de meteogalicia
      */
-    void gotoMeteogalicia() {
+    private void gotoMeteogalicia() {
         Station station = _stationManager.getStation();
         if (station != null) {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.meteogalicia.es/web/predicion/localidades/localidadesIndex.action?idZona=" + station.getId()));
@@ -315,7 +320,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     /**
      * Recarga las preferencias, por si han cambiado
      */
-    protected void reloadPreferences() {
+    private void reloadPreferences() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String stationOrdering = prefs.getString(Preferences.PREF_STATION_ORDERING, Preferences.DEFAULT_STATION_ORDERING);
         if (stationOrdering.equals("favorites")) {
@@ -367,7 +372,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     /**
      * Devuelve un TextView con el nombre de un día para poner sobre las predicciones
      */
-    protected TextView getDayName(Calendar date) {
+    private TextView getDayName(Calendar date) {
         TextView dayName = new TextView(this);
         if (date != null) {
             dayName.setText(DateUtils.weekDayFormat.format(date.getTime()));
@@ -421,8 +426,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                     dialog.cancel();
                 }
             });
-            AlertDialog alert = builder.create();
-            dialog = alert;
+            dialog = builder.create();
             break;
         }
         default:
@@ -430,6 +434,10 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                 Station station = _stationManager.getStation();
                 if (station != null) {
                     int day = id - DIALOG_DAY_COMMENT_MASK - station.getId() * MAX_PREDICTED_DAYS;
+                    if (day >= station.getPredictions().size()) {
+                        // Avoid overflow if tapping past the last prediction.
+                        return null;
+                    }
                     StationPrediction prediction = station.getPredictions().get(day);
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     Calendar predictionDate = prediction.getDate();
@@ -468,7 +476,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     /**
      * Actualiza la parte del layout que visualiza predicciones
      */
-    protected void updateLayout() {
+    private void updateLayout() {
 
         final LinearLayout scrolled  = (LinearLayout) findViewById(R.id.scrolled);
         scrolled.removeAllViews();
@@ -575,7 +583,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     /**
      * Inicializa la estación elegida, mirando en el GPS y sino pillando la primera.
      */
-    protected void initStationManager() {
+    private void initStationManager() {
         final Object data = getLastNonConfigurationInstance();
         if (data == null) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -614,7 +622,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     /**
      * Rellena un adaptador de android con las estaciones, para el combo
      */
-    protected void fillStationAdapter() {
+    private void fillStationAdapter() {
         _stationAdapter.clear();
         if (_stationManager.getStation() == null) {
             _stationAdapter.add(new Station(getString(R.string.waiting_gps), -1, 0, 0));
@@ -627,7 +635,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     /**
      * Utilidad para mostrar la actividad con las preferencias
      */
-    protected void showPreferences() {
+    private void showPreferences() {
         Intent settingsActivity = new Intent(getBaseContext(), Preferences.class);
         startActivity(settingsActivity);
     }
@@ -740,27 +748,33 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         return list;
     }
 
+    private void maybeRequestPermission() {
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },0 );
+        }
+    }
+
     private UpdateServiceBinder _binder = null;
 
     private String _background = "default";
     /// La actividad necesita un manager propio por si cambias de estacion a mano, no le sirve el del servicio
-    StationManager _stationManager = null;
+    private StationManager _stationManager = null;
     private ArrayAdapter<Station> _stationAdapter = null;
     private static FavoritesDB _favoritesDB = null;
     private ServiceConnection _serviceConnection = null;
 
-    final static int DIALOG_LOADING_ID = 0;
-    final static int DIALOG_PREDICTION_EXPLAIN_ID = 1;
-    final static int DIALOG_DAY_COMMENT_MASK = 1024; // por encima de 1024, el diálogo es el comentario de un día
-    final static int AGE_THRESHOLD = 1200; // 20 minutos para marcar como vieja la última localización conocida
-    final static int MAX_PREDICTED_DAYS = 20; // Cualquier número mayor a la cantidad de días que mostramos estará bien, preferiblemente no muy grande.
+    private final static int DIALOG_LOADING_ID = 0;
+    private final static int DIALOG_PREDICTION_EXPLAIN_ID = 1;
+    private final static int DIALOG_DAY_COMMENT_MASK = 1024; // por encima de 1024, el diálogo es el comentario de un día
+    private final static int MAX_PREDICTED_DAYS = 20; // Cualquier número mayor a la cantidad de días que mostramos estará bien, preferiblemente no muy grande.
 
     // Lo tenemos aquí y no en dateutils porque necesita los strings para estar traducido
-    public static SimpleDateFormat lastUpdateFormat = null;
+    private static SimpleDateFormat lastUpdateFormat = null;
 
     /// Usamos esto para no intentar mostrar el diálogo en los cambios de orientación
-    boolean _skipDialog = false;
+    private boolean _skipDialog = false;
 
     /// Marca para saber si el usuario está esperando por el UpdateService y debemos notificar cualquier evento que suceda
-    boolean _dialogLoadingShown = false;
+    private boolean _dialogLoadingShown = false;
 }

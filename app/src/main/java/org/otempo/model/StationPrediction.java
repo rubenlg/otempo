@@ -77,7 +77,7 @@ public abstract class StationPrediction {
 		}
     }
 
-	protected int skyStateDescriptionResId(@Nullable SkyState state) {
+	int skyStateDescriptionResId(@Nullable SkyState state) {
 		if (state == null) {
 			return R.string.sky_unknown;
 		}
@@ -106,7 +106,7 @@ public abstract class StationPrediction {
         }
 	}
 	
-	public int windStateDescriptionResId(@Nullable WindState state) {
+	int windStateDescriptionResId(@Nullable WindState state) {
 		if (state == null) {
 			return R.string.wind_unknown;
 		}

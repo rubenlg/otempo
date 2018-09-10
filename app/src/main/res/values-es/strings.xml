@@ -25,8 +25,6 @@
     <string name="morning">Mañana</string>
     <string name="afternoon">Tarde</string>
     <string name="evening">Noche</string>
-    <string name="sync_short">OTempo sincronizando</string>
-    <string name="sync_desc">Descargando predicciones</string>
     <string name="predicted_at">"'Predicho el' EEE d 'a las' HH:mm"</string>
     <string name="predicted_time_why">¿Por qué?</string>
     <string name="predicted_time_explain">En este momento, Meteogalicia sólo recalcula las predicciones dos veces al día.</string>
