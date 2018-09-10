@@ -31,9 +31,8 @@ import java.net.URLConnection;
 import java.util.Date;
 import java.util.Locale;
 
-import org.eclipse.jdt.annotation.Nullable;
-
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 /**

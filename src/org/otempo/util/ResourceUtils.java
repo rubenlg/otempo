@@ -18,10 +18,10 @@
  */
 package org.otempo.util;
 
-import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.R;
 import org.otempo.model.StationPrediction.SkyState;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 /**

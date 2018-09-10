@@ -20,7 +20,7 @@ package org.otempo.model;
 
 import java.util.Calendar;
 
-import org.eclipse.jdt.annotation.Nullable;
+import android.support.annotation.Nullable;
 import org.otempo.R;
 import org.otempo.util.DateUtils;
 

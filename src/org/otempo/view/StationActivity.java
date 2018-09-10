@@ -1,47 +1,22 @@
 /*
  * Copyright (C) 2010-2011 Ruben Lopez
- * 
+ *
  * This file is part of OTempo - Galician Weather
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 3 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; If not, see <http://www.gnu.org/licenses/>.
  */
 package org.otempo.view;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-import org.eclipse.jdt.annotation.NonNull;
-import org.otempo.R;
-import org.otempo.StationManager;
-import org.otempo.StationUpdateListener;
-import org.otempo.favorites.FavoritesDB;
-import org.otempo.model.AlphabeticStationComparator;
-import org.otempo.model.FavoritesStationComparator;
-import org.otempo.model.Station;
-import org.otempo.model.StationMediumTermPrediction;
-import org.otempo.model.StationPrediction;
-import org.otempo.model.StationPredictionVisitor;
-import org.otempo.model.StationShortTermPrediction;
-import org.otempo.service.UpdateService;
-import org.otempo.service.UpdateService.UpdateServiceBinder;
-import org.otempo.util.BitmapUtils;
-import org.otempo.util.DateUtils;
-import org.otempo.util.LayoutUtils;
-import org.otempo.util.ResourceUtils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -66,21 +41,53 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
+
+import org.otempo.R;
+import org.otempo.StationManager;
+import org.otempo.StationUpdateListener;
+import org.otempo.favorites.FavoritesDB;
+import org.otempo.model.AlphabeticStationComparator;
+import org.otempo.model.FavoritesStationComparator;
+import org.otempo.model.Station;
+import org.otempo.model.StationMediumTermPrediction;
+import org.otempo.model.StationPrediction;
+import org.otempo.model.StationPredictionVisitor;
+import org.otempo.model.StationShortTermPrediction;
+import org.otempo.service.UpdateService;
+import org.otempo.service.UpdateService.UpdateServiceBinder;
+import org.otempo.util.BitmapUtils;
+import org.otempo.util.DateUtils;
+import org.otempo.util.LayoutUtils;
+import org.otempo.util.ResourceUtils;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Actividad principal, donde se muestran los datos de la estación actual
@@ -146,6 +153,79 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                 }
             });
         }
+
+        final Button hamburgerButton = (Button) findViewById(R.id.hamburgerButton);
+        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        final ListView sideMenu = (ListView) findViewById(R.id.sideMenu);
+        if (hamburgerButton != null && drawerLayout != null && sideMenu != null) {
+            hamburgerButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    drawerLayout.openDrawer(sideMenu);
+                }
+            });
+        }
+        fillSideMenu(sideMenu, drawerLayout);
+    }
+
+    static class SideMenuItem {
+      public final int id;
+      public final int title_id;
+      public final int icon_id;
+
+      SideMenuItem(int id, int title_id, int icon_id) {
+        this.id = id;
+        this.title_id = title_id;
+        this.icon_id = icon_id;
+      }
+    }
+
+    static class SideMenuListAdapter extends ArrayAdapter<SideMenuItem> {
+      public SideMenuListAdapter(Context context, int resource, List<SideMenuItem> items) {
+        super(context, resource, items);
+      }
+
+      @Override
+      public View getView(int position, View convertView, ViewGroup parent) {
+        View v = convertView;
+        if (v == null) {
+          LayoutInflater vi;
+          vi = LayoutInflater.from(getContext());
+          v = vi.inflate(R.layout.side_menu_item, null);
+        }
+
+        SideMenuItem item = getItem(position);
+        if (item != null) {
+          ImageView icon = (ImageView) v.findViewById(R.id.side_menu_item_icon);
+          if (icon != null) {
+            icon.setImageResource(item.icon_id);
+          }
+          TextView title = (TextView) v.findViewById(R.id.side_menu_item_title);
+          if (title != null) {
+            title.setText(item.title_id);
+          }
+        }
+        return v;
+      }
+    }
+
+    private void fillSideMenu(ListView sideMenu, final DrawerLayout drawerLayout) {
+      final List<SideMenuItem> items = new ArrayList<SideMenuItem>();
+      items.add(new SideMenuItem(R.id.settings, R.string.settings, android.R.drawable.ic_menu_preferences));
+      items.add(new SideMenuItem(R.id.syncNow, R.string.syncMenu, R.drawable.menu_update));
+      items.add(new SideMenuItem(R.id.shareFbook, R.string.shareMenu, android.R.drawable.ic_menu_share));
+      items.add(new SideMenuItem(R.id.source, R.string.source, android.R.drawable.ic_menu_info_details));
+      items.add(new SideMenuItem(R.id.myLocation, R.string.my_location, android.R.drawable.ic_menu_mylocation));
+      items.add(new SideMenuItem(R.id.changelogMenu, R.string.changelogMenu, android.R.drawable.ic_menu_recent_history));
+      sideMenu.setAdapter(new SideMenuListAdapter(this, R.layout.side_menu_item, items));
+
+      sideMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+          drawerLayout.closeDrawers();
+          onMenuItemSelected(items.get(pos).id);
+        }
+      });
     }
 
     @Override
@@ -179,33 +259,37 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.settings) {
-            showPreferences();
-        } else if (item.getItemId() == R.id.source) {
-            gotoMeteogalicia();
-        } else if (item.getItemId() == R.id.myLocation) {
-            _stationManager.setClosestStation();
-        } else if (item.getItemId() == R.id.changelogMenu) {
-            showChangeLog();
-        } else if (item.getItemId() == R.id.syncNow) {
-            Station current = _stationManager.getStation();
-            if (current != null) {
-                showDialog(DIALOG_LOADING_ID);
-                _binder.requestWithPriority(_stationManager.getStation());
-            }
-        } else if (item.getItemId() == R.id.shareFbook) {
-            Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-            shareIntent.setType("text/plain");
-            shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
-            shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://www.facebook.com/otempo");
-            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_chooser_title)));
-        }
-        return true;
-    }
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    onMenuItemSelected(item.getItemId());
+    return true;
+  }
 
-    /**
+  public void onMenuItemSelected(int id) {
+    if (id == R.id.settings) {
+      showPreferences();
+    } else if (id == R.id.source) {
+      gotoMeteogalicia();
+    } else if (id == R.id.myLocation) {
+      _stationManager.setClosestStation();
+    } else if (id == R.id.changelogMenu) {
+      showChangeLog();
+    } else if (id == R.id.syncNow) {
+      Station current = _stationManager.getStation();
+      if (current != null) {
+        showDialog(DIALOG_LOADING_ID);
+        _binder.requestWithPriority(_stationManager.getStation());
+      }
+    } else if (id == R.id.shareFbook) {
+      Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+      shareIntent.setType("text/plain");
+      shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
+      shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://www.facebook.com/otempo");
+      startActivity(Intent.createChooser(shareIntent, getString(R.string.share_chooser_title)));
+    }
+  }
+
+  /**
      * Lanza la actividad del registro de cambios
      */
     private void showChangeLog() {
@@ -213,7 +297,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         startActivity(i);
 
     }
-    
+
     /**
      * Lanza el navegador en la web de meteogalicia
      */
@@ -353,7 +437,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                     if (predictionDate != null) {
                     	header = DateUtils.weekDayFormat.format(predictionDate.getTime());
                     }
-                    builder.setMessage(header + ":\n"
+                    builder.setMessage(header + ":\n\n"
                     			+ prediction.createDescription(this))
                     .setCancelable(false)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -394,7 +478,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         }
         final LinearLayout.LayoutParams params =
             new LinearLayout.LayoutParams(
-            		LayoutUtils.dips(75, this), 
+            		LayoutUtils.dips(75, this),
             		LinearLayout.LayoutParams.WRAP_CONTENT);
         Station currentStation = _stationManager.getStation();
         if (currentStation == null) {
@@ -670,7 +754,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     final static int DIALOG_DAY_COMMENT_MASK = 1024; // por encima de 1024, el diálogo es el comentario de un día
     final static int AGE_THRESHOLD = 1200; // 20 minutos para marcar como vieja la última localización conocida
     final static int MAX_PREDICTED_DAYS = 20; // Cualquier número mayor a la cantidad de días que mostramos estará bien, preferiblemente no muy grande.
-    
+
     // Lo tenemos aquí y no en dateutils porque necesita los strings para estar traducido
     public static SimpleDateFormat lastUpdateFormat = null;
 

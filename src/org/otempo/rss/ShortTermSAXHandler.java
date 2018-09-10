@@ -18,7 +18,8 @@
  */
 package org.otempo.rss;
 
-import org.eclipse.jdt.annotation.Nullable;
+import android.support.annotation.Nullable;
+
 import org.otempo.model.Station;
 import org.otempo.model.StationPrediction;
 import org.otempo.model.StationShortTermPrediction;
@@ -85,5 +86,6 @@ public class ShortTermSAXHandler extends PredictionSAXHandler {
 	}
 
     // Predicción a corto plazo actual
-    @Nullable private StationShortTermPrediction _currentShortPrediction = null;
+    @Nullable
+    private StationShortTermPrediction _currentShortPrediction = null;
 }

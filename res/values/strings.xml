@@ -35,15 +35,31 @@
     <string name="update_amount">Station count</string>
     <string name="share_chooser_title">Share OTempo App</string>
     <string name="share_subject">OTempo, galician weather for Android</string>
-	<string name="shortTermDescriptionFormat" formatted="false">
-	    %s in the morning, with %s wind and rain probability of %.0f%%.\n
-		%s in the afternoon, with %s wind and rain probability of %.0f%%.\n
+	<string name="shortTermDescriptionFormatMorning" formatted="false">
+	    %s in the morning, with %s wind and rain probability of %.0f%%.
+	</string>
+	<string name="shortTermDescriptionFormatMorningNoRain" formatted="false">
+	    %s in the morning, with %s wind (unknown rain probability).
+	</string>
+	<string name="shortTermDescriptionFormatAfternoon" formatted="false">
+		%s in the afternoon, with %s wind and rain probability of %.0f%%.
+	</string>
+	<string name="shortTermDescriptionFormatAfternoonNoRain" formatted="false">
+		%s in the afternoon, with %s wind (unknown rain probability).
+	</string>
+	<string name="shortTermDescriptionFormatNight" formatted="false">
 		%s in the night, with %s wind and rain probability of %.0f%%.
 	</string>
-   	<string name="mediumTermDescriptionFormat" formatted="false">
+	<string name="shortTermDescriptionFormatNightNoRain" formatted="false">
+		%s in the night, with %s wind (unknown rain probability).
+	</string>
+	<string name="mediumTermDescriptionFormat" formatted="false">
 	    %s, with %s wind and rain probability of %.0f%%.
 	</string>
-	
+	<string name="mediumTermDescriptionFormatNoRain" formatted="false">
+	    %s, with %s wind (unknown rain probability).
+	</string>
+
 	<!--  Sky states -->
 	<string name="sky_clear">Clear</string>
 	<string name="sky_cloud_and_clear">Clouds and clears</string>
@@ -107,14 +123,20 @@
 	<string name="wind_very_strong_south">very strong south</string>
 	<string name="wind_very_strong_southeast">very strong southeast</string>
 	<string name="wind_very_strong_southwest">very strong southwest</string>
-	<string name="wind_very_strong_west">very strong west</string>	
+	<string name="wind_very_strong_west">very strong west</string>
 
-    <string-array name="changelog_3_2">
-        <item>Adapt to the new RSS location of Meteogalicia. Thanks Pilar and Konyn for the feedback.</item>
+	<string-array name="changelog_3_4">
+		<item>Added a menu on the top left corner for devices without a hardware menu button. Thanks Juan for the feedback!</item>
+	</string-array>
+	<string-array name="changelog_3_3">
+		<item>Fix the rain message when the probability is unknown. Thanks Tony for the feedback!</item>
+	</string-array>
+	<string-array name="changelog_3_2">
+        <item>Adapt to the new RSS location of Meteogalicia. Thanks Pilar and Konyn for the feedback!</item>
     </string-array>
     <string-array name="changelog_3_1">
         <item>Fixed a crash in the application.</item>
-        <item>Improved the layout to look and feel the same in all devices. Thanks to Adrian Barbeito for the feedback.</item>
+        <item>Improved the layout to look and feel the same in all devices. Thanks Adrian Barbeito for the feedback!</item>
     </string-array>
     	<string-array name="changelog_3_0">
     	<item>Added again medium-term predictions.</item>

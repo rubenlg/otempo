@@ -20,7 +20,6 @@ package org.otempo.favorites;
 
 import java.util.Date;
 
-import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.R;
 import org.otempo.model.Station;
 import org.otempo.util.Nullness;
@@ -30,6 +29,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 
 /**
  * Utilidad para acceder a la base de datos de estaciones favoritas (más accedidas)
@@ -41,7 +41,8 @@ public class FavoritesDB extends SQLiteOpenHelper {
     private static final String STATION_ID_COL = "station_id";
     private static final String ACCESS_COUNT_COL = "accessCount";
     private static final String LAST_ACCESS_COL = "last_access";
-    @Nullable private String _createSQL = null;
+    @Nullable
+    private String _createSQL = null;
 
     /**
      * Construye la utilidad

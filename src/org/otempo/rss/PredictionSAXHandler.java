@@ -14,13 +14,10 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.NonNullByDefault;
-import org.eclipse.jdt.annotation.Nullable;
-
-@NonNullByDefault(false)
 public abstract class PredictionSAXHandler extends DefaultHandler {
 
 	public PredictionSAXHandler(Station station, boolean clearPredictions) {

@@ -35,15 +35,31 @@
     <string name="update_amount">Estacións actualizadas</string>
     <string name="share_chooser_title">Compartir app OTempo</string>
     <string name="share_subject">OTempo, meteoroloxía galega para Android</string>
-    <string name="shortTermDescriptionFormat" formatted="false">
-	    %s pola mañá, con vento %s e probabilidade de chuvia do %.0f%%.\n
-		%s pola tarde, con vento %s e probabilidade de chuvia do %.0f%%.\n
+    <string name="shortTermDescriptionFormatMorning" formatted="false">
+	    %s pola mañá, con vento %s e probabilidade de chuvia do %.0f%%.
+	</string>
+    <string name="shortTermDescriptionFormatMorningNoRain" formatted="false">
+	    %s pola mañá, con vento %s (probabilidade de chuvia descoñecida).
+	</string>
+    <string name="shortTermDescriptionFormatAfternoon" formatted="false">
+		%s pola tarde, con vento %s e probabilidade de chuvia do %.0f%%.
+	</string>
+    <string name="shortTermDescriptionFormatAfternoonNoRain" formatted="false">
+		%s pola tarde, con vento %s (probabilidade de chuvia descoñecida).
+	</string>
+    <string name="shortTermDescriptionFormatNight" formatted="false">
 		%s pola noite, con vento %s e probabilidade de chuvia do %.0f%%.
 	</string>
-	<string name="mediumTermDescriptionFormat" formatted="false">
+    <string name="shortTermDescriptionFormatNightNoRain" formatted="false">
+		%s pola noite, con vento %s (probabilidade de chuvia descoñecida).
+	</string>
+   	<string name="mediumTermDescriptionFormat" formatted="false">
 	    %s, con vento %s e probabilidade de chuvia do %.0f%%.
 	</string>
-
+   	<string name="mediumTermDescriptionFormatNoRain" formatted="false">
+	    %s, con vento %s (probabilidade de chuvia descoñecida).
+	</string>
+   	
 	<!--  Sky states -->
 	<string name="sky_clear">Despexado</string>
 	<string name="sky_cloud_and_clear">Nubes e claros</string>
@@ -109,7 +125,13 @@
 	<string name="wind_very_strong_southwest">moi forte do suroeste</string>
 	<string name="wind_very_strong_west">moi forte do oeste</string>
 
-    <string-array name="changelog_3_2">
+	<string-array name="changelog_3_4">
+		<item>Menú na esquina superior esquerda para dispositivos sen botón de menú. Gracias a Juan polo feedback!</item>
+	</string-array>
+    <string-array name="changelog_3_3">
+        <item>Mellorada a mensaxe de chuvia cando non se coñece a probabilidade. Gracias a Tony polo reporte.</item>
+    </string-array>
+	<string-array name="changelog_3_2">
         <item>Adaptado á nova ubicación dos RSS de Meteogalicia. Gracias a Pilar e Konyn polo feedback.</item>
     </string-array>
 	<string-array name="changelog_3_1">

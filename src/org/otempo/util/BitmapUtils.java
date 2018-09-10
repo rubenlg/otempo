@@ -22,10 +22,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import org.eclipse.jdt.annotation.Nullable;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.Nullable;
 
 /**
  * Herramientas para bitmaps

@@ -35,15 +35,31 @@
     <string name="update_amount">Estaciones actualizadas</string>
     <string name="share_chooser_title">Compartir app OTempo</string>
     <string name="share_subject">OTempo, meteorología gallega para Android</string>
-	<string name="shortTermDescriptionFormat" formatted="false">
-	    %s por la mañana, con viento %s y probabilidad de lluvia del %.0f%%.\n
-		%s por la tarde, con viento %s y probabilidad de lluvia del %.0f%%.\n
+	<string name="shortTermDescriptionFormatMorning" formatted="false">
+	    %s por la mañana, con viento %s y probabilidad de lluvia del %.0f%%.
+	</string>
+	<string name="shortTermDescriptionFormatMorningNoRain" formatted="false">
+	    %s por la mañana, con viento %s (probabilidad de lluvia desconocida).
+	</string>
+	<string name="shortTermDescriptionFormatAfternoon" formatted="false">
+		%s por la tarde, con viento %s y probabilidad de lluvia del %.0f%%.
+	</string>
+	<string name="shortTermDescriptionFormatAfternoonNoRain" formatted="false">
+		%s por la tarde, con viento %s (probabilidad de lluvia desconocida).
+	</string>
+	<string name="shortTermDescriptionFormatNight" formatted="false">
 		%s por la noche, con viento %s y probabilidad de lluvia del %.0f%%.
+	</string>
+	<string name="shortTermDescriptionFormatNightNoRain" formatted="false">
+		%s por la noche, con viento %s (probabilidad de lluvia desconocida).
 	</string>
 	<string name="mediumTermDescriptionFormat" formatted="false">
 	    %s, con viento %s y probabilidad de lluvia del %.0f%%.
 	</string>
-	
+	<string name="mediumTermDescriptionFormatNoRain" formatted="false">
+	    %s, con viento %s (probabilidad de lluvia desconocida).
+	</string>
+
 	<!--  Sky states -->
 	<string name="sky_clear">Cielo despejado</string>
 	<string name="sky_cloud_and_clear">Nubes y claros</string>
@@ -107,8 +123,14 @@
 	<string name="wind_very_strong_southeast">muy fuerte del sudeste</string>
 	<string name="wind_very_strong_southwest">muy fuerte del suroeste</string>
 	<string name="wind_very_strong_west">muy fuerte del oeste</string>
-	
-    <string-array name="changelog_3_2">
+
+	<string-array name="changelog_3_4">
+		<item>Menú en la esquina superior izquierda para dispositivos sin botón de menú. Gracias a Juan por el feedback!</item>
+	</string-array>
+    <string-array name="changelog_3_3">
+        <item>Mejorado el mensaje de lluvia cuando no se conoce la probabilidad. Gracias a Tony por el reporte.</item>
+    </string-array>
+	<string-array name="changelog_3_2">
         <item>Adaptado a la nueva ubicación de los RSS de Meteogalicia. Gracias a Pilar y Konyn por el feedback.</item>
     </string-array>
 	<string-array name="changelog_3_1">

@@ -20,12 +20,10 @@ package org.otempo.model;
 
 import java.util.Comparator;
 
-import org.eclipse.jdt.annotation.NonNullByDefault;
 
 /**
  * Comparador de estaciones por favoritismo. La estación más accedida será menor
  */
-@NonNullByDefault(false)
 public class FavoritesStationComparator implements Comparator<Station> {
 
     @Override

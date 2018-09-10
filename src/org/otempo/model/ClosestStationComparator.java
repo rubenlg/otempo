@@ -20,14 +20,11 @@ package org.otempo.model;
 
 import java.util.Comparator;
 
-import org.eclipse.jdt.annotation.NonNullByDefault;
-
 /**
  * Comparador de estaciones por distancia a unas coordenadas de latitud/longitud dadas
  * Será menor la estación cuya distancia a la coordenada dada sea menor
  * Sirve para ordenar estaciones por distancia a nuestra ubicación, por ejemplo.
  */
-@NonNullByDefault(false)
 public class ClosestStationComparator implements Comparator<Station> {
     /**
      * Construye el comparador

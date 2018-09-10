@@ -22,8 +22,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.otempo.model.ClosestStationComparator;
 import org.otempo.model.Station;
 
@@ -32,6 +30,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 /**
  * Encapsula la lógica para cambiar de estación manualmente o automáticamente

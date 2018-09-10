@@ -1,57 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout 
+<android.support.v4.widget.DrawerLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/root"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	<Spinner
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/stationSpinner"
-		android:prompt="@string/select_station">
-	</Spinner>
-	<HorizontalScrollView
-		android:id="@+id/scrollView" 
-		android:layout_width="wrap_content" 
-		android:layout_height="fill_parent"
-		android:background="@drawable/background"
-		android:layout_below="@id/stationSpinner"
-		>
-		<RelativeLayout 
-			android:id="@+id/scrolled_container"
-			android:layout_width="wrap_content" 
-			android:layout_height="fill_parent"
-			android:orientation="vertical">
-			<LinearLayout 
-				android:id="@+id/predictedGroup" 
-				android:layout_width="wrap_content" 
+	android:id="@+id/drawerLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/root"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/stationBar">
+			<Button
+				android:id="@+id/hamburgerButton"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:paddingLeft="20dp"
+				android:paddingRight="20dp"
+				android:text="☰"/>
+			<Spinner
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="22dip"
-				android:layout_marginBottom="20dip"
-				android:layout_alignParentBottom="true"
-				android:orientation="horizontal">
-				<TextView 
-					android:id="@+id/predictionTime"
-					android:text="---" 
+				android:id="@+id/stationSpinner"
+				android:prompt="@string/select_station">
+			</Spinner>
+		</LinearLayout>
+		<HorizontalScrollView
+			android:id="@+id/scrollView"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:background="@drawable/background"
+			android:layout_below="@id/stationBar"
+			>
+			<RelativeLayout
+				android:id="@+id/scrolled_container"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+				<LinearLayout
+					android:id="@+id/predictedGroup"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginLeft="22dip"
-					/>
-				<Button
-					android:id="@+id/predictionHelpButton"
-					android:text="@string/predicted_time_why"
+					android:layout_marginTop="22dip"
+					android:layout_marginBottom="20dip"
+					android:layout_alignParentBottom="true"
+					android:orientation="horizontal">
+					<TextView
+						android:id="@+id/predictionTime"
+						android:text="---"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="22dip"
+						/>
+					<Button
+						android:id="@+id/predictionHelpButton"
+						android:text="@string/predicted_time_why"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="20dip"/>
+				</LinearLayout>
+				<LinearLayout
+					android:id="@+id/scrolled"
 					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="20dip"/>
-			</LinearLayout>
-			<LinearLayout 
-				android:id="@+id/scrolled" 
-				android:layout_width="wrap_content" 
-				android:layout_height="fill_parent"
-				android:orientation="horizontal"
-				android:layout_above="@id/predictedGroup"
-				>
-			</LinearLayout>
+					android:layout_height="match_parent"
+					android:orientation="horizontal"
+					android:layout_above="@id/predictedGroup"
+					>
+				</LinearLayout>
 			</RelativeLayout>
-	</HorizontalScrollView>
-</RelativeLayout>
+		</HorizontalScrollView>
+	</RelativeLayout>
+	<ListView
+		android:layout_width="240dp"
+		android:layout_height="match_parent"
+		android:layout_gravity="left"
+		android:orientation="vertical"
+		android:background="#cc111111"
+		android:id="@+id/sideMenu">
+	</ListView>
+</android.support.v4.widget.DrawerLayout>
