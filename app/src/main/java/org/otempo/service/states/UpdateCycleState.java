@@ -44,16 +44,8 @@ public class UpdateCycleState implements ServiceState {
     @Override
     public void update(UpdateService context) {
         if (context.hasPendingStations() && context.hasConnectivity()) {
-            if (!_notificationActive && context.countPendingStations() >= MIN_STATIONS_TO_NOTIFY) {
-                addNotification(context);
-                _notificationActive = true;
-            }
             context.processNextStation(false);
         } else {
-            if (_notificationActive) {
-                removeNotification(context);
-                _notificationActive = false;
-            }
             if (!context.hasPendingStations()) {
                 // Se pueden usar datos en segundo plano
                 if (context.getBackgroundDataAllowed()) {
@@ -78,29 +70,6 @@ public class UpdateCycleState implements ServiceState {
         context.addStationMaxPrio(station);
     }
 
-    private void addNotification(Context context) {
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(R.drawable.notification_update, context.getString(R.string.sync_short), System.currentTimeMillis());
-
-        //Context context = getApplicationContext();
-        CharSequence contentTitle = context.getString(R.string.sync_short);
-        CharSequence contentText = context.getString(R.string.sync_desc);
-        Intent notificationIntent = new Intent(context, StationActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-        notificationManager.notify(UPDATING_NOTIF_ID, notification);
-    }
-
-    private void removeNotification(Context context) {
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(UPDATING_NOTIF_ID);
-    }
-
     @Override
     public void connectivityAvailable(UpdateService context) {}
-
-    private boolean _notificationActive = false;
-    private static final int UPDATING_NOTIF_ID = 1;
-    // Número mínimo de estaciones que se deben actualizar en un ciclo para molestar al usuario con la notificación
-    private static final int MIN_STATIONS_TO_NOTIFY = 3;
 }
