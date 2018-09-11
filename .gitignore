@@ -3,3 +3,5 @@
 local.properties
 app/build
 *.iml
+app/release/
+build/
