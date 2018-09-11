@@ -190,6 +190,7 @@ public class StationCache {
             Log.e("OTempo", "BAD URL: "+e.getMessage(), e);
             return null;
         } catch (IOException e) {
+            Log.e("OTempo", "IOException: " + e.getMessage(), e);
             return null;
         }
     }

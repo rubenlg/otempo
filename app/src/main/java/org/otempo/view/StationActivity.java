@@ -18,6 +18,7 @@
  */
 package org.otempo.view;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -749,8 +750,10 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     }
 
     private void maybeRequestPermission() {
-        if (Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+        if (Build.VERSION.SDK_INT < 23) {
+            return;
+        }
+        if (ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },0 );
         }
     }
