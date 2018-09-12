@@ -97,7 +97,7 @@ public class StationCache {
                 return null;
             }
         } else {
-            Log.w("OTempo", "SD CARD STATE: "+state.toString());
+            Log.w("OTempo", "SD CARD STATE: " + state);
             return null;
         }
     }

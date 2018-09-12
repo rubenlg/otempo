@@ -111,6 +111,7 @@ public class FavoritesDB extends SQLiteOpenHelper {
                 }
             } while (cursor.moveToNext());
         }
+        cursor.close();
     }
 
 }

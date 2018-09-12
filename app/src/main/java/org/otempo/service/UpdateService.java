@@ -127,6 +127,7 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
         String defaultStationPreference = prefs.getString(Preferences.PREF_DEFAULT_STATION, Preferences.DEFAULT_DEFAULT_STATION);
         int defaultStationFixed = Integer.valueOf(prefs.getString(Preferences.PREF_DEFAULT_STATION_FIXED, "1"));
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        assert locationManager != null;
         _widgetStationManager = new StationManager(locationManager, defaultStationPreference, defaultStationFixed);
         _widgetStationManager.setListener(this);
     }
@@ -190,13 +191,6 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
                 iStation.remove();
             }
         }
-    }
-
-    /**
-     * @return Devuelve el recuento de estaciones pendientes de ser actualizadas
-     */
-    public synchronized int countPendingStations() {
-        return _pendingStations.size();
     }
 
     /**
@@ -375,7 +369,7 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
         }
 
         // Patrón Observador
-        private Set<StationUpdateListener> _listeners = new HashSet<StationUpdateListener>();
+        private final Set<StationUpdateListener> _listeners = new HashSet<>();
 
         /**
          * Solicita que una estación se actualice con prioridad máxima frente a cualquier otra (típicamente la que está viendo el usuario)
@@ -404,7 +398,7 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
      */
     public boolean getBackgroundDataAllowed() {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return connManager.getBackgroundDataSetting();
+        return connManager.getActiveNetworkInfo().isConnected();
     }
 
     /**
@@ -440,13 +434,13 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
     private StationManager _widgetStationManager = null;
 
     /// Stations pending to be processed
-    private List<Station> _pendingStations = new ArrayList<Station>();
+    private final List<Station> _pendingStations = new ArrayList<>();
 
     /// Was the service thread killed?
     private boolean _interrupted = false;
 
     /// Binder to communicate with clients
-    private UpdateServiceBinder _binder = new UpdateServiceBinder();
+    private final UpdateServiceBinder _binder = new UpdateServiceBinder();
 
     /// Worker thread
     @Nullable private Thread _workThread = null;

@@ -28,7 +28,7 @@ import java.util.Locale;
 public class DateUtils {
 
 	/// Formato para los días de la semana que se visualizan encima de cada predicción
-    public static SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEE d", Locale.getDefault());
+    public static final SimpleDateFormat weekDayFormat = new SimpleDateFormat("EEE d", Locale.getDefault());
 
     /**
      * Comprueba si una fecha dada se corresponde al día de hoy
@@ -52,20 +52,4 @@ public class DateUtils {
         return cal.after(yesterday);
     }
 
-    /**
-     * Devuelve la diferencia en milisegundos entre dos fechas.
-     * @param start Fecha inicial
-     * @param end Fecha final
-     * @return Milisegundos
-     * @note start debe ser > end
-     * @note Tiene en cuenta cambios de horario (verano/invierno)
-     */
-    public static long getDifference(Calendar start, Calendar end) {
-        if (start.after(end)) {
-            return - getDifference(end, start);
-        }
-        long endMillis   =  end.getTimeInMillis() +  end.getTimeZone().getOffset(  end.getTimeInMillis() );
-        long startMillis = start.getTimeInMillis() + start.getTimeZone().getOffset( start.getTimeInMillis() );
-        return (endMillis - startMillis);
-    }
 }

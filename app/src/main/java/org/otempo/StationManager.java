@@ -18,25 +18,16 @@
  */
 package org.otempo;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-
 import org.otempo.model.ClosestStationComparator;
 import org.otempo.model.Station;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 
 /**
  * Encapsula la lógica para cambiar de estación manualmente o automáticamente
@@ -125,30 +116,6 @@ public class StationManager implements LocationListener {
         if (_autoSortStations && lastLocation != null) {
             Station.sortStations(new ClosestStationComparator(lastLocation.getLatitude(), lastLocation.getLongitude()));
         }
-    }
-
-    /**
-     * Devuelve la antiguedad de la última localización conocida, en segundos
-     * @note Falla cuando se hacen cambios de hora, no me parece importante para este caso
-     */
-    public long getLastLocationAgeInSecs() {
-    	final Location lastLocation = _lastLocation; 
-        if (lastLocation == null) {
-            return Long.MAX_VALUE;
-        } else {
-            long locTime = lastLocation.getTime();
-            Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-            long nowTime = cal.getTimeInMillis();
-            return (nowTime - locTime) / 1000;
-        }
-    }
-
-    /**
-     * @return La última localización conocida
-     */
-    @Nullable
-    public Location getLastLocation() {
-        return _lastLocation;
     }
 
     /**

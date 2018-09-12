@@ -18,16 +18,9 @@
  */
 package org.otempo.service.states;
 
-import org.otempo.R;
 import org.otempo.model.Station;
 import org.otempo.service.UpdateService;
-import org.otempo.view.StationActivity;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 /**

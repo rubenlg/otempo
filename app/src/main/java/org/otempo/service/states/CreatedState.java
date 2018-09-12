@@ -49,8 +49,6 @@ public class CreatedState implements ServiceState {
         context.addStationMaxPrio(station);
     }
 
-    int _curStation = 0;
-
     @Override
     public void connectivityAvailable(UpdateService context) {}
 }

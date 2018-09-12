@@ -54,9 +54,8 @@ public class StationWidget extends AppWidgetProvider {
         // Si no conseguimos elegir primera estación, entonces ponemos el mensaje de "cargando..."
         if (!firstStation(context)) {
             // Actualizamos todos los widgets (va a ser uno solo) con el layout por defecto
-            for (int i=0; i<N; i++) {
-                int appWidgetId = appWidgetIds[i];
-                RemoteViews rviews = new RemoteViews(context.getPackageName(),  R.layout.widget_layout_err);
+            for (int appWidgetId : appWidgetIds) {
+                RemoteViews rviews = new RemoteViews(context.getPackageName(), R.layout.widget_layout_err);
                 rviews.setTextViewText(R.id.widgetError, context.getString(R.string.loading_data));
 
                 Intent otempoIntent = new Intent(context, StationActivity.class);
@@ -76,6 +75,7 @@ public class StationWidget extends AppWidgetProvider {
         String defaultStationPreference = prefs.getString(Preferences.PREF_DEFAULT_STATION, Preferences.DEFAULT_DEFAULT_STATION);
         int defaultStationFixed = Integer.valueOf(prefs.getString(Preferences.PREF_DEFAULT_STATION_FIXED, "1"));
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        assert locationManager != null;
         StationManager tmpStationManager = new StationManager(locationManager, defaultStationPreference, defaultStationFixed);
         Station station = tmpStationManager.getStation();
         if (station == null) {

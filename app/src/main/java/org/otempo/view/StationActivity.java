@@ -18,7 +18,6 @@
  */
 package org.otempo.view;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -48,7 +47,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -130,8 +128,8 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         if (_favoritesDB == null) {
             _favoritesDB = new FavoritesDB(getApplicationContext());
         }
-        Spinner stationSpinner = (Spinner) findViewById(R.id.stationSpinner);
-        _stationAdapter = new ArrayAdapter<Station>(this, android.R.layout.simple_spinner_item);
+        Spinner stationSpinner = findViewById(R.id.stationSpinner);
+        _stationAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         initStationManager();
         fillStationAdapter();
         _stationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -144,7 +142,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
 
         reloadPreferences();
 
-        final Button predictionHelpButton = (Button) findViewById(R.id.predictionHelpButton);
+        final Button predictionHelpButton = findViewById(R.id.predictionHelpButton);
         if (predictionHelpButton != null) { // en landscape no hay
             predictionHelpButton.setOnClickListener(new OnClickListener() {
                 @Override
@@ -159,9 +157,9 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
             });
         }
 
-        final Button hamburgerButton = (Button) findViewById(R.id.hamburgerButton);
-        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        final ListView sideMenu = (ListView) findViewById(R.id.sideMenu);
+        final Button hamburgerButton = findViewById(R.id.hamburgerButton);
+        final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+        final ListView sideMenu = findViewById(R.id.sideMenu);
         if (hamburgerButton != null && drawerLayout != null && sideMenu != null) {
             hamburgerButton.setOnClickListener(new OnClickListener() {
                 @Override
@@ -169,8 +167,8 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                     drawerLayout.openDrawer(sideMenu);
                 }
             });
+            fillSideMenu(sideMenu, drawerLayout);
         }
-        fillSideMenu(sideMenu, drawerLayout);
     }
 
     static class SideMenuItem {
@@ -190,8 +188,9 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         super(context, resource, items);
       }
 
+      @NonNull
       @Override
-      public View getView(int position, View convertView, ViewGroup parent) {
+      public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View v = convertView;
         if (v == null) {
           LayoutInflater vi;
@@ -201,11 +200,11 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
 
         SideMenuItem item = getItem(position);
         if (item != null) {
-          ImageView icon = (ImageView) v.findViewById(R.id.side_menu_item_icon);
+          ImageView icon = v.findViewById(R.id.side_menu_item_icon);
           if (icon != null) {
             icon.setImageResource(item.icon_id);
           }
-          TextView title = (TextView) v.findViewById(R.id.side_menu_item_title);
+          TextView title = v.findViewById(R.id.side_menu_item_title);
           if (title != null) {
             title.setText(item.title_id);
           }
@@ -215,7 +214,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     }
 
     private void fillSideMenu(ListView sideMenu, final DrawerLayout drawerLayout) {
-      final List<SideMenuItem> items = new ArrayList<SideMenuItem>();
+      final List<SideMenuItem> items = new ArrayList<>();
       items.add(new SideMenuItem(R.id.settings, R.string.settings, android.R.drawable.ic_menu_preferences));
       items.add(new SideMenuItem(R.id.syncNow, R.string.syncMenu, R.drawable.menu_update));
       items.add(new SideMenuItem(R.id.shareFbook, R.string.shareMenu, android.R.drawable.ic_menu_share));
@@ -331,7 +330,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         }
         _stationManager.setAutoSortStations(stationOrdering.equals("distance"));
         fillStationAdapter();
-        Spinner stationSpinner = (Spinner) findViewById(R.id.stationSpinner);
+        Spinner stationSpinner = findViewById(R.id.stationSpinner);
         stationSpinner.setSelection(_stationAdapter.getPosition(_stationManager.getStation()));
         String background = prefs.getString(Preferences.PREF_BACKGROUND, "default");
         boolean mustUpdate = !_background.equals(background);
@@ -479,9 +478,9 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
      */
     private void updateLayout() {
 
-        final LinearLayout scrolled  = (LinearLayout) findViewById(R.id.scrolled);
+        final LinearLayout scrolled  = findViewById(R.id.scrolled);
         scrolled.removeAllViews();
-        final LinearLayout predictedGroup = (LinearLayout) findViewById(R.id.predictedGroup);
+        final LinearLayout predictedGroup = findViewById(R.id.predictedGroup);
         if (predictedGroup != null) { // en landscape no hay
             predictedGroup.setVisibility(LinearLayout.INVISIBLE);
         }
@@ -497,7 +496,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         final int currentStationId = currentStation.getId();
         if (currentStation.getPredictions().size() > 0) {
             if (predictedGroup != null) { // en landscape no hay
-                final TextView predictionTime = (TextView) findViewById(R.id.predictionTime);
+                final TextView predictionTime = findViewById(R.id.predictionTime);
                 predictionTime.setText(getPredictionTimeString(currentStation.getLastCreationDate()));
                 predictedGroup.setVisibility(LinearLayout.VISIBLE);
             }
@@ -591,6 +590,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
             String defaultStationPreference = prefs.getString(Preferences.PREF_DEFAULT_STATION, Preferences.DEFAULT_DEFAULT_STATION);
             int defaultStationFixed = Integer.valueOf(prefs.getString(Preferences.PREF_DEFAULT_STATION_FIXED, "1"));
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            assert locationManager != null;
             _stationManager = new StationManager(locationManager, defaultStationPreference, defaultStationFixed);
             if (locationManager.getBestProvider(new Criteria(), false) == null) {
                 Toast.makeText(getApplicationContext(), R.string.gps_unavailable, Toast.LENGTH_LONG).show();
@@ -613,7 +613,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
             @Override
 			public void run() {
                 fillStationAdapter();
-                Spinner stationSpinner = (Spinner) findViewById(R.id.stationSpinner);
+                Spinner stationSpinner = findViewById(R.id.stationSpinner);
                 stationSpinner.setSelection(_stationAdapter.getPosition(station));
                 updateLayout();
             }
@@ -670,7 +670,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                 removeDialog(DIALOG_LOADING_ID);
                 _dialogLoadingShown = false;
                 Toast.makeText(getApplicationContext(), R.string.internet_error, Toast.LENGTH_LONG).show();
-                LinearLayout scrolled  = (LinearLayout) findViewById(R.id.scrolled);
+                LinearLayout scrolled  = findViewById(R.id.scrolled);
                 scrolled.removeAllViews();
             }
         });
@@ -685,7 +685,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                     removeDialog(DIALOG_LOADING_ID);
                     _dialogLoadingShown = false;
                     Toast.makeText(getApplicationContext(), R.string.internal_error, Toast.LENGTH_LONG).show();
-                    LinearLayout scrolled  = (LinearLayout) findViewById(R.id.scrolled);
+                    LinearLayout scrolled  = findViewById(R.id.scrolled);
                     scrolled.removeAllViews();
                 }
             }

@@ -41,6 +41,6 @@ public class ClosestStationComparator implements Comparator<Station> {
         double distB = Station.distance2(arg1.getLatitude(), arg1.getLongitude(), _lat, _lng);
         return Double.compare(distA, distB);
     }
-    private double _lat;
-    private double _lng;
+    private final double _lat;
+    private final double _lng;
 }

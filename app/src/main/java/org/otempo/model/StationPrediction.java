@@ -22,7 +22,6 @@ import java.util.Calendar;
 
 import android.support.annotation.Nullable;
 import org.otempo.R;
-import org.otempo.util.DateUtils;
 
 import android.content.Context;
 
@@ -64,18 +63,6 @@ public abstract class StationPrediction {
     public int getMaxTemp() { return _maxTemp; }
     public int getMinTemp() { return _minTemp; }
     public void setMinTemp(int minTemp) { _minTemp = minTemp; }
-
-    /**
-     * Devuelve la edad de una predicción en milisegundos desde que se creó hasta ahora mismo
-     */
-    public long getAge() {
-        final Calendar creationDate = _creationDate;
-		if (creationDate != null) {
-			return DateUtils.getDifference(creationDate, Calendar.getInstance());
-		} else {
-			return 0;
-		}
-    }
 
 	int skyStateDescriptionResId(@Nullable SkyState state) {
 		if (state == null) {

@@ -52,9 +52,7 @@ public class WaitNextUpdateState implements ServiceState {
     private synchronized void sleep(int updatePeriod) {
         try {
             wait(updatePeriod);
-        } catch (InterruptedException e) {
-            return;
-        }
+        } catch (InterruptedException ignored) {}
     }
 
     private synchronized void awake() {

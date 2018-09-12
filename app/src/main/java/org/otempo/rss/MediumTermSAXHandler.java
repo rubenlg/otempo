@@ -18,6 +18,7 @@
  */
 package org.otempo.rss;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.otempo.model.Station;
@@ -33,7 +34,7 @@ public class MediumTermSAXHandler extends PredictionSAXHandler {
     }
 
     @Override
-    public void endElementSpecific(String uri, String localName) {
+    public void endElementSpecific(@NonNull String uri, @NonNull String localName) {
     	if (localName.equals("ceo")) {
             getCurrentMediumPrediction().setSkyState(parseSkyState(getCurrentText()));
         } else if (localName.equals("vento")) {

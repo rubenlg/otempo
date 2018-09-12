@@ -34,6 +34,7 @@ public class ChangeLog extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Version[] versions = {
+            new Version("3.5", R.array.changelog_3_5),
             new Version("3.4", R.array.changelog_3_4),
             new Version("3.3", R.array.changelog_3_3),
             new Version("3.2", R.array.changelog_3_2),
@@ -59,11 +60,11 @@ public class ChangeLog extends ListActivity {
             new Version("1.1", R.array.changelog_1_1)
         };
 
-        ArrayList<String> changes = new ArrayList<String>();
+        ArrayList<String> changes = new ArrayList<>();
         for (Version version: versions) {
             version.addToArray(changes);
         }
-        setListAdapter(new ArrayAdapter<String>(this, R.layout.changelog_item, changes));
+        setListAdapter(new ArrayAdapter<>(this, R.layout.changelog_item, changes));
 
         getListView().setTextFilterEnabled(true);
     }
@@ -79,7 +80,7 @@ public class ChangeLog extends ListActivity {
                 changes.add(" - " + change);
             }
         }
-        private String _versionName;
-        private int _versionChangesR;
+        private final String _versionName;
+        private final int _versionChangesR;
     }
 }

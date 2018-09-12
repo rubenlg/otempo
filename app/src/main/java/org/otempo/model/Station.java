@@ -254,15 +254,15 @@ public class Station {
     private double _longitude;
     private int _accessCount = 0; ///< Viene de BD
     @Nullable private Date _lastAccess = null; ///< Viene de BD
-    private List<StationPrediction> _predictions = new ArrayList<StationPrediction>();
+    private final List<StationPrediction> _predictions = new ArrayList<>();
     /// Contiene la fecha de creación más reciente de todas las predicciones
     @Nullable private Calendar _lastCreationDate = null;
 
-    private static List<Station> _knownStations = new ArrayList<Station>();
+    private static final List<Station> _knownStations = new ArrayList<>();
     
     // Mapa de identificador viejo a identificador nuevo para las antiguas localidades de Meteogalicia
     // TODO(ryu): Eliminar después de un par de versiones
-    private static SparseIntArray _legacyIdMap = new SparseIntArray();
+    private static final SparseIntArray _legacyIdMap = new SparseIntArray();
     
     static {
     	// Provincia de A Coruña

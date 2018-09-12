@@ -123,6 +123,9 @@
 	<string name="wind_very_strong_southwest">very strong southwest</string>
 	<string name="wind_very_strong_west">very strong west</string>
 
+	<string-array name="changelog_3_5">
+		<item>Fixed a crashing bug. Thanks Guillermo for the feedback!</item>
+	</string-array>
 	<string-array name="changelog_3_4">
 		<item>Added a menu on the top left corner for devices without a hardware menu button. Thanks Juan for the feedback!</item>
 	</string-array>

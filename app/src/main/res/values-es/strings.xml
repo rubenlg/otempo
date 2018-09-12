@@ -122,6 +122,9 @@
 	<string name="wind_very_strong_southwest">muy fuerte del suroeste</string>
 	<string name="wind_very_strong_west">muy fuerte del oeste</string>
 
+	<string-array name="changelog_3_5">
+		<item>Arreglado un fallo al cargar la aplicación. Gracias Guillermo por el feedback!</item>
+	</string-array>
 	<string-array name="changelog_3_4">
 		<item>Menú en la esquina superior izquierda para dispositivos sin botón de menú. Gracias a Juan por el feedback!</item>
 	</string-array>

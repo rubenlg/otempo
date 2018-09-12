@@ -11,7 +11,6 @@ import java.util.Locale;
 import org.otempo.model.Station;
 import org.otempo.model.StationPrediction;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import android.support.annotation.NonNull;
@@ -61,8 +60,8 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 	}
 
     @Override
-    public final void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if (localName == "dataPredicion") {
+    public final void startElement(String uri, String localName, String qName, Attributes attributes) {
+        if (localName.equals("dataPredicion")) {
         	String format = attributes.getValue("formato");
             _lastPredFormat = new SimpleDateFormat(format, SPANISH);
         }
@@ -70,19 +69,19 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
     }
 
     @Override
-    public final void characters(char[] ch, int start, int length) throws SAXException {
+    public final void characters(char[] ch, int start, int length) {
         _currentChars.append(ch, start, length);
     }
     
     @Override
-    public final void endElement(String uri, String localName, String qName) throws SAXException {
+    public final void endElement(String uri, String localName, String qName) {
         if (localName == "item") {
         	if (hasCurrentPrediction()) {
                 _predictions.add(getOrCreateCurrentPrediction());
                 resetCurrentPrediction();
             }
         }
-        if (localName == "rss") {
+        if (localName.equals("rss")) {
             _station.setPredictions(_predictions, _clearPredictions);
         }
         if (localName == null) return;
@@ -172,13 +171,13 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 	// Borra la predicción actual (usado al cerrar un item) 
 	protected abstract void resetCurrentPrediction();
 	
-	private static Locale SPANISH = new Locale("es"); 
+	private static final Locale SPANISH = new Locale("es");
 	
     // Lista de predicciones de la estación
-    private List<StationPrediction> _predictions = new ArrayList<StationPrediction>();
+    private final List<StationPrediction> _predictions = new ArrayList<>();
 	
 	// Constructor de string para acumular texto a medida que nos va llegando
-    private StringBuilder _currentChars = new StringBuilder();
+    private final StringBuilder _currentChars = new StringBuilder();
 
 	// Estación que se está parseando
     private Station _station = null;

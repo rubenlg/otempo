@@ -97,6 +97,7 @@ public class Preferences extends PreferenceActivity {
         if (requestCode == ACTIVITY_SELECT_BG_IMAGE) {
             if (resultCode == RESULT_OK) {
                 Uri selectedImage = intent.getData();
+                assert selectedImage != null;
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                 Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);

@@ -59,7 +59,7 @@ public class BitmapUtils {
             BitmapFactory.Options o2 = new BitmapFactory.Options();
             o2.inSampleSize = scale;
             b = BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         }
         return b;
     }

@@ -46,9 +46,7 @@ public class WaitConnectionState implements ServiceState {
     private synchronized void sleep() {
         try {
             wait(_sleepTimeout);
-        } catch (InterruptedException e) {
-            return;
-        }
+        } catch (InterruptedException ignored) {}
     }
 
     private synchronized void awake() {
