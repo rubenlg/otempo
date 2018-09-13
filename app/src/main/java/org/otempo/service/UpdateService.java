@@ -235,7 +235,7 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
             }
 
             // Parsing short term
-            InputStream streamShortTerm = StationCache.getStationRSS(station.getId(), true, forceStorage);
+            InputStream streamShortTerm = StationCache.getStationRSS(station.getId(), true, forceStorage, this);
             if (streamShortTerm == null) {
                 throw new IOException("Station cache returned a NULL stream for short term");
             }
@@ -245,7 +245,7 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
             parserShort.parse(streamShortTerm, shortTermHandler);
             
             // Parsing medium term
-            InputStream streamMediumTerm = StationCache.getStationRSS(station.getId(), false, forceStorage);
+            InputStream streamMediumTerm = StationCache.getStationRSS(station.getId(), false, forceStorage, this);
             if (streamMediumTerm == null) {
                 throw new IOException("Station cache returned a NULL stream for medium term");
             }
@@ -280,8 +280,8 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
         } catch (SAXException e) {
             Log.e("OTempo", "Error parsing station "+station.getName() + ": " + e.getMessage(), e);
             _binder.deliverInternetError();
-            StationCache.removeCached(station.getId(), true);
-            StationCache.removeCached(station.getId(), false);
+            StationCache.removeCached(station.getId(), true, this);
+            StationCache.removeCached(station.getId(), false, this);
             // Si falla el parseo, ya ha sucedido que era meteogalicia que tenía el RSS petado, así que no lo volvemos a añadir en pendientes, se queda sin actualizar hasta el siguiente ciclo.
         }
     }

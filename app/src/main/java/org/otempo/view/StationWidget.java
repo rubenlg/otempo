@@ -27,7 +27,6 @@ import org.otempo.model.Station;
 import org.otempo.model.StationMediumTermPrediction;
 import org.otempo.model.StationPrediction;
 import org.otempo.model.StationShortTermPrediction;
-import org.otempo.service.UpdateService;
 import org.otempo.util.DateUtils;
 import org.otempo.util.ResourceUtils;
 
@@ -64,7 +63,8 @@ public class StationWidget extends AppWidgetProvider {
                 appWidgetManager.updateAppWidget(appWidgetId, rviews);
             }
         }
-        context.startService(new Intent(context, UpdateService.class));
+        // TODO: Use JobScheduler instead. Can't start services from widgets anymore.
+        // context.startService(new Intent(context, UpdateService.class));
     }
 
     /**
