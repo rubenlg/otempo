@@ -123,6 +123,12 @@
 	<string name="wind_very_strong_southwest">very strong southwest</string>
 	<string name="wind_very_strong_west">very strong west</string>
 
+	<string-array name="changelog_3_7">
+		<item>Fixed offline mode.</item>
+	</string-array>
+	<string-array name="changelog_3_6">
+		<item>Fixed another crashing bug.</item>
+	</string-array>
 	<string-array name="changelog_3_5">
 		<item>Fixed a crashing bug. Thanks Guillermo for the feedback!</item>
 	</string-array>
