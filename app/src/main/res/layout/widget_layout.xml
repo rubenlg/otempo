@@ -7,8 +7,8 @@
 	android:orientation="horizontal"
 	android:paddingLeft="15dip" 
 	android:paddingRight="12dip"
-	android:paddingTop="17dip" 
-	android:paddingBottom="19dip"
+	android:paddingTop="8dip"
+	android:paddingBottom="8dip"
 	android:baselineAligned="false">
 	<LinearLayout 
 		android:orientation="vertical"
@@ -37,8 +37,9 @@
 		android:orientation="vertical">
 		<TextView 
 			android:text="@string/morning" 
-			android:layout_height="wrap_content" 
-			android:layout_gravity="center" 
+			android:layout_height="wrap_content"
+			android:textColor="#aaa"
+			android:layout_gravity="center"
 			android:layout_width="wrap_content"
 			android:textSize="11dip"/>
 		<ImageView android:id="@+id/widgetMorning"
