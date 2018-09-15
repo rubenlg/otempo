@@ -115,7 +115,7 @@ public class StationWidget extends AppWidgetProvider {
      */
     public static void updateStation(Context context, Station station) {
         String dayName = DateUtils.weekDayFormat.format(new Date());
-        RemoteViews rviews = null;
+        RemoteViews rviews;
 
         // Si no hay estación -> Error
         String stationName = station.getName();

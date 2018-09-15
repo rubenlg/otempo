@@ -42,7 +42,7 @@ public class FavoritesDB extends SQLiteOpenHelper {
     private static final String ACCESS_COUNT_COL = "accessCount";
     private static final String LAST_ACCESS_COL = "last_access";
     @Nullable
-    private String _createSQL = null;
+    private String _createSQL;
 
     /**
      * Construye la utilidad

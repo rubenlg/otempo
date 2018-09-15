@@ -75,7 +75,8 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
     
     @Override
     public final void endElement(String uri, String localName, String qName) {
-        if (localName == "item") {
+		if (localName == null) return;
+        if (localName.equals("item")) {
         	if (hasCurrentPrediction()) {
                 _predictions.add(getOrCreateCurrentPrediction());
                 resetCurrentPrediction();
@@ -84,7 +85,6 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
         if (localName.equals("rss")) {
             _station.setPredictions(_predictions, _clearPredictions);
         }
-        if (localName == null) return;
         try {
             if (localName.equals("tMax")) {
                 getOrCreateCurrentPrediction().setMaxTemp(Integer.valueOf(getCurrentText()));
@@ -180,7 +180,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
     private final StringBuilder _currentChars = new StringBuilder();
 
 	// Estación que se está parseando
-    private Station _station = null;
+    private Station _station;
 
     // Último formato de fecha de predicción declarado en el RSS de meteogalicia 
 	private SimpleDateFormat _lastPredFormat = null;
@@ -190,5 +190,5 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
         new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", SPANISH);
 
     // Borrar las predicciones antes de cargar las nuevas?
-	private boolean _clearPredictions = true;
+	private boolean _clearPredictions;
 }

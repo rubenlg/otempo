@@ -388,8 +388,11 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
      */
     public boolean hasConnectivity() {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connManager == null) {
+            return false;
+        }
         NetworkInfo netInfo = connManager.getActiveNetworkInfo();
-        return netInfo != null && netInfo.getState() == NetworkInfo.State.CONNECTED;
+        return netInfo != null && netInfo.isConnected();
 
     }
 
@@ -398,6 +401,9 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
      */
     public boolean getBackgroundDataAllowed() {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connManager == null) {
+            return false;
+        }
         return connManager.getActiveNetworkInfo().isConnected();
     }
 
@@ -407,7 +413,7 @@ public class UpdateService extends Service implements Listener, OnSharedPreferen
     private class ConnectivityReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context ctx, Intent intent) {
-            if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+            if (Nullness.equals(intent.getAction(), ConnectivityManager.CONNECTIVITY_ACTION)) {
                 boolean connectivity = !intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
                 if (connectivity) {
                     if (_state != null) {

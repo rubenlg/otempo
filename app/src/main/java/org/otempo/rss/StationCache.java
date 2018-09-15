@@ -132,7 +132,7 @@ public class StationCache {
             //cache.createNewFile();
             OutputStream outputStream = new FileOutputStream(cache);
             byte[] buffer = new byte[4096];
-            int n = 0;
+            @SuppressWarnings("UnusedAssignment") int n = 0;
             while (-1 != (n = rss.read(buffer))) {
                 outputStream.write(buffer, 0, n);
             }

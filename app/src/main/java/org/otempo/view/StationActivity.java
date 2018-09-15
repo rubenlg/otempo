@@ -404,7 +404,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        Dialog dialog = null;
+        Dialog dialog;
         switch(id) {
         case DIALOG_LOADING_ID: {
             // No usar nunca esta forma, peta en 1.5, porque el show se hace dos veces:
