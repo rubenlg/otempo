@@ -48,6 +48,7 @@ public class Preferences extends PreferenceActivity {
     public static final String PREF_PREDICTED_TIME_WHY_CLICKED = "predictedTimeWhyClicked"; // Se ha pulsado ya el "por qué?" de la hora de predicción?
     public static final String PREF_BACKGROUND = "background";
     public static final String PREF_BACKGROUND_USER_IMAGE = "bgUserImage";
+    public static final String PREF_UPDATE_PERIOD = "updatePeriod";
     public static final String DEFAULT_STATION_ORDERING = "alphabetic";
 
     @Override

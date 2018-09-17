@@ -21,12 +21,14 @@ package org.otempo.view;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.arch.lifecycle.ProcessLifecycleOwner;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import org.otempo.R;
@@ -35,6 +37,7 @@ import org.otempo.model.Station;
 import org.otempo.model.StationMediumTermPrediction;
 import org.otempo.model.StationPrediction;
 import org.otempo.model.StationShortTermPrediction;
+import org.otempo.service.FetchWorker;
 import org.otempo.util.DateUtils;
 import org.otempo.util.ResourceUtils;
 
@@ -45,32 +48,42 @@ import java.util.Date;
  * Proveedor del widget que se puede integrar en el escritorio
  */
 public class StationWidget extends AppWidgetProvider {
+
     @Override
     public void onUpdate(
             Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // Si no conseguimos elegir primera estación, entonces ponemos el mensaje de "cargando..."
-        if (!firstStation(context)) {
-            // Actualizamos todos los widgets (va a ser uno solo) con el layout por defecto
-            for (int appWidgetId : appWidgetIds) {
-                RemoteViews rviews =
-                        new RemoteViews(context.getPackageName(), R.layout.widget_layout_err);
-                rviews.setTextViewText(R.id.widgetError, context.getString(R.string.loading_data));
 
-                Intent otempoIntent = new Intent(context, StationActivity.class);
-                PendingIntent pendingIntent =
-                        PendingIntent.getActivity(context, 0, otempoIntent, 0);
-                rviews.setOnClickPendingIntent(R.id.widgetRoot, pendingIntent);
-                appWidgetManager.updateAppWidget(appWidgetId, rviews);
-            }
+        Station station = getWidgetStation(context);
+
+        if (station.getPredictions().size() > 0) {
+            Log.d("OTempo", "Already had predictions for the widget");
+            displayStation(context, station);
+        } else {
+            Log.d("OTempo", "Loading predictions for the widget");
+            displayLoading(context, appWidgetManager, appWidgetIds);
+            fetchThenShow(station, context);
         }
-        // TODO: Use JobScheduler instead. Can't start services from widgets anymore.
-        // context.startService(new Intent(context, UpdateService.class));
     }
 
-    /**
-     * Elige la primera estación a mostrar, si es posible
-     */
-    private static boolean firstStation(Context context) {
+    private static void fetchThenShow(final Station station, final Context context) {
+        FetchWorker.run(
+                station,
+                ProcessLifecycleOwner.get(),
+                new FetchWorker.ResultListener() {
+                    @Override
+                    public void success() {
+                        Log.d("OTempo", "Success fetching widget data");
+                        displayStation(context, station);
+                    }
+
+                    @Override
+                    public void error() {
+                        Log.e("OTempo", "Unable to fetch widget data");
+                    }
+                });
+    }
+
+    private static Station getWidgetStation(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String defaultStationPreference = prefs.getString(
                 Preferences.PREF_DEFAULT_STATION, Preferences.DEFAULT_DEFAULT_STATION);
@@ -82,15 +95,10 @@ public class StationWidget extends AppWidgetProvider {
         StationManager tmpStationManager =
                 new StationManager(locationManager, defaultStationPreference, defaultStationFixed);
         Station station = tmpStationManager.getStation();
-        if (station == null) {
-            station = Station.getKnownStations().get(0);
+        if (station != null) {
+            return station;
         }
-        if (station.getPredictions().size() > 0) {
-            updateStation(context, station);
-            return true;
-        } else {
-            return false;
-        }
+        return Station.getKnownStations().get(0);
     }
 
     /**
@@ -113,7 +121,7 @@ public class StationWidget extends AppWidgetProvider {
      * @param context Contexto válido de Android
      * @param station La estación que deseamos mostrar en el widget
      */
-    public static void updateStation(Context context, Station station) {
+    public static void displayStation(Context context, Station station) {
         String dayName = DateUtils.weekDayFormat.format(new Date());
         RemoteViews rviews;
 
@@ -165,5 +173,19 @@ public class StationWidget extends AppWidgetProvider {
                 PendingIntent.getActivity(context, 0, otempoIntent, 0);
         rviews.setOnClickPendingIntent(R.id.widgetRoot, pendingIntent);
         manager.updateAppWidget(widget, rviews);
+    }
+
+    private static void displayLoading(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        for (int appWidgetId : appWidgetIds) {
+            RemoteViews rviews =
+                    new RemoteViews(context.getPackageName(), R.layout.widget_layout_err);
+            rviews.setTextViewText(R.id.widgetError, context.getString(R.string.loading_data));
+
+            Intent otempoIntent = new Intent(context, StationActivity.class);
+            PendingIntent pendingIntent =
+                    PendingIntent.getActivity(context, 0, otempoIntent, 0);
+            rviews.setOnClickPendingIntent(R.id.widgetRoot, pendingIntent);
+            appWidgetManager.updateAppWidget(appWidgetId, rviews);
+        }
     }
 }

@@ -31,7 +31,6 @@ import java.net.URLConnection;
 import java.util.Date;
 import java.util.Locale;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -51,16 +50,16 @@ public class StationCache {
      * @return Un flujo del que leer el RSS
      */
     @Nullable
-    public static InputStream getStationRSS(int stationId, boolean shortTerm, boolean forceStorage, Context context) {
+    public static InputStream getStationRSS(int stationId, boolean shortTerm, boolean forceStorage, File cacheDir) {
         InputStream stream = null;
-        long storageAge = getStorageAge(stationId, shortTerm, context);
+        long storageAge = getStorageAge(stationId, shortTerm, cacheDir);
         // Si la edad de la caché no es buena, intentamos coger de internet
         if ((storageAge < 0 || storageAge > MAX_STORAGE_AGE) && !forceStorage) {
-            stream = getFromInternet(stationId, shortTerm, context);
+            stream = getFromInternet(stationId, shortTerm, cacheDir);
         }
         // Si en internet no se puede, o la caché es buena, pues de la caché
         if (stream == null) {
-            stream = getFromStorage(stationId, shortTerm, context);
+            stream = getFromStorage(stationId, shortTerm, cacheDir);
         }
         // Puede que devolvamos null a pesar de todo
         return stream;
@@ -70,9 +69,8 @@ public class StationCache {
      * @param stationId ID de estación
      * @return Edad de la cache en milisegundos para una estación
      */
-    private static long getStorageAge(int stationId, boolean shortTerm, Context context) {
-        File sdDir = context.getCacheDir();
-        File cache = new File(sdDir, DATA_DIR + makeFileName(stationId, shortTerm));
+    private static long getStorageAge(int stationId, boolean shortTerm, File cacheDir) {
+        File cache = new File(cacheDir, DATA_DIR + makeFileName(stationId, shortTerm));
         if (cache.exists()) {
             Date d = new Date();
             return d.getTime() - cache.lastModified();
@@ -86,9 +84,8 @@ public class StationCache {
      * @return Obtiene el RSS de una estación desde la SD, o null si no hay.
      */
     @Nullable
-    private static InputStream getFromStorage(int stationId, boolean shortTerm, Context context) {
-        File sdDir = context.getCacheDir();
-        File cache = new File(sdDir, DATA_DIR + makeFileName(stationId, shortTerm));
+    private static InputStream getFromStorage(int stationId, boolean shortTerm, File cacheDir) {
+        File cache = new File(cacheDir, DATA_DIR + makeFileName(stationId, shortTerm));
         try {
             return new FileInputStream(cache);
         } catch (FileNotFoundException e) {
@@ -101,9 +98,8 @@ public class StationCache {
      *
      * @param stationId Id de la estación a invalidar
      */
-    public static boolean removeCached(int stationId, boolean shortTerm, Context context) {
-        File sdDir = context.getCacheDir();
-        File dataDir = new File(sdDir, DATA_DIR);
+    public static boolean removeCached(int stationId, boolean shortTerm, File cacheDir) {
+        File dataDir = new File(cacheDir, DATA_DIR);
         if (!dataDir.exists()) return true;
         File cache = new File(dataDir, makeFileName(stationId, shortTerm));
         cache.delete();
@@ -117,9 +113,8 @@ public class StationCache {
      * @param rss       flujo del que se puede leer el RSS
      * @return true si se pudo guardar correctamente, y false en todos los demás casos
      */
-    private static boolean saveCached(int stationId, boolean shortTerm, InputStream rss, Context context) {
-        File sdDir = context.getCacheDir();
-        File dataDir = new File(sdDir, DATA_DIR);
+    private static boolean saveCached(int stationId, boolean shortTerm, InputStream rss, File cacheDir) {
+        File dataDir = new File(cacheDir, DATA_DIR);
         try {
             if (!dataDir.exists()) {
                 Log.d("OTEMPO", "*** CREATING " + dataDir);
@@ -164,7 +159,7 @@ public class StationCache {
      * @return Obtiene el RSS de una estación directamente desde Internet
      */
     @Nullable
-    private static InputStream getFromInternet(int stationId, boolean shortTerm, Context context) {
+    private static InputStream getFromInternet(int stationId, boolean shortTerm, File cacheDir) {
         try {
             URL url;
             if (shortTerm) {
@@ -174,8 +169,8 @@ public class StationCache {
             }
             URLConnection conn = url.openConnection();
             InputStream stream = conn.getInputStream();
-            if (saveCached(stationId, shortTerm, stream, context)) {
-                return getFromStorage(stationId, shortTerm, context);
+            if (saveCached(stationId, shortTerm, stream, cacheDir)) {
+                return getFromStorage(stationId, shortTerm, cacheDir);
             } else {
                 return stream;
             }
