@@ -123,6 +123,9 @@
 	<string name="wind_very_strong_southwest">moi forte do suroeste</string>
 	<string name="wind_very_strong_west">moi forte do oeste</string>
 
+	<string-array name="changelog_3_8">
+		<item>Arranxado un faio e mellorada a velocidade de carga do widget.</item>
+	</string-array>
 	<string-array name="changelog_3_7">
 		<item>Arrenxado o modo sen conexión.</item>
 	</string-array>
