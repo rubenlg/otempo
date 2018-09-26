@@ -119,8 +119,6 @@ public class StationCache {
             if (!dataDir.exists()) {
                 Log.d("OTEMPO", "*** CREATING " + dataDir);
                 dataDir.mkdirs();
-            } else {
-                Log.d("OTEMPO", "Exists " + dataDir);
             }
             File cache = new File(dataDir, makeFileName(stationId, shortTerm));
             cache.getParentFile().mkdirs();

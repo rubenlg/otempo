@@ -1,6 +1,5 @@
 package org.otempo.rss;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,7 +53,7 @@ public abstract class PredictionSAXHandler extends DefaultHandler {
 	        Calendar c = new GregorianCalendar();
 	        c.setTime(format.parse(string));
 	        return c;
-	    } catch (ParseException e) {
+	    } catch (Exception e) {
 	        return null;
 	    }
 	}

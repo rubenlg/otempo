@@ -21,7 +21,6 @@ package org.otempo.view;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.arch.lifecycle.ProcessLifecycleOwner;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -37,7 +36,7 @@ import org.otempo.model.Station;
 import org.otempo.model.StationMediumTermPrediction;
 import org.otempo.model.StationPrediction;
 import org.otempo.model.StationShortTermPrediction;
-import org.otempo.service.FetchWorker;
+import org.otempo.rss.PredictionsParser;
 import org.otempo.util.DateUtils;
 import org.otempo.util.ResourceUtils;
 
@@ -55,32 +54,21 @@ public class StationWidget extends AppWidgetProvider {
 
         Station station = getWidgetStation(context);
 
+        if (station.getPredictions().size() == 0) {
+            try {
+                // We can't use workers from a BroadcastReceiver, so we can only do this
+                // synchronously.
+                PredictionsParser.parse(station, context.getCacheDir());
+            } catch (Exception e) {
+                Log.e("OTempo", "Widget was unable to read station", e);
+            }
+        }
+
         if (station.getPredictions().size() > 0) {
-            Log.d("OTempo", "Already had predictions for the widget");
             displayStation(context, station);
         } else {
-            Log.d("OTempo", "Loading predictions for the widget");
             displayLoading(context, appWidgetManager, appWidgetIds);
-            fetchThenShow(station, context);
         }
-    }
-
-    private static void fetchThenShow(final Station station, final Context context) {
-        FetchWorker.run(
-                station,
-                ProcessLifecycleOwner.get(),
-                new FetchWorker.ResultListener() {
-                    @Override
-                    public void success() {
-                        Log.d("OTempo", "Success fetching widget data");
-                        displayStation(context, station);
-                    }
-
-                    @Override
-                    public void error() {
-                        Log.e("OTempo", "Unable to fetch widget data");
-                    }
-                });
     }
 
     private static Station getWidgetStation(Context context) {
@@ -176,6 +164,7 @@ public class StationWidget extends AppWidgetProvider {
     }
 
     private static void displayLoading(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        Log.d("OTempo", "Display loading on the widget");
         for (int appWidgetId : appWidgetIds) {
             RemoteViews rviews =
                     new RemoteViews(context.getPackageName(), R.layout.widget_layout_err);

@@ -11,9 +11,7 @@ import org.otempo.rss.PredictionsParser;
 
 import java.io.IOException;
 
-import androidx.work.Constraints;
 import androidx.work.Data;
-import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkStatus;

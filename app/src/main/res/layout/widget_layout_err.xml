@@ -10,7 +10,8 @@
 	android:paddingTop="17dip" 
 	android:paddingBottom="20dip">
 	<TextView android:id="@+id/widgetError"
-		android:text="ERR" 
+		android:text="ERR"
+		android:textColor="#fff"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:gravity="center"/>
