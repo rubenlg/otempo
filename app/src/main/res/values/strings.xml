@@ -123,6 +123,9 @@
 	<string name="wind_very_strong_southwest">very strong southwest</string>
 	<string name="wind_very_strong_west">very strong west</string>
 
+	<string-array name="changelog_3_9">
+		<item>Custom backgrounds are working again.</item>
+	</string-array>
 	<string-array name="changelog_3_8">
 		<item>Fixed a crashing bug and made the widget load faster.</item>
 	</string-array>

@@ -243,7 +243,7 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     @Override
     protected void onResume() {
         super.onResume();
-        maybeRequestPermission();
+        maybeRequestLocationPermission();
         Station station = _stationManager.getStation();
         if (station != null) {
             fetchThenShow(station, false);
@@ -343,13 +343,14 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                 findViewById(R.id.scrollView).setBackgroundResource(R.drawable.background);
             }
         } else if (_background.equals("user_image")) {
+            maybeRequestStoragePermission();
             String fileName = prefs.getString(Preferences.PREF_BACKGROUND_USER_IMAGE, "");
             // No permitimos imágenes de más de 1000 pixeles de ancho o alto, para no petar la memoria con esta imagen
             int maxW = Math.max((int) (getResources().getDisplayMetrics().widthPixels * 1.5), 1000);
             int maxH = Math.max((int) (getResources().getDisplayMetrics().heightPixels * 1.5), 1000);
             Bitmap bitmap = BitmapUtils.safeDecodeFile(new File(fileName), maxW, maxH);
-            BitmapDrawable image = new BitmapDrawable(bitmap);
-            findViewById(R.id.scrollView).setBackgroundDrawable(image);
+            BitmapDrawable image = new BitmapDrawable(getResources(), bitmap);
+            findViewById(R.id.scrollView).setBackground(image);
         }
         if (mustUpdate) {
             updateLayout();
@@ -660,23 +661,6 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
             // Nada que hacer
         }
     }
-/*
-    @Override
-    public void internetError() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                removeDialog(DIALOG_LOADING_ID);
-                _dialogLoadingShown = false;
-                Toast.makeText(getApplicationContext(), R.string.internet_error, Toast.LENGTH_LONG).show();
-                LinearLayout scrolled = findViewById(R.id.scrolled);
-                scrolled.removeAllViews();
-            }
-        });
-    }
-
-
-*/
 
     private void fetchThenShow(final Station station, final boolean checkIfWasAlreadyLatest) {
         final Calendar previousPredictionTime = station.getLastCreationDate();
@@ -716,12 +700,21 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
         return list;
     }
 
-    private void maybeRequestPermission() {
+    private void maybeRequestLocationPermission() {
         if (Build.VERSION.SDK_INT < 23) {
             return;
         }
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+        }
+    }
+
+    private void maybeRequestStoragePermission() {
+        if (Build.VERSION.SDK_INT < 23) {
+            return;
+        }
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         }
     }
 
@@ -736,6 +729,9 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
                     Spinner stationSpinner = findViewById(R.id.stationSpinner);
                     stationSpinner.setSelection(_stationAdapter.getPosition(_stationManager.getStation()));
                 }
+            } else if (permissions[i].equals(android.Manifest.permission.READ_EXTERNAL_STORAGE) &&
+                    grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                reloadPreferences();
             }
         }
     }
