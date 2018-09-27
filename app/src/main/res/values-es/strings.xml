@@ -122,6 +122,9 @@
 	<string name="wind_very_strong_southwest">muy fuerte del suroeste</string>
 	<string name="wind_very_strong_west">muy fuerte del oeste</string>
 
+	<string-array name="changelog_3_10">
+		<item>Arreglado un fallo al cerrar la aplicación.</item>
+	</string-array>
 	<string-array name="changelog_3_9">
 		<item>Los fondos personalizados vuelven a funcionar.</item>
 	</string-array>

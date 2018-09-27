@@ -253,7 +253,6 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(_serviceConnection);
         PreferenceManager.getDefaultSharedPreferences(getBaseContext()).unregisterOnSharedPreferenceChangeListener(this);
     }
 
@@ -741,7 +740,6 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
     private StationManager _stationManager = null;
     private ArrayAdapter<Station> _stationAdapter = null;
     private static FavoritesDB _favoritesDB = null;
-    private ServiceConnection _serviceConnection = null;
 
     private final static int DIALOG_LOADING_ID = 0;
     private final static int DIALOG_PREDICTION_EXPLAIN_ID = 1;

@@ -123,6 +123,9 @@
 	<string name="wind_very_strong_southwest">moi forte do suroeste</string>
 	<string name="wind_very_strong_west">moi forte do oeste</string>
 
+	<string-array name="changelog_3_10">
+		<item>Arranxado un faio ó cerrar a aplicación.</item>
+	</string-array>
 	<string-array name="changelog_3_9">
 		<item>Os fondos personalizaos voltan a funcionar.</item>
 	</string-array>
