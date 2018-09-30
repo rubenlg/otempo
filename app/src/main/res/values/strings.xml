@@ -123,6 +123,9 @@
 	<string name="wind_very_strong_southwest">very strong southwest</string>
 	<string name="wind_very_strong_west">very strong west</string>
 
+	<string-array name="changelog_3_11">
+		<item>Improve stability of the widget.</item>
+	</string-array>
 	<string-array name="changelog_3_10">
 		<item>Fixed another crashing bug.</item>
 	</string-array>
