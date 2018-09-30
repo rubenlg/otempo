@@ -27,7 +27,7 @@ public class UpdateWorker extends Worker {
             List<Station> stationsToUpdate = getStationsToUpdate();
             Log.d("OTempo", "Updating " + stationsToUpdate.size() + " stations");
             for (Station station : stationsToUpdate) {
-                PredictionsParser.parse(station, getApplicationContext().getCacheDir());
+                PredictionsParser.parse(station, getApplicationContext().getCacheDir(), false);
             }
         } catch (IOException e) {
             return Result.FAILURE;

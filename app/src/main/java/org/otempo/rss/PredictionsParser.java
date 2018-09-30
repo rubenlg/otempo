@@ -20,10 +20,10 @@ public class PredictionsParser {
      * TODO: StationCache.getStationRSS es una chapuza. Hace demasiadas cosas que no son evidentes.
      * Este método debería limitarse a parsear, y no andar mirando en la cache.
      */
-    public static void parse(Station station, File cacheDir) throws IOException {
+    public static void parse(Station station, File cacheDir, boolean forceStorage) throws IOException {
         try {
             // Parsing short term
-            InputStream streamShortTerm = StationCache.getStationRSS(station.getId(), true, false, cacheDir);
+            InputStream streamShortTerm = StationCache.getStationRSS(station.getId(), true, forceStorage, cacheDir);
             if (streamShortTerm == null) {
                 throw new IOException("Station cache returned a NULL stream for short term");
             }
@@ -33,7 +33,7 @@ public class PredictionsParser {
             parserShort.parse(streamShortTerm, shortTermHandler);
 
             // Parsing medium term
-            InputStream streamMediumTerm = StationCache.getStationRSS(station.getId(), false, false, cacheDir);
+            InputStream streamMediumTerm = StationCache.getStationRSS(station.getId(), false, forceStorage, cacheDir);
             if (streamMediumTerm == null) {
                 throw new IOException("Station cache returned a NULL stream for medium term");
             }

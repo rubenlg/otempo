@@ -28,7 +28,7 @@ public class FetchWorker extends Worker {
             return Result.FAILURE;
         }
         try {
-            PredictionsParser.parse(station, getApplicationContext().getCacheDir());
+            PredictionsParser.parse(station, getApplicationContext().getCacheDir(), false);
         } catch (IOException e) {
             return Result.FAILURE;
         }

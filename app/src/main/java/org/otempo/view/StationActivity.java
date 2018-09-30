@@ -348,8 +348,10 @@ public class StationActivity extends Activity implements OnSharedPreferenceChang
             int maxW = Math.max((int) (getResources().getDisplayMetrics().widthPixels * 1.5), 1000);
             int maxH = Math.max((int) (getResources().getDisplayMetrics().heightPixels * 1.5), 1000);
             Bitmap bitmap = BitmapUtils.safeDecodeFile(new File(fileName), maxW, maxH);
-            BitmapDrawable image = new BitmapDrawable(getResources(), bitmap);
-            findViewById(R.id.scrollView).setBackground(image);
+            if (bitmap != null) {
+                BitmapDrawable image = new BitmapDrawable(getResources(), bitmap);
+                findViewById(R.id.scrollView).setBackground(image);
+            }
         }
         if (mustUpdate) {
             updateLayout();

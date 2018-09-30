@@ -57,8 +57,9 @@ public class StationWidget extends AppWidgetProvider {
         if (station.getPredictions().size() == 0) {
             try {
                 // We can't use workers from a BroadcastReceiver, so we can only do this
-                // synchronously.
-                PredictionsParser.parse(station, context.getCacheDir());
+                // synchronously. Also, network is not allowed in the main thread, so we force a
+                // read from storage.
+                PredictionsParser.parse(station, context.getCacheDir(), true);
             } catch (Exception e) {
                 Log.e("OTempo", "Widget was unable to read station", e);
             }
