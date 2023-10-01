@@ -29,7 +29,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Utilidad para acceder a la base de datos de estaciones favoritas (más accedidas)

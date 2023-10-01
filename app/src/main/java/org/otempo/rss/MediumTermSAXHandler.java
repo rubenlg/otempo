@@ -18,8 +18,8 @@
  */
 package org.otempo.rss;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.otempo.model.Station;
 import org.otempo.model.StationMediumTermPrediction;

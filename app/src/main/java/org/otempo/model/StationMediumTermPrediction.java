@@ -22,7 +22,7 @@ package org.otempo.model;
 import org.otempo.R;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Predicción a medio plazo de una estación. Dispone de menos información que una predicción a corto plazo.

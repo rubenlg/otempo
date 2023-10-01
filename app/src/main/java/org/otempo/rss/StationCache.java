@@ -31,7 +31,7 @@ import java.net.URLConnection;
 import java.util.Date;
 import java.util.Locale;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 /**

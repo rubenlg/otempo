@@ -1,7 +1,8 @@
 package org.otempo.service;
 
+import android.content.Context;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import org.otempo.model.FavoritesStationComparator;
@@ -15,11 +16,16 @@ import java.util.Collections;
 import java.util.List;
 
 import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 
 /**
  * Station updater based on WorkerManager
  */
 public class UpdateWorker extends Worker {
+    public UpdateWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+        super(context, workerParams);
+    }
+
     @NonNull
     @Override
     public Result doWork() {
@@ -30,9 +36,9 @@ public class UpdateWorker extends Worker {
                 PredictionsParser.parse(station, getApplicationContext().getCacheDir(), false);
             }
         } catch (IOException e) {
-            return Result.FAILURE;
+            return Result.failure();
         }
-        return Result.SUCCESS;
+        return Result.success();
     }
 
     private List<Station> getStationsToUpdate() {

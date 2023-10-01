@@ -12,8 +12,8 @@ import org.otempo.model.StationPrediction;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 public abstract class PredictionSAXHandler extends DefaultHandler {

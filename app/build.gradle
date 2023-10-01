@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "org.otempo"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 33
     }
 
     buildTypes {
@@ -19,7 +18,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-annotations:27.1.1'
-    implementation 'com.android.support:support-v13:26.1.0'
-    implementation 'android.arch.work:work-runtime:1.0.0-alpha08'
+    implementation 'androidx.annotation:annotation:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+    implementation 'androidx.work:work-runtime:2.0.1'
 }

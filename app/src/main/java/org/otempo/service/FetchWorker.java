@@ -1,9 +1,11 @@
 package org.otempo.service;
 
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import android.content.Context;
 import android.util.Log;
 
 import org.otempo.model.Station;
@@ -14,25 +16,30 @@ import java.io.IOException;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.WorkStatus;
+import androidx.work.WorkInfo;
 import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 
 
 public class FetchWorker extends Worker {
+    public FetchWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+        super(context, workerParams);
+    }
+
     @NonNull
     @Override
     public Result doWork() {
         int id = getInputData().getInt("stationId", -1);
         Station station = Station.getById(id);
         if (station == null) {
-            return Result.FAILURE;
+            return Result.failure();
         }
         try {
             PredictionsParser.parse(station, getApplicationContext().getCacheDir(), false);
         } catch (IOException e) {
-            return Result.FAILURE;
+            return Result.failure();
         }
-        return Result.SUCCESS;
+        return Result.success();
     }
 
     public interface ResultListener {
@@ -48,10 +55,10 @@ public class FetchWorker extends Worker {
                         .build())
                 .build();
         WorkManager.getInstance().enqueue(request);
-        WorkManager.getInstance().getStatusById(request.getId())
-                .observe(owner, new Observer<WorkStatus>() {
+        WorkManager.getInstance().getWorkInfoByIdLiveData(request.getId())
+                .observe(owner, new Observer<WorkInfo>() {
                     @Override
-                    public void onChanged(@Nullable WorkStatus status) {
+                    public void onChanged(@Nullable WorkInfo status) {
                         if (status == null) {
                             return;
                         }
