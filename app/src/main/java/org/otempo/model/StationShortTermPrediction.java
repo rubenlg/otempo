@@ -18,7 +18,7 @@
  */
 package org.otempo.model;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import org.otempo.R;
 
 import android.content.Context;

@@ -1,6 +1,6 @@
 package org.otempo.util;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 public class Nullness {
 	public static <T> T checkNotNull(@Nullable T e){

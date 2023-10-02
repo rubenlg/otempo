@@ -25,7 +25,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import android.util.SparseIntArray;
 

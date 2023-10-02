@@ -21,7 +21,7 @@ package org.otempo.util;
 import org.otempo.R;
 import org.otempo.model.StationPrediction.SkyState;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 
 /**
